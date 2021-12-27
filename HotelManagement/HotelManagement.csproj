@@ -1,0 +1,1136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B71D3418-EFA1-4211-90C2-43D410F08C5D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>HotelManagement</RootNamespace>
+    <AssemblyName>HotelManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>hotel__3__LzJ_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bunifu_UI_v1.5.4">
+      <HintPath>C:\Download\Bunifu_UI_Winforms_1.5.4_Downloadly.ir\Bunifu UI Winforms 1.5.4\Bunifu_UI_v1.5.4.dll</HintPath>
+    </Reference>
+    <Reference Include="Kavenegar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kavenegar.1.1.2\lib\net40\Kavenegar.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework">
+      <HintPath>C:\Users\Behzad\source\repos\WindowsFormsApp4\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Base, Version=2017.2.2.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Stimulsoft Reports 2017.2.2\Libs\Net\Stimulsoft.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report, Version=2017.2.2.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Stimulsoft Reports 2017.2.2\Libs\Net\Stimulsoft.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Check, Version=2017.2.2.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Stimulsoft Reports 2017.2.2\Libs\Net\Stimulsoft.Report.Check.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Design, Version=2017.2.2.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Stimulsoft Reports 2017.2.2\Libs\Net\Stimulsoft.Report.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Win, Version=2017.2.2.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Stimulsoft Reports 2017.2.2\Libs\Net\Stimulsoft.Report.Win.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivityItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ActivityItem.Designer.cs">
+      <DependentUpon>ActivityItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActionFood.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionFood.Designer.cs">
+      <DependentUpon>ActionFood.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActionRole.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionRole.Designer.cs">
+      <DependentUpon>ActionRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActionSerivce.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionSerivce.Designer.cs">
+      <DependentUpon>ActionSerivce.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activity.cs" />
+    <Compile Include="Actor.cs" />
+    <Compile Include="BookList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BookList.Designer.cs">
+      <DependentUpon>BookList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Branch.cs" />
+    <Compile Include="Bubble.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Bubble.Designer.cs">
+      <DependentUpon>Bubble.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardAccounts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardAccounts.Designer.cs">
+      <DependentUpon>CardAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardBookDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardBookDetail.Designer.cs">
+      <DependentUpon>CardBookDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardCustomerDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardCustomerDetail.Designer.cs">
+      <DependentUpon>CardCustomerDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardGuestDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardGuestDetail.Designer.cs">
+      <DependentUpon>CardGuestDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardInvoice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardInvoice.Designer.cs">
+      <DependentUpon>CardInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardTransact.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardTransact.Designer.cs">
+      <DependentUpon>CardTransact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Chat.cs" />
+    <Compile Include="ChatForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChatForm.Designer.cs">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CirclePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ScreenCapture.cs" />
+    <Compile Include="CustomeNumeric.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomeNumeric.Designer.cs">
+      <DependentUpon>CustomeNumeric.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer.cs" />
+    <Compile Include="Dashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database.cs" />
+    <Compile Include="DialogCity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogCity.Designer.cs">
+      <DependentUpon>DialogCity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditAccount.Designer.cs">
+      <DependentUpon>EditAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditRole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditRole.Designer.cs">
+      <DependentUpon>EditRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditSetting.Designer.cs">
+      <DependentUpon>EditSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditTransact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditTransact.Designer.cs">
+      <DependentUpon>EditTransact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Communication.cs" />
+    <Compile Include="EmployeeList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EmployeeList.Designer.cs">
+      <DependentUpon>EmployeeList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmInvoiceEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInvoiceEdit.Designer.cs">
+      <DependentUpon>frmInvoiceEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GradientPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Guest.cs" />
+    <Compile Include="HashPassword.cs" />
+    <Compile Include="Invoice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Invoice.Designer.cs">
+      <DependentUpon>Invoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InvoiceDetail.Designer.cs">
+      <DependentUpon>InvoiceDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewAccount.Designer.cs">
+      <DependentUpon>NewAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewBook.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NewBook.Designer.cs">
+      <DependentUpon>NewBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewBranch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NewBranch.Designer.cs">
+      <DependentUpon>NewBranch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewEmployee.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NewEmployee.Designer.cs">
+      <DependentUpon>NewEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NewRole.Designer.cs">
+      <DependentUpon>NewRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderFood.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrderFood.Designer.cs">
+      <DependentUpon>OrderFood.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewRoom.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NewRoom.Designer.cs">
+      <DependentUpon>NewRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewTransact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewTransact.Designer.cs">
+      <DependentUpon>NewTransact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NewUser.Designer.cs">
+      <DependentUpon>NewUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderService.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrderService.Designer.cs">
+      <DependentUpon>OrderService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OvalPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OnlineUserItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OnlineUserItem.Designer.cs">
+      <DependentUpon>OnlineUserItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PVItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PVItem.Designer.cs">
+      <DependentUpon>PVItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PayDialog.Designer.cs">
+      <DependentUpon>PayDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PayInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PayInfo.Designer.cs">
+      <DependentUpon>PayInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ActionRoleFirt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionRoleFirt.Designer.cs">
+      <DependentUpon>ActionRoleFirt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report.cs" />
+    <Compile Include="Setting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Setting.Designer.cs">
+      <DependentUpon>Setting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TabBill.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TabBill.Designer.cs">
+      <DependentUpon>TabBill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TabBooking.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TabBooking.Designer.cs">
+      <DependentUpon>TabBooking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TabRoom.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TabRoom.Designer.cs">
+      <DependentUpon>TabRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TabServices.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TabServices.Designer.cs">
+      <DependentUpon>TabServices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TabUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TabUser.Designer.cs">
+      <DependentUpon>TabUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Theme.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserDetail.Designer.cs">
+      <DependentUpon>UserDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserList.Designer.cs">
+      <DependentUpon>UserList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VerticalLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="VerticalLabelFirst.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Weather.cs" />
+    <EmbeddedResource Include="ActivityItem.resx">
+      <DependentUpon>ActivityItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActionFood.resx">
+      <DependentUpon>ActionFood.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActionRole.resx">
+      <DependentUpon>ActionRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActionSerivce.resx">
+      <DependentUpon>ActionSerivce.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookList.resx">
+      <DependentUpon>BookList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bubble.resx">
+      <DependentUpon>Bubble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardAccounts.resx">
+      <DependentUpon>CardAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardBookDetail.resx">
+      <DependentUpon>CardBookDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardCustomerDetail.resx">
+      <DependentUpon>CardCustomerDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardGuestDetail.resx">
+      <DependentUpon>CardGuestDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardInvoice.resx">
+      <DependentUpon>CardInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardTransact.resx">
+      <DependentUpon>CardTransact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChatForm.resx">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomeNumeric.resx">
+      <DependentUpon>CustomeNumeric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogCity.resx">
+      <DependentUpon>DialogCity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditAccount.resx">
+      <DependentUpon>EditAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditRole.resx">
+      <DependentUpon>EditRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditSetting.resx">
+      <DependentUpon>EditSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditTransact.resx">
+      <DependentUpon>EditTransact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeList.resx">
+      <DependentUpon>EmployeeList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInvoiceEdit.resx">
+      <DependentUpon>frmInvoiceEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Invoice.resx">
+      <DependentUpon>Invoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InvoiceDetail.resx">
+      <DependentUpon>InvoiceDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewAccount.resx">
+      <DependentUpon>NewAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewBook.aa-DJ.resx">
+      <DependentUpon>NewBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewBook.resx">
+      <DependentUpon>NewBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewBranch.resx">
+      <DependentUpon>NewBranch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewEmployee.resx">
+      <DependentUpon>NewEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRole.resx">
+      <DependentUpon>NewRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderFood.resx">
+      <DependentUpon>OrderFood.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewRoom.resx">
+      <DependentUpon>NewRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewTransact.resx">
+      <DependentUpon>NewTransact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewUser.resx">
+      <DependentUpon>NewUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderService.resx">
+      <DependentUpon>OrderService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlineUserItem.resx">
+      <DependentUpon>OnlineUserItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PVItem.resx">
+      <DependentUpon>PVItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PayDialog.resx">
+      <DependentUpon>PayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PayInfo.resx">
+      <DependentUpon>PayInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ActionRoleFirt.resx">
+      <DependentUpon>ActionRoleFirt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting.resx">
+      <DependentUpon>Setting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TabBill.resx">
+      <DependentUpon>TabBill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TabBooking.resx">
+      <DependentUpon>TabBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TabRoom.resx">
+      <DependentUpon>TabRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TabServices.resx">
+      <DependentUpon>TabServices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TabUser.resx">
+      <DependentUpon>TabUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserDetail.resx">
+      <DependentUpon>UserDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserList.resx">
+      <DependentUpon>UserList.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\menu %283%29.png" />
+    <None Include="Resources\menu %282%29.png" />
+    <None Include="Resources\menu.png" />
+    <None Include="Resources\next-back-arrow-navigation-direction-right-30bd37a1ae8a9953-512x512.png" />
+    <None Include="Resources\user.png" />
+    <None Include="Resources\user %282%29.png" />
+    <None Include="Resources\user %281%29.png" />
+    <None Include="Resources\password-recovery.png" />
+    <None Include="Resources\padlock %281%29.png" />
+    <None Include="Resources\unlock.png" />
+    <None Include="Resources\padlock.png" />
+    <None Include="Resources\lock.png" />
+    <None Include="Resources\question.png" />
+    <None Include="Resources\question.bmp" />
+    <None Include="Resources\Invisible.png" />
+    <None Include="Resources\Eye.png" />
+    <None Include="Resources\if_locked_1055033.png" />
+    <None Include="Resources\forgot-password-icon-18350.png" />
+    <None Include="Resources\icon-recover-password-512.png" />
+    <None Include="Resources\fingerprint.png" />
+    <None Include="Resources\employee_Profilefemale.png" />
+    <None Include="Resources\employee_Profilemale.png" />
+    <None Include="Resources\email.png" />
+    <None Include="Resources\emailr.png" />
+    <None Include="Resources\home.png" />
+    <None Include="Resources\close.png" />
+    <None Include="Resources\home1.png" />
+    <None Include="Resources\account-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notebook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\book-open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\booking.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calendar-text.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\415896-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\309097-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\telephone-operator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Message.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Message2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1011336-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\branch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_2_2301005.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hotel %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_2_23010051.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hotel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\success.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1288812-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1288813-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1288820-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\card2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\card3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\credit-card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clipboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1173392-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1872933-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_credit-card_532622.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_2_3319597.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bank %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\392530-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\392530-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\326602-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\326606-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\296812-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_ic_delete_48px_352303.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_ic_mode_edit_48px_352547.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\352303-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\352547-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\transaction.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\opened-door-aperture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\increased-revenue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\multiple-users-silhouette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\covered-food-tray-on-a-hand-of-hotel-room-service.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plate-fork-and-knife.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restaurant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wedding-dinner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calendar %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restaurant-service.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wedding-reception.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\352303-32 %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\352303-321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\352547-321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\352303-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_flat-style-circle-edit_1312511 %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\47-512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\211623-20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_icon-arrow-down-b_211614.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\211623-20 %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\211623-20 %281%291.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\211614-20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_basics-15_296819.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minus %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\substract.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\results.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\room-service.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bellhop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hotel-service.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luggage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\staff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bell-boy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\material-icon-2155442_1280.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifying-glass-2244781_640.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifying-glass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search-icon-android-755342-5135991.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\organization.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rainy_weather-wallpaper-800x600.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next-page %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next-page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check-square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\send-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Word-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\word.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\925911-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\392530-481.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\314807-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\314807-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\314807-64%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_flat-style-circle-edit_1312511 %283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eraser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\oneblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\twoblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\threeblu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play-button blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play-button green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OneBluee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ThreeBluee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TwoBluee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user %283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pexels-photo-125510 %281%29.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pexels-photo-125510 %282%29.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pexels-photo-1110497.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cloud.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_Analytics_two_206471.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_Analytics_two_20647164.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\storm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\downpour.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\snow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading-circles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\waves.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_free-30_653686.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_free-31_653685.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\if_free-05_463018.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\password.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\paid-business-stamp-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\466640558-1024x1024.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exchange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1954538-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1954538-641.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1954533-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\circleAct.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\powerW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\powerB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LogW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\maxB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\maxW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hotel__2__N9U_icon.ico" />
+    <Content Include="hotel__3__LzJ_icon.ico" />
+    <None Include="Resources\293633-24.png" />
+    <None Include="Resources\send %281%29.png" />
+    <None Include="Resources\send.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
