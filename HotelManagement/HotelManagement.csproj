@@ -182,6 +182,8 @@
     <Compile Include="CirclePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Database\DBConfig.cs" />
+    <Compile Include="Models\Actor.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="CustomeNumeric.cs">
       <SubType>UserControl</SubType>
