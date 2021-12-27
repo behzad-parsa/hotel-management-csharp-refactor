@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.Models
 {
-    class Actor
+    public class Actor
     {
         public int ID { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string NationalCode { get; set; }
-        public string PhoneNumber { get; set; }
+        public string Mobile { get; set; }
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
         public string Nationality { get; set; }

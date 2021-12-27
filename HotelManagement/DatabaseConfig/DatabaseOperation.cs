@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.DatabaseConfig
 {
-    class DatabaseOperation
+    public class DatabaseOperation
     {
         private SqlCommand cmd;
+        public enum OperationType{
+            Insert ,
+            Update , 
+            Delete 
 
+        }
         //Getting Sql Query With Their Parameter From Service Classes Then Apply To Database 
-        public bool InsertUpdateDelete(string sql, Dictionary<string, object> parameters, bool isProcedure)
+        public int InsertUpdateDelete(string sql, Dictionary<string, object> parameters, bool isProcedure , OperationType operationType)
         {
             //Initialzing Database
             cmd = DBConfig.MakeConnection();
@@ -30,12 +35,19 @@ namespace HotelManagement.DatabaseConfig
             {
                 DBConfig.Conncet();
                 cmd.ExecuteNonQuery();
-                return true;
+                
+                if (operationType == OperationType.Insert) //Ater Insert We Need To Id of Inserted Row
+                { 
+                    cmd.CommandText = "Select @@Identity";
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+
+                }
+                return 1;
             }
             catch (Exception)
             {
                 //throw;
-                return false;
+                return -1;
             }
             finally
             {

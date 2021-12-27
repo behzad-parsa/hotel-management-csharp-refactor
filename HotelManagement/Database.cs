@@ -105,7 +105,7 @@ namespace HotelManagement
                 {
 
                     MakeConnection();
-                    //dataTable = new DataTable();
+               
                     cmd.CommandText = "Insert Into \"Actor\" (Firstname , Lastname , Birthday , NationalCode , Nationality , Email , Tel , Mobile , Gender , State , City , Address) Values(@Firstname , @Lastname , @Birthday , @NationalCode , @Nationality , @Email , @Tel , @Mobile , @Gender , @State , @City , @Address)";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@Firstname", firstname);
@@ -120,7 +120,7 @@ namespace HotelManagement
                     cmd.Parameters.AddWithValue("@State", Database.CheckNullInsert(state));
                     cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
                     cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
-                    // DateTime.Now.ToString("h:mm:ss tt")
+                    
 
 
                     Connect();
@@ -184,17 +184,6 @@ namespace HotelManagement
                     Disconnect();
                     return -1;
                 }
-
-
-
-
-
-
-
-
-
-
-
 
 
             }
@@ -5843,9 +5832,6 @@ namespace HotelManagement
 
         }
 
-
-
-
         public class Food
         {
 
@@ -6180,7 +6166,6 @@ namespace HotelManagement
 
         }
 
-
         public class Service
         {
 
@@ -6504,11 +6489,6 @@ namespace HotelManagement
 
 
         }
-
-
-
-
-
 
 
         public class Database

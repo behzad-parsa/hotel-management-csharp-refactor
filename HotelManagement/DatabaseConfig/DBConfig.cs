@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.DatabaseConfig
 {
-    class DBConfig
+    public class DBConfig
     {
         private static SqlCommand cmd = new SqlCommand();
         private static SqlConnection con = new SqlConnection();

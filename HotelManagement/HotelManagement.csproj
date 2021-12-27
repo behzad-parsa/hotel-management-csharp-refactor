@@ -182,7 +182,14 @@
     <Compile Include="CirclePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Database\DBConfig.cs" />
+    <Compile Include="DatabaseConfig\DatabaseOperation.cs" />
+    <Compile Include="DatabaseConfig\DBConfig.cs" />
+    <Compile Include="frmTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTest.Designer.cs">
+      <DependentUpon>frmTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Actor.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="CustomeNumeric.cs">
@@ -367,6 +374,7 @@
       <DependentUpon>ActionRoleFirt.cs</DependentUpon>
     </Compile>
     <Compile Include="Report.cs" />
+    <Compile Include="Services\ActorService.cs" />
     <Compile Include="Setting.cs">
       <SubType>UserControl</SubType>
     </Compile>
