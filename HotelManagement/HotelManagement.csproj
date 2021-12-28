@@ -376,6 +376,7 @@
     </Compile>
     <Compile Include="Report.cs" />
     <Compile Include="Services\ActorService.cs" />
+    <Compile Include="Services\Mapper.cs" />
     <Compile Include="Setting.cs">
       <SubType>UserControl</SubType>
     </Compile>

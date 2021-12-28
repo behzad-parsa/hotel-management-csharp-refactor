@@ -31,8 +31,9 @@ namespace HotelManagement
             //    State = "Tehran" , 
             //    Tel = "123546"
             //};
-            //ActorService actorService = new ActorService();
+            ActorService actorService = new ActorService();
             //actorService.InsertActor(actor);
+            var actor = actorService.GetActorByNationalCode("0000");
         }
         
     }

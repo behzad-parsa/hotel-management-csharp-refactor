@@ -1,6 +1,7 @@
 ﻿using HotelManagement.DatabaseConfig;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,10 @@ namespace HotelManagement.Services
     public class ActorService
     {
         public int LastInsertedId { get; set; }
+
         private readonly DatabaseOperation _database;
         private string sqlQuery;
+        private Dictionary<string, object> parameters;
        
         public ActorService()
         {
@@ -20,8 +23,7 @@ namespace HotelManagement.Services
 
         public bool InsertActor(Models.Actor actor)
         {
-            Dictionary<string, object> parameter = new Dictionary<string, object>();
-
+            parameters = new Dictionary<string, object>();
 
             sqlQuery = "INSERT INTO \"Actor\" " +
                 "(Firstname , Lastname , Birthday , NationalCode , Nationality ," +
@@ -45,18 +47,32 @@ namespace HotelManagement.Services
 
 
             //Second Approach - Iterate through The Prop erties of an Object
+            //issue : All The Property Object Name And The Column Name Must Be The Same
             foreach (var property in typeof(Models.Actor).GetProperties())
             {
-                parameter.Add("@"+property.Name , property.GetValue(actor,null));
+                parameters.Add("@"+property.Name , property.GetValue(actor,null));
             }
 
-
-            LastInsertedId = _database.InsertUpdateDelete(sqlQuery, parameter, DatabaseOperation.OperationType.Insert);
+            LastInsertedId = _database.InsertUpdateDelete(sqlQuery, DatabaseOperation.OperationType.Insert, parameters);
 
             return (LastInsertedId != DatabaseResult.Failed);
         }
         
+        public Models.Actor GetActorByNationalCode(string nationalCode)
+        {
+            parameters = new Dictionary<string, object>();
+            sqlQuery = "SELECT * FROM \"Actor\" " +
+                "WHERE " +
+                "NationalCode = @NationalCode";
+            parameters.Add("@NationalCode", nationalCode);
 
+            var dataTable =  _database.Select(sqlQuery, DatabaseOperation.OperationType.Select, parameters);
 
+           
+            if (dataTable == null || dataTable.Rows.Count == 0)
+                return null;
+
+            return Mapper.ConvertToObj<Models.Actor>(dataTable.Rows[0]);
+        }
     }
 }

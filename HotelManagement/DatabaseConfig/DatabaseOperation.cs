@@ -21,11 +21,12 @@ namespace HotelManagement.DatabaseConfig
             Insert ,
             Update , 
             Delete ,
+            Select,
             Procedure
         }
 
         //Getting Sql Query With Their Parameters From Service Classes , Then Apply To Database 
-        public int InsertUpdateDelete(string sql, Dictionary<string, object> parameters, OperationType operationType)
+        public int InsertUpdateDelete(string sql, OperationType operationType, Dictionary<string, object> parameters)
         {
             
             sqlCommand.CommandText = sql;
@@ -66,7 +67,7 @@ namespace HotelManagement.DatabaseConfig
         }
 
         
-        public DataTable Select (string sql, Dictionary<string,object> parameters = null, OperationType operationType)
+        public DataTable Select (string sql, OperationType operationType, Dictionary<string, object> parameters = null)
         {
             sqlCommand.CommandText = sql;
 
@@ -81,7 +82,7 @@ namespace HotelManagement.DatabaseConfig
                     sqlCommand.Parameters.Add(new SqlParameter(parameter.Key, parameter.Value));
 
 
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
             DataTable dataTable = new DataTable();
             try
             {
