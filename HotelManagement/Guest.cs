@@ -10,7 +10,7 @@ using System.Data;
 namespace HotelManagement
 {
    
-    public class Guest : Actor
+    public class Guest : ActorSecond
     {
         //public string Firstname { get; set; }
         //public string NationalCode { get; set; }

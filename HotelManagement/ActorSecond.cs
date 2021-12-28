@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace HotelManagement
 {
-    public class Actor
+    public class ActorSecond
     {
         public int ID { get; set; }
         public string Firstname { get; set; }
@@ -33,7 +33,7 @@ namespace HotelManagement
         //private  SqlDataAdapter adp = new SqlDataAdapter();
         //private  DataTable dataTable = new DataTable();
 
-        public Actor( string fname , string lname , string nationalCode , string mobile , DateTime birth , string gender , string nationality , string email , string tel , string state , string city , string address)
+        public ActorSecond( string fname , string lname , string nationalCode , string mobile , DateTime birth , string gender , string nationality , string email , string tel , string state , string city , string address)
         {
             this.Firstname = fname;
             this.Lastname = lname;
@@ -53,7 +53,7 @@ namespace HotelManagement
 
 
         }
-        public Actor(string fname, string lname, string nationalCode, string gender, DateTime birth , string mobile)
+        public ActorSecond(string fname, string lname, string nationalCode, string gender, DateTime birth , string mobile)
         {
             this.Firstname = fname;
             this.Lastname = lname;
@@ -70,7 +70,7 @@ namespace HotelManagement
         }
 
 
-        public Actor( int id, string fname, string lname, string nationalCode, string mobile, DateTime birth, string gender, string nationality, string email, string tel, string state, string city, string address)
+        public ActorSecond( int id, string fname, string lname, string nationalCode, string mobile, DateTime birth, string gender, string nationality, string email, string tel, string state, string city, string address)
         {
             this.ID = id;
             this.Firstname = fname;
@@ -88,7 +88,7 @@ namespace HotelManagement
         }
 
 
-        public Actor(int id , string fname, string lname, string nationalCode, string gender, DateTime birth, string mobile)
+        public ActorSecond(int id , string fname, string lname, string nationalCode, string gender, DateTime birth, string mobile)
         {
             this.ID = id;
             this.Firstname = fname;

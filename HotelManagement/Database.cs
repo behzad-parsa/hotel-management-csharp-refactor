@@ -387,6 +387,9 @@ namespace HotelManagement
 
             }
 
+
+
+
             public static bool UpdateGuest(int id, string firstname, string lastname, DateTime birthday, string nationalCode ,string mobile, string gender)
             {
                 try

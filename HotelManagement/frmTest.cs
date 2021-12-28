@@ -16,24 +16,26 @@ namespace HotelManagement
         public frmTest()
         {
             InitializeComponent();
-            //HotelManagement.Models.Actor actor = new Models.Actor()
-            //{
-            //    Firstname = "Maria",
-            //    Lastname = "Johnson",
-            //    Birthday = new DateTime(1996, 2, 2),
-            //    NationalCode = "123456",
-            //    Nationality = "Iran",
-            //    Address = "ValiAsr",
-            //    City = "Arakis",
-            //    Gender = "Male" ,
-            //    Email = "Sth@yahoo.com" , 
-            //    Mobile = "123456789" ,
-            //    State = "Tehran" , 
-            //    Tel = "123546"
-            //};
+            HotelManagement.Models.Actor actor = new Models.Actor()
+            {
+                ID = 3,
+                Firstname = "Florence ",
+                Lastname = "Pugh",
+                Birthday = new DateTime(1996, 2, 2),
+                NationalCode = "5555",
+                Nationality = "England",
+                Address = "Bukingham",
+                City = "London",
+                Gender = "Female",
+                Email = "fPugh@Gmail.com",
+                Mobile = "095675232",
+                State = "London",
+                Tel = "85255"
+            };
             ActorService actorService = new ActorService();
             //actorService.InsertActor(actor);
-            var actor = actorService.GetActorByNationalCode("0000" ,null);
+            //var actor = actorService.GetActor()
+            var result = actorService.UpdateActor(actor);
         }
         
     }

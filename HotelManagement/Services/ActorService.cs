@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HotelManagement.Models;
 
 namespace HotelManagement.Services
 {
@@ -21,7 +22,7 @@ namespace HotelManagement.Services
             _database = new DatabaseOperation();
         }
 
-        public bool InsertActor(Models.Actor actor)
+        public bool InsertActor(Actor actor)
         {
             parameters = new Dictionary<string, object>();
 
@@ -48,7 +49,7 @@ namespace HotelManagement.Services
 
             //Second Approach - Iterate through The Prop erties of an Object
             //issue : All The Property Object Name And The Column Name Must Be The Same
-            foreach (var property in typeof(Models.Actor).GetProperties())
+            foreach (var property in typeof(Actor).GetProperties())
             {
                 parameters.Add("@"+property.Name , property.GetValue(actor,null));
             }
@@ -58,24 +59,54 @@ namespace HotelManagement.Services
             return (LastInsertedId != DatabaseResult.Failed);
         }
         
-        public Models.Actor GetActorByNationalCode(string nationalCode , int? id)
+        public Actor GetActor(int id)
         {
             parameters = new Dictionary<string, object>();
             sqlQuery = "SELECT * FROM \"Actor\" " +
                 "WHERE " +
-                "NationalCode = @NationalCode OR ID = @ID";
-            parameters.Add("@NationalCode", nationalCode);
-            parameters.Add("@ID", DBNull.Value);
+                "ID = @ID";
+            parameters.Add("@ID", id);
+
             var dataTable =  _database.Select(sqlQuery, DatabaseOperation.OperationType.Select, parameters);
 
-           
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;
 
-            return Mapper.ConvertToObj<Models.Actor>(dataTable.Rows[0]);
+            return Mapper.ConvertToObj<Actor>(dataTable.Rows[0]);
+        }
+        public Actor GetActor(string nationalCode)
+        {
+            parameters = new Dictionary<string, object>();
+            sqlQuery = "SELECT * FROM \"Actor\" " +
+                "WHERE " +
+                "NationalCode = @NationalCode";
+            parameters.Add("@NationalCode", nationalCode);
+
+            var dataTable = _database.Select(sqlQuery, DatabaseOperation.OperationType.Select, parameters);
+            if (dataTable == null || dataTable.Rows.Count == 0)
+                return null;
+
+            return Mapper.ConvertToObj<Actor>(dataTable.Rows[0]);
         }
 
+        public bool UpdateActor(Actor actor)
+        {
+            parameters = new Dictionary<string, object>();
+            sqlQuery = "UPDATE \"Actor\" " +
+                "Set Firstname = @Firstname , Lastname = @Lastname  , Birthday=@Birthday ," +
+                "NationalCode = @NationalCode , Nationality = @Nationality , Email = @Email ," +
+                "Tel= @Tel , Mobile= @Mobile , Gender= @Gender , State = @State, City = @City ," +
+                "Address = @Address WHERE ID = @ID ";
 
+            
+            foreach (var property in typeof(Actor).GetProperties())
+            {
+                parameters.Add("@" +property.Name, property.GetValue(actor, null));
+            }
+
+            return _database.InsertUpdateDelete(sqlQuery, DatabaseOperation.OperationType.Update, parameters) != DatabaseResult.Failed;
+
+        }
 
 
 

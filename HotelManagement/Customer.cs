@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement
 {
-    public class Customer : Actor
+    public class Customer : ActorSecond
     {
         public new int ID { get; set; }
         public int ActID { get; set; }
