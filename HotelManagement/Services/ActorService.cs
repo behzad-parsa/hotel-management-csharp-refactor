@@ -58,14 +58,14 @@ namespace HotelManagement.Services
             return (LastInsertedId != DatabaseResult.Failed);
         }
         
-        public Models.Actor GetActorByNationalCode(string nationalCode)
+        public Models.Actor GetActorByNationalCode(string nationalCode , int? id)
         {
             parameters = new Dictionary<string, object>();
             sqlQuery = "SELECT * FROM \"Actor\" " +
                 "WHERE " +
-                "NationalCode = @NationalCode";
+                "NationalCode = @NationalCode OR ID = @ID";
             parameters.Add("@NationalCode", nationalCode);
-
+            parameters.Add("@ID", DBNull.Value);
             var dataTable =  _database.Select(sqlQuery, DatabaseOperation.OperationType.Select, parameters);
 
            
@@ -74,5 +74,10 @@ namespace HotelManagement.Services
 
             return Mapper.ConvertToObj<Models.Actor>(dataTable.Rows[0]);
         }
+
+
+
+
+
     }
 }
