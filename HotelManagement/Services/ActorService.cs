@@ -9,14 +9,16 @@ namespace HotelManagement.Services
 {
     public class ActorService
     {
+        public int LastInsertedId { get; set; }
         private readonly DatabaseOperation _database;
         private string sqlQuery;
+       
         public ActorService()
         {
             _database = new DatabaseOperation();
         }
 
-        public int InsertActor(Models.Actor actor)
+        public bool InsertActor(Models.Actor actor)
         {
             Dictionary<string, object> parameter = new Dictionary<string, object>();
 
@@ -49,13 +51,11 @@ namespace HotelManagement.Services
             }
 
 
-            return _database.InsertUpdateDelete(sqlQuery, parameter, false , DatabaseOperation.OperationType.Insert);
+            LastInsertedId = _database.InsertUpdateDelete(sqlQuery, parameter, DatabaseOperation.OperationType.Insert);
+
+            return (LastInsertedId != DatabaseResult.Failed);
         }
-        //public int GetLastInsertedId()
-        //{
-        //    sqlQuery = "Select IDENT_CURRENT('/Actor'/)"
-        //    return _database.select("Select ");
-        //}
+        
 
 
     }

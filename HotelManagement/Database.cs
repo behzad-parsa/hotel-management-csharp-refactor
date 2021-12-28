@@ -151,42 +151,42 @@ namespace HotelManagement
 
 
             }
-            public static int InsertGuest(string firstname, string lastname, DateTime birthday, string nationalCode, string mobile, string gender)
-            {
-                try
-                {
+            //public static int InsertGuest(string firstname, string lastname, DateTime birthday, string nationalCode, string mobile, string gender)
+            //{
+            //    try
+            //    {
 
-                    MakeConnection();
+            //        MakeConnection();
 
-                    cmd.CommandText = "Insert Into \"Actor\" (Firstname , Lastname , Birthday , NationalCode , Mobile , Gender ) Values(@Firstname , @Lastname , @Birthday , @NationalCode , @Mobile , @Gender )";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@Firstname", firstname);
-                    cmd.Parameters.AddWithValue("@Lastname ", lastname);
-                    cmd.Parameters.AddWithValue("@Birthday", birthday);
-                    cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
-                    cmd.Parameters.AddWithValue("@Mobile", mobile);
-                    cmd.Parameters.AddWithValue("@Gender", gender);
-
-
+            //        cmd.CommandText = "Insert Into \"Actor\" (Firstname , Lastname , Birthday , NationalCode , Mobile , Gender ) Values(@Firstname , @Lastname , @Birthday , @NationalCode , @Mobile , @Gender )";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@Firstname", firstname);
+            //        cmd.Parameters.AddWithValue("@Lastname ", lastname);
+            //        cmd.Parameters.AddWithValue("@Birthday", birthday);
+            //        cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
+            //        cmd.Parameters.AddWithValue("@Mobile", mobile);
+            //        cmd.Parameters.AddWithValue("@Gender", gender);
 
 
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
-
-                    return insertedID;
-
-                }
-                catch
-                {
-                    Disconnect();
-                    return -1;
-                }
 
 
-            }
+            //        Connect();
+            //        cmd.ExecuteNonQuery();
+            //        cmd.CommandText = Database.QueryLastID;
+            //        int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+            //        Disconnect();
+
+            //        return insertedID;
+
+            //    }
+            //    catch
+            //    {
+            //        Disconnect();
+            //        return -1;
+            //    }
+
+
+            //}
 
             public static bool SearchActor(string nationalCode)
             {
