@@ -88,7 +88,6 @@ namespace HotelManagement.Services
 
             return Mapper.ConvertToObj<Actor>(dataTable.Rows[0]);
         }
-
         public bool UpdateActor(Actor actor)
         {
             parameters = new Dictionary<string, object>();
@@ -107,8 +106,6 @@ namespace HotelManagement.Services
             return _database.InsertUpdateDelete(sqlQuery, DatabaseOperation.OperationType.Update, parameters) != DatabaseResult.Failed;
 
         }
-
-
 
     }
 }

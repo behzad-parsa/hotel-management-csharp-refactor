@@ -192,6 +192,8 @@
       <DependentUpon>frmTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Actor.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Guest.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="CustomeNumeric.cs">
       <SubType>UserControl</SubType>
@@ -265,7 +267,7 @@
     <Compile Include="GradientPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Guest.cs" />
+    <Compile Include="GuestSecond.cs" />
     <Compile Include="HashPassword.cs" />
     <Compile Include="Invoice.cs">
       <SubType>UserControl</SubType>
@@ -376,6 +378,7 @@
     </Compile>
     <Compile Include="Report.cs" />
     <Compile Include="Services\ActorService.cs" />
+    <Compile Include="Services\GuestService.cs" />
     <Compile Include="Services\Mapper.cs" />
     <Compile Include="Setting.cs">
       <SubType>UserControl</SubType>

@@ -187,7 +187,7 @@ namespace HotelManagement
 
 
             //}
-
+            //imp
             public static bool SearchActor(string nationalCode)
             {
                 try
@@ -334,7 +334,7 @@ namespace HotelManagement
 
             }
 
-
+            //imp
             public static bool UpdateAll( int id , string firstname, string lastname, DateTime birthday, string nationalCode, string nationality, string email, string tel, string mobile, string gender, string state, string city, string address)
             {
                 try
@@ -389,7 +389,7 @@ namespace HotelManagement
 
 
 
-
+           //Not Implemented
             public static bool UpdateGuest(int id, string firstname, string lastname, DateTime birthday, string nationalCode ,string mobile, string gender)
             {
                 try
@@ -408,8 +408,6 @@ namespace HotelManagement
                     cmd.Parameters.AddWithValue("@Gender", gender);
 
 
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
@@ -423,24 +421,7 @@ namespace HotelManagement
                     return false;
                 }
 
-
-
-
-
-
-
-
-
-
-
-
-
             }
-
-
-
-
-
 
         }
 
@@ -448,23 +429,15 @@ namespace HotelManagement
         public class Guest
         {
 
-
-
             public static int ActID { get; set; }
             public static int CustomerID { get; set; }
 
             public static DateTime DateModified { get; set; }
 
-
-
-
-
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
 
             private static void MakeConnection()
             {
@@ -482,7 +455,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -503,7 +475,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -522,7 +493,7 @@ namespace HotelManagement
                 }
             }
 
-
+            //Implemented
             public static int Insert(int actID, int customerID)
             {
 
@@ -560,61 +531,59 @@ namespace HotelManagement
 
 
             }
-
-            public static bool SearchGuest(  int customerID , DateTime date)
-            {
-                try
-                {
-
-
-                    MakeConnection();
-                    dataTable = new DataTable();
-
-                    cmd.CommandText = "SELECT * FROM \"Guest\" Where CustomerID = @CustomerID AND DateModified = @Date";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@CustomerID", customerID);
-                    //cmd.Parameters.AddWithValue("@ActID", actID);
-                    cmd.Parameters.AddWithValue("@Date", date);
-
-                    adp.SelectCommand = cmd;
-
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-
-                        ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
-                        CustomerID = Convert.ToInt32(dataTable.Rows[0]["CustomerID"]);
-                        DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
+            
+            //public static bool SearchGuest(  int customerID , DateTime date)
+            //{
+            //    try
+            //    {
 
 
+            //        MakeConnection();
+            //        dataTable = new DataTable();
 
-                        //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-                        //Image = (byte[])dataTable.Rows[0]["Image"];
+            //        cmd.CommandText = "SELECT * FROM \"Guest\" Where CustomerID = @CustomerID AND DateModified = @Date";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@CustomerID", customerID);
+            //        //cmd.Parameters.AddWithValue("@ActID", actID);
+            //        cmd.Parameters.AddWithValue("@Date", date);
 
+            //        adp.SelectCommand = cmd;
 
-                        return true;
+            //        Connect();
+            //        adp.Fill(dataTable);
+            //        Disconnect();
 
+            //        if (dataTable.Rows.Count != 0)
+            //        {
 
-                    }
-                    else
-                    {
-                        return false;
-                    }
+            //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
+            //            CustomerID = Convert.ToInt32(dataTable.Rows[0]["CustomerID"]);
+            //            DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
 
 
 
-
-                }
-                catch
-                {
-
-                    return false;
-                }
+            //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
+            //            //Image = (byte[])dataTable.Rows[0]["Image"];
 
 
+            //            return true;
+
+
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
+
+
+
+
+            //    }
+            //    catch
+            //    {
+
+            //        return false;
+            //    }
 
 
 
@@ -624,7 +593,9 @@ namespace HotelManagement
 
 
 
-            }
+
+
+            //}
 
             public static bool Delete(int actID , int customerID, DateTime date)
             {
@@ -675,10 +646,6 @@ namespace HotelManagement
 
             public static int ID { get; set; }
             public static int ActID { get; set; }
-
-
-
-
 
 
             private static SqlConnection con = new SqlConnection();
@@ -1952,7 +1919,7 @@ namespace HotelManagement
 
             }
 
-            //ds
+           
             public static bool DeleteFacilType(int roomID)
             {
 
@@ -2021,137 +1988,6 @@ namespace HotelManagement
 
 
             }
-            //public static bool RoomFacility(int id)
-            //{
-            //    try
-            //    {
-            //        //facility.Clear();
-
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-            //        //DataTable facil = new DataTable();
-            //        cmd.CommandText = "Select * From RoomFacilities Where RoomID = @ID ";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@ID", id);
-
-
-            //        adp.SelectCommand = cmd;
-
-            //        Connect();
-            //        adp.Fill(dataTable);
-
-            //        Disconnect();
-
-            //        //cmd.CommandText = "Select * From RoomFacilities Where RoomID =" + id;
-            //        //adp.SelectCommand = cmd;
-            //        //Connect();
-            //        //adp.Fill(facil);
-            //        //Disconnect();
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-
-            //            //ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-
-            //            //TypeID = Convert.ToInt32(dataTable.Rows[0]["RoomTypeID"]);
-            //            //RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
-            //            //BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
-            //            //IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
-
-            //            //Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
-            //            //Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
-            //            //Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
-            //            //Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-            //            List<int> lstId = new List<int>();
-            //                //facility.Clear();
-            //            for (int i = 0; i <dataTable.Rows.Count; i++)
-            //           {
-            //                //int facilID = Convert.ToInt32(dataTable.Rows[i]["FacilitiesID"]);
-            //                //// facility.Add(Convert.ToInt32(dataTable.Rows[i]["FacilitiesID"]));
-            //                //facility.Add(facilID);
-            //                lstId.Add(Convert.ToInt32(dataTable.Rows[i]["FacilitiesID"]));
-            //            }
-
-            //            facility = lstId;
-
-
-
-
-
-            //            //return dataTable;
-            //            return true;
-
-
-            //        }
-            //        else
-            //        {
-            //            facility = null;
-            //            return false;
-            //            //return null; 
-            //        }
-
-
-
-
-            //    }
-            //    catch
-            //    {
-
-            //        return false;
-            //        //return null;
-            //    }
-
-            //}
-            //public static int SearchRoomID(int branchID, int roomNumberID)
-            //{
-            //    try
-            //    {
-
-
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-
-            //        cmd.CommandText = "SELECT * FROM \"Room\" Where BranchID = @BranchID AND RoomNumberID = @RoomNumberID ";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@BranchID", branchID);
-            //        cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
-
-            //        adp.SelectCommand = cmd;
-
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
-
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-
-            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-
-
-
-
-            //            //return dataTable;
-            //            return ID;
-
-
-            //        }
-            //        else
-            //        {
-            //            return -1;
-            //            //return null; 
-            //        }
-
-
-
-
-            //    }
-            //    catch
-            //    {
-
-            //        return -2;
-            //        //return null;
-            //    }
-
-            //}
             public static Dictionary<int,string> GetRoomNumbers()
             {
                 try

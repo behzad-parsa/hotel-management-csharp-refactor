@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelManagement.Models;
 
 namespace HotelManagement
 {
@@ -35,7 +36,17 @@ namespace HotelManagement
             ActorService actorService = new ActorService();
             //actorService.InsertActor(actor);
             //var actor = actorService.GetActor()
-            var result = actorService.UpdateActor(actor);
+            //var result = actorService.UpdateActor(actor);
+            GuestService guestService = new GuestService();
+
+            Guest guest = new Guest()
+            {
+                DateModified = new DateTime(2021,12,28),
+                ActID = 2027,
+                CustomerID = 3031
+                 
+            };
+            var res = guestService.DeleteGuest(guest);
         }
         
     }

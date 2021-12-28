@@ -13,7 +13,7 @@ namespace HotelManagement
         public int ActID { get; set; }
 
 
-        public List<Guest> LstGuest { get; set; }
+        public List<GuestSecond> LstGuest { get; set; }
 
 
 
@@ -21,7 +21,7 @@ namespace HotelManagement
         public Customer(string fname, string lname, string nationalCode, string mobile, DateTime birth, string gender, string nationality, string email, string tel, string state, string city, string address)
          : base(fname, lname, nationalCode  , mobile , birth , gender , nationality , email , tel , state , city , address)
         {
-            LstGuest = new List<Guest>();
+            LstGuest = new List<GuestSecond>();
         }
 
         public Customer(int actID  , string fname, string lname, string nationalCode, string gender, DateTime birth, string mobile)
@@ -30,7 +30,7 @@ namespace HotelManagement
           
             this.ActID = actID;
 
-            LstGuest = new List<Guest>();
+            LstGuest = new List<GuestSecond>();
            
         }
 
@@ -41,7 +41,7 @@ namespace HotelManagement
         {
             this.ID = id;
            // this.ActID = actID;
-            LstGuest = new List<Guest>();
+            LstGuest = new List<GuestSecond>();
         }
 
 

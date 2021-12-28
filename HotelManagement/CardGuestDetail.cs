@@ -117,7 +117,7 @@ namespace HotelManagement
                 foreach (DataRow item in data.Rows)
                 {
                     string[] name = item["Name"].ToString().Split(' ');
-                    Guest guest = new Guest(Convert.ToInt32(item["ActID"]) , Convert.ToDateTime( item["Date"] ), name[0] , name[1] , item["NC"].ToString()  , item["Gender"].ToString(), Convert.ToDateTime( item["Birthday"] ), item["Mobile"].ToString());
+                    GuestSecond guest = new GuestSecond(Convert.ToInt32(item["ActID"]) , Convert.ToDateTime( item["Date"] ), name[0] , name[1] , item["NC"].ToString()  , item["Gender"].ToString(), Convert.ToDateTime( item["Birthday"] ), item["Mobile"].ToString());
                     NewBook.customerInfo.LstGuest.Add(guest);
 
                 }
@@ -132,7 +132,7 @@ namespace HotelManagement
  
 
         }
-        private void AddGuestToDGV(Guest guest)
+        private void AddGuestToDGV(GuestSecond guest)
         {
             DataRow dr = dataTable.NewRow();
             dr["NC"] = guest.NationalCode;
@@ -765,7 +765,7 @@ namespace HotelManagement
 
             if (isFindGuest)
             {
-                Guest guest = new Guest(ActID, DateTime.Now.Date, txtFname.Text, txtLname.Text, txtNCSearch.Text, RadioButtonResult(rdbMale, rdbFemale), dateBirth.Value.Date, txtMobile.Text);
+                GuestSecond guest = new GuestSecond(ActID, DateTime.Now.Date, txtFname.Text, txtLname.Text, txtNCSearch.Text, RadioButtonResult(rdbMale, rdbFemale), dateBirth.Value.Date, txtMobile.Text);
                 //On Add
                 //var g = NewBook.customerInfo.LstGuest.Find(x => x.NationalCode == guest.NationalCode);
                 if (!updateFlag)
@@ -889,7 +889,7 @@ namespace HotelManagement
                             //panelGuestContainer.Enabled = false;
                             //NewBook.statusFlag = 2;
                             PanelStatus(panelStatusGuest, "Action Completed Successfuly", Status.Green);
-                            Guest guest = new Guest(ActID , DateTime.Now.Date, txtFname.Text, txtLname.Text, txtNCSearch.Text, RadioButtonResult(rdbMale, rdbFemale), dateBirth.Value.Date, txtMobile.Text);
+                            GuestSecond guest = new GuestSecond(ActID , DateTime.Now.Date, txtFname.Text, txtLname.Text, txtNCSearch.Text, RadioButtonResult(rdbMale, rdbFemale), dateBirth.Value.Date, txtMobile.Text);
                             NewBook.customerInfo.LstGuest.Add(guest);
                             AddGuestToDGV(guest);
 
@@ -942,7 +942,7 @@ namespace HotelManagement
         }
 
 
-        Guest selectedGuest;
+        GuestSecond selectedGuest;
         private void dgvGuestList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvGuestList.CurrentRow != null)
