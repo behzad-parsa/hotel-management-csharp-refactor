@@ -183,6 +183,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DatabaseConfig\DatabaseOperation.cs" />
+    <Compile Include="DatabaseConfig\DatabaseResult.cs" />
     <Compile Include="DatabaseConfig\DBConfig.cs" />
     <Compile Include="frmTest.cs">
       <SubType>Form</SubType>

@@ -30,9 +30,6 @@ namespace HotelManagement
             //    Mobile = "123456789" ,
             //    State = "Tehran" , 
             //    Tel = "123546"
-
-
-
             //};
             //ActorService actorService = new ActorService();
             //actorService.InsertActor(actor);

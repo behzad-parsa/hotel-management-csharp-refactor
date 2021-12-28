@@ -98,7 +98,7 @@ namespace HotelManagement
 
 
 
-
+            //Impelement
             public static int InsertAll(string firstname, string lastname, DateTime birthday, string nationalCode, string nationality, string email, string tel, string mobile, string gender, string state, string city, string address)
             {
                 try

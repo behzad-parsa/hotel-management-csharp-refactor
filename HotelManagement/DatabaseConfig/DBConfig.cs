@@ -10,6 +10,7 @@ namespace HotelManagement.DatabaseConfig
 {
     public class DBConfig
     {
+
         private static SqlCommand cmd = new SqlCommand();
         private static SqlConnection con = new SqlConnection();
 
