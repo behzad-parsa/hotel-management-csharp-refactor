@@ -14,7 +14,7 @@ namespace HotelManagement
 
 
 
-        public static void SetHotelComponents(StiReport report ,Branch branch)
+        public static void SetHotelComponents(StiReport report ,BranchSecond branch)
         {
 
             StiText txtHotelName = new StiText();

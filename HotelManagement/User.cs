@@ -45,7 +45,7 @@ namespace HotelManagement
             public static DateTime Birth { get; set; }
             public static string Gender { get; set; }
             public static string NationalCode { get; set; }
-            public static Branch Branch { get; set; }
+            public static BranchSecond Branch { get; set; }
             public static List<string> AccessLevel { get; set; }
             public static List<Activity> Activities { get; set; }
 
@@ -233,7 +233,7 @@ namespace HotelManagement
                             byte[] logo = HotelDatabase.Branch.Logo;
                             string address = HotelDatabase.Branch.Address;
                             //BranchName = dataTable.Rows[0]["BranchName"].ToString();
-                            Branch = new Branch(BranchID, code, owner, branchName, rate, logo, tel, state, city, address);
+                            Branch = new BranchSecond(BranchID, code, owner, branchName, rate, logo, tel, state, city, address);
 
                         }
 

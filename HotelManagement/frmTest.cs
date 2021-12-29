@@ -17,36 +17,58 @@ namespace HotelManagement
         public frmTest()
         {
             InitializeComponent();
-            HotelManagement.Models.Actor actor = new Models.Actor()
-            {
-                ID = 3,
-                Firstname = "Florence ",
-                Lastname = "Pugh",
-                Birthday = new DateTime(1996, 2, 2),
-                NationalCode = "5555",
-                Nationality = "England",
-                Address = "Bukingham",
-                City = "London",
-                Gender = "Female",
-                Email = "fPugh@Gmail.com",
-                Mobile = "095675232",
-                State = "London",
-                Tel = "85255"
-            };
-            ActorService actorService = new ActorService();
-            //actorService.InsertActor(actor);
-            //var actor = actorService.GetActor()
-            //var result = actorService.UpdateActor(actor);
-            GuestService guestService = new GuestService();
+            //HotelManagement.Models.Actor actor = new Models.Actor()
+            //{
+            //    Firstname = "Maria",
+            //    Lastname = "Johnson",
+            //    Birthday = new DateTime(1996, 2, 2),
+            //    NationalCode = "123564456",
+            //    Nationality = "Iran",
+            //    Address = "ValiAsr",
+            //    City = "Arakis",
+            //    Gender = "Male",
+            //    Email = "Sth@yahoo.com",
+            //    Mobile = "123456789",
+            //    State = "Tehran",
+            //    Tel = "123546"
 
-            Guest guest = new Guest()
+
+
+            //};
+            //ActorService actorService = new ActorService();
+            //actorService.InsertActor(actor);
+
+            //ActorService actorservice = new ActorService();
+
+            //actorservice.InsertActor(new Actor()
+            //{
+            //    Firstname= "hAJ"
+            //});
+
+
+            BranchService branchService = new BranchService();
+
+            var list = branchService.GetAllBranches();
+            var branch = branchService.GetBranch(2);
+
+            Branch br = new Branch()
             {
-                DateModified = new DateTime(2021,12,28),
-                ActID = 2027,
-                CustomerID = 3031
-                 
+              
+                City = "Tehran",
+                Address = "BLVD",
+                Logo = branch.Logo,
+                Owner = "Sorosh" ,
+                BranchName = "Dune" ,
+                Rate = "3" , 
+                State = "Tehran" ,
+                Code = "GHJ12585" ,
+                Tel = "11111111"
+                
+                
             };
-            var res = guestService.DeleteGuest(guest);
+            var res = branchService.InsertBranch(br);
+           
+
         }
         
     }

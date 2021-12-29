@@ -19,7 +19,7 @@ namespace HotelManagement
         public static int backFalg = -1;
        // public static int currentCustomerID; // Wrong -- THis is Act Id Check that Later .. It must be Cust ID
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
-        public static Customer customerInfo;
+        public static CustomerSecond customerInfo;
 
         //private int customerID;
         //private enum Status

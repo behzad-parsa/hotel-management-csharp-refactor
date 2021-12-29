@@ -25,7 +25,7 @@ namespace HotelManagement
 
 
         }
-        public CardCustomerDetail(Customer customer)
+        public CardCustomerDetail(CustomerSecond customer)
         {
             InitializeComponent();
 
@@ -637,7 +637,7 @@ namespace HotelManagement
                         btnSubmit.Enabled = false;
                         btnNext.Visible = true;
 
-                        Customer customer = new Customer(CustomerID, ActID, HotelDatabase.Actor.Firstname, HotelDatabase.Actor.Lastname, HotelDatabase.Actor.NationalCode,
+                        CustomerSecond customer = new CustomerSecond(CustomerID, ActID, HotelDatabase.Actor.Firstname, HotelDatabase.Actor.Lastname, HotelDatabase.Actor.NationalCode,
                             HotelDatabase.Actor.Mobile, HotelDatabase.Actor.Birthday, HotelDatabase.Actor.Gender, HotelDatabase.Actor.Nationality,
                             HotelDatabase.Actor.Email, HotelDatabase.Actor.Tel, HotelDatabase.Actor.State, HotelDatabase.Actor.City, HotelDatabase.Actor.Address);
 
@@ -755,7 +755,7 @@ namespace HotelManagement
                             panelContact.Enabled = false;
 
 
-                            Customer customer = new Customer(CustomerID , ActID , txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
+                            CustomerSecond customer = new CustomerSecond(CustomerID , ActID , txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
                                  RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
                                  , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
 
@@ -805,7 +805,7 @@ namespace HotelManagement
                         if (isFindCustomer)
                         {
                             btnSubmit.Enabled = false;
-                            Customer customer = new Customer(CustomerID, ActID, txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
+                            CustomerSecond customer = new CustomerSecond(CustomerID, ActID, txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
                                 RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
                                 , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
 
@@ -848,7 +848,7 @@ namespace HotelManagement
                         //btnCustSubmit.Enabled = false;
                         //btnNext.Visible = true;
                         //isFindCutomerFlag = false;
-                        Customer customer = new Customer(CustomerID, ActID, txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
+                        CustomerSecond customer = new CustomerSecond(CustomerID, ActID, txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
                             RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
                             , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
 

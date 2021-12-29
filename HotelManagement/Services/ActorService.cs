@@ -72,7 +72,7 @@ namespace HotelManagement.Services
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;
 
-            return Mapper.ConvertToObj<Actor>(dataTable.Rows[0]);
+            return Mapper.ConvertRowToObj<Actor>(dataTable.Rows[0]);
         }
         public Actor GetActor(string nationalCode)
         {
@@ -86,7 +86,7 @@ namespace HotelManagement.Services
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;
 
-            return Mapper.ConvertToObj<Actor>(dataTable.Rows[0]);
+            return Mapper.ConvertRowToObj<Actor>(dataTable.Rows[0]);
         }
         public bool UpdateActor(Actor actor)
         {

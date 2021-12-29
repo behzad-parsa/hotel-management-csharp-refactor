@@ -11,7 +11,7 @@ namespace HotelManagement.Services
     public class Mapper
     {
         //Convert DataTable To Tagert Object (or Model)
-        public static T ConvertToObj<T>(DataRow dataRow)
+        public static T ConvertRowToObj<T>(DataRow dataRow)
         {
             T obj = Activator.CreateInstance<T>();
 
@@ -29,6 +29,16 @@ namespace HotelManagement.Services
             }
 
             return obj;
+        }
+        public static List<T> ConvertDataTableToList<T> (DataTable dataTable)
+        {
+            List<T> objectList = new List<T>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                T item = ConvertRowToObj<T>(row);
+                objectList.Add(item);
+            }
+            return objectList;
         }
         
     }

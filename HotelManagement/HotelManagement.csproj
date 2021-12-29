@@ -129,7 +129,7 @@
     <Compile Include="BookList.Designer.cs">
       <DependentUpon>BookList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Branch.cs" />
+    <Compile Include="BranchSecond.cs" />
     <Compile Include="Bubble.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -192,6 +192,7 @@
       <DependentUpon>frmTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Actor.cs" />
+    <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="ScreenCapture.cs" />
@@ -201,7 +202,7 @@
     <Compile Include="CustomeNumeric.Designer.cs">
       <DependentUpon>CustomeNumeric.cs</DependentUpon>
     </Compile>
-    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerSecond.cs" />
     <Compile Include="Dashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -378,6 +379,8 @@
     </Compile>
     <Compile Include="Report.cs" />
     <Compile Include="Services\ActorService.cs" />
+    <Compile Include="Services\BranchService.cs" />
+    <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\GuestService.cs" />
     <Compile Include="Services\Mapper.cs" />
     <Compile Include="Setting.cs">

@@ -11,16 +11,16 @@ namespace HotelManagement.DatabaseConfig
     public class DBConfig
     {
 
-        private static SqlCommand cmd = new SqlCommand();
-        private static SqlConnection con = new SqlConnection();
+        private static readonly SqlCommand sqlCommand = new SqlCommand();
+        private static readonly SqlConnection sqlConnection = new SqlConnection();
 
         public static SqlCommand MakeConnection()
         {
             try
             {
-                con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
-                cmd.Connection = con;
-                return cmd;
+                sqlConnection.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
+                sqlCommand.Connection = sqlConnection;
+                return sqlCommand;
             }
             catch (Exception)
             {
@@ -32,9 +32,9 @@ namespace HotelManagement.DatabaseConfig
         {
             try
             {
-                if (con.State == ConnectionState.Closed)
+                if (sqlConnection.State == ConnectionState.Closed)
                 {
-                    con.Open();
+                    sqlConnection.Open();
                 }
             }
             catch (Exception)
@@ -47,9 +47,9 @@ namespace HotelManagement.DatabaseConfig
         {
             try
             {
-                if (con.State == ConnectionState.Open)
+                if (sqlConnection.State == ConnectionState.Open)
                 {
-                    con.Close();
+                    sqlConnection.Close();
                 }
 
             }

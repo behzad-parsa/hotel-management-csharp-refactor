@@ -596,7 +596,7 @@ namespace HotelManagement
 
 
             //}
-
+            //Imp
             public static bool Delete(int actID , int customerID, DateTime date)
             {
                 try
@@ -711,7 +711,7 @@ namespace HotelManagement
                 }
             }
 
-
+            //IMP
             public static int Insert(int actID)
             {
 
@@ -747,110 +747,110 @@ namespace HotelManagement
 
             }
 
-            public static bool SearchCustomer(int actID)
-            {
-                try
-                {
+            //public static bool SearchCustomer(int actID)
+            //{
+            //    try
+            //    {
 
 
-                    MakeConnection();
-                    dataTable = new DataTable();
+            //        MakeConnection();
+            //        dataTable = new DataTable();
 
-                    cmd.CommandText = "SELECT * FROM \"Customer\" Where ActID = @ActID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ActID", actID);
-
-
-                    adp.SelectCommand = cmd;
-
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-                        ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
+            //        cmd.CommandText = "SELECT * FROM \"Customer\" Where ActID = @ActID ";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@ActID", actID);
 
 
-                        //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-                        //Image = (byte[])dataTable.Rows[0]["Image"];
+            //        adp.SelectCommand = cmd;
+
+            //        Connect();
+            //        adp.Fill(dataTable);
+            //        Disconnect();
+
+            //        if (dataTable.Rows.Count != 0)
+            //        {
+
+            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+            //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
 
 
-                        return true;
+            //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
+            //            //Image = (byte[])dataTable.Rows[0]["Image"];
 
 
-                    }
-                    else
-                    {
-                        return false;
-                    }
+            //            return true;
 
 
-
-
-                }
-                catch
-                {
-
-                    return false;
-                }
-
-            }
-
-            public static int SearchCustomerWithID(int ID)
-            {
-                try
-                {
-
-
-                    MakeConnection();
-                    dataTable = new DataTable();
-
-                    cmd.CommandText = "SELECT * FROM \"Customer\" Where ID = @ID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", ID);
-
-
-                    adp.SelectCommand = cmd;
-
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-
-                        ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
-
-
-
-                        //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-                        //Image = (byte[])dataTable.Rows[0]["Image"];
-
-
-                        return ActID;
-
-
-                    }
-                    else
-                    {
-                        return -1;
-                    }
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
 
 
 
 
-                }
-                catch
-                {
+            //    }
+            //    catch
+            //    {
 
-                    return -2;
-                }
+            //        return false;
+            //    }
 
-            }
+            //}
 
+            //public static int SearchCustomerWithID(int ID)
+            //{
+            //    try
+            //    {
+
+
+            //        MakeConnection();
+            //        dataTable = new DataTable();
+
+            //        cmd.CommandText = "SELECT * FROM \"Customer\" Where ID = @ID ";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@ID", ID);
+
+
+            //        adp.SelectCommand = cmd;
+
+            //        Connect();
+            //        adp.Fill(dataTable);
+            //        Disconnect();
+
+            //        if (dataTable.Rows.Count != 0)
+            //        {
+
+            //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
+
+
+
+            //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
+            //            //Image = (byte[])dataTable.Rows[0]["Image"];
+
+
+            //            return ActID;
+
+
+            //        }
+            //        else
+            //        {
+            //            return -1;
+            //        }
+
+
+
+
+            //    }
+            //    catch
+            //    {
+
+            //        return -2;
+            //    }
+
+            //}
+            //IMP
             public static int SearchCustomerID(int actID)
             {
                 try
@@ -875,25 +875,12 @@ namespace HotelManagement
                     {
 
                         ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-
-
-
-                        //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-                        //Image = (byte[])dataTable.Rows[0]["Image"];
-
-
                         return ID;
-
-
                     }
                     else
                     {
                         return -1;
                     }
-
-
-
-
                 }
                 catch
                 {
@@ -902,38 +889,26 @@ namespace HotelManagement
                 }
 
             }
-
-
-
         }
 
 
         public class Branch
         {
-            
             public static int ID { get; set; }
             public static string Code { get; set; }
             public static string Owner { get; set; }
-
             public static string BranchName { get; set; }
             public static string Rate { get; set; }
-
             public static byte[] Logo { get; set; }
-
             public static string Tel { get; set; }
             public static string State { get; set; }
             public static string City { get; set; }
             public static string Address { get; set; }
 
-
-
-
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
 
             private static void MakeConnection()
             {
@@ -951,7 +926,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -972,7 +946,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -1035,40 +1008,40 @@ namespace HotelManagement
 
             }
 
-            public static bool SearchBranch(string code)
-            {
-                try
-                {
+            //public static bool SearchBranch(string code)
+            //{
+            //    try
+            //    {
 
 
-                    MakeConnection();
-                    dataTable = new DataTable();
+            //        MakeConnection();
+            //        dataTable = new DataTable();
 
-                    cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@Code" , code);
+            //        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@Code" , code);
 
 
-                    adp.SelectCommand = cmd;
+            //        adp.SelectCommand = cmd;
 
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
+            //        Connect();
+            //        adp.Fill(dataTable);
+            //        Disconnect();
 
-                    if (dataTable.Rows.Count != 0)
-                    {
+            //        if (dataTable.Rows.Count != 0)
+            //        {
 
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
 
-                        Code = dataTable.Rows[0]["Code"].ToString();
-                        BranchName = Database.CheckNullSelect(dataTable.Rows[0]["BranchName"]) as string;
-                        Owner = Database.CheckNullSelect(dataTable.Rows[0]["Owner"]) as string;
-                        Rate = Database.CheckNullSelect(dataTable.Rows[0]["Rate"]) as string;
-                        Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
-                        State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
-                        City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
-                        Logo = (byte[])dataTable.Rows[0]["Logo"];
-                        Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;
+            //            Code = dataTable.Rows[0]["Code"].ToString();
+            //            BranchName = Database.CheckNullSelect(dataTable.Rows[0]["BranchName"]) as string;
+            //            Owner = Database.CheckNullSelect(dataTable.Rows[0]["Owner"]) as string;
+            //            Rate = Database.CheckNullSelect(dataTable.Rows[0]["Rate"]) as string;
+            //            Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
+            //            State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
+            //            City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
+            //            Logo = (byte[])dataTable.Rows[0]["Logo"];
+            //            Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;
 
 
 
@@ -1076,26 +1049,26 @@ namespace HotelManagement
        
 
 
-                        return true;
+            //            return true;
 
 
-                    }
-                    else
-                    {
-                        return false;
-                    }
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
 
 
 
 
-                }
-                catch
-                {
+            //    }
+            //    catch
+            //    {
 
-                    return false;
-                }
+            //        return false;
+            //    }
 
-            }
+            //}
 
             public static bool SearchBranchWithID(int id)
             {
@@ -1212,40 +1185,40 @@ namespace HotelManagement
                 }
             }
 
-            public static int Update(byte[] logo)
-            {
+            //public static int Update(byte[] logo)
+            //{
 
-                try
-                {
+            //    try
+            //    {
 
-                    MakeConnection();
+            //        MakeConnection();
 
-                    cmd.CommandText = "Update \"BranchInfo\" Set Logo = @Logo Where ID = "+1;
-                    cmd.Parameters.Clear();
-                    //cmd.Parameters.AddWithValue("@Code", code);
+            //        cmd.CommandText = "Update \"BranchInfo\" Set Logo = @Logo Where ID = "+1;
+            //        cmd.Parameters.Clear();
+            //        //cmd.Parameters.AddWithValue("@Code", code);
      
-                    cmd.Parameters.AddWithValue("@Logo", logo);
+            //        cmd.Parameters.AddWithValue("@Logo", logo);
              
 
 
 
 
 
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
+            //        Connect();
+            //        cmd.ExecuteNonQuery();
+            //        Disconnect();
 
-                    return 1;
+            //        return 1;
 
-                }
-                catch
-                {
+            //    }
+            //    catch
+            //    {
 
-                    return -1;
-                }
+            //        return -1;
+            //    }
 
 
-            }
+            //}
 
 
 

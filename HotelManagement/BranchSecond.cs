@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement
 {
-    public class Branch
+    public class BranchSecond
     {
         public int ID { get; set; }
         public string Code { get; set; }
@@ -22,7 +22,7 @@ namespace HotelManagement
         public string City { get; set; }
         public  string Address { get; set; }
 
-        public Branch(int id , string code , string owner , string branchName , string rate , byte[] logo , string tel , string state , string city , string address)
+        public BranchSecond(int id , string code , string owner , string branchName , string rate , byte[] logo , string tel , string state , string city , string address)
         {
             this.ID = id;
             this.Code = code;
