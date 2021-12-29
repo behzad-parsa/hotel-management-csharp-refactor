@@ -194,6 +194,7 @@
     <Compile Include="Models\Actor.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="CustomeNumeric.cs">
@@ -381,6 +382,7 @@
     <Compile Include="Services\ActorService.cs" />
     <Compile Include="Services\BranchService.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\GuestService.cs" />
     <Compile Include="Services\Mapper.cs" />
     <Compile Include="Setting.cs">

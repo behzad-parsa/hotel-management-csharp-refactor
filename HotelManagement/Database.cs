@@ -964,7 +964,7 @@ namespace HotelManagement
                 }
             }
 
-
+            //implemented
             public static int Insert(string code , string owner , string branchName , string rate , byte[] logo , string tel , string state , string city , string address )
             {
 
@@ -1069,7 +1069,7 @@ namespace HotelManagement
             //    }
 
             //}
-
+            //implement
             public static bool SearchBranchWithID(int id)
             {
                 try
@@ -1129,7 +1129,7 @@ namespace HotelManagement
                 }
 
             }
-
+            //Implement
             public static Dictionary<int , string> GetAllBranch()
             {
                 try
@@ -1224,7 +1224,7 @@ namespace HotelManagement
 
         }
 
-
+        //----------------------------------------------------------------------
         public class Employee
         {
             public static int ID { get; set; }
@@ -1235,13 +1235,10 @@ namespace HotelManagement
             public static int Salary { get; set; }
 
 
-
-
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
 
 
             private static void MakeConnection()
@@ -1260,7 +1257,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -1281,7 +1277,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -1318,11 +1313,6 @@ namespace HotelManagement
                     cmd.Parameters.AddWithValue("@Salary", Database.CheckNullInsert(salary));
 
 
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     cmd.CommandText = Database.QueryLastID;
@@ -1340,16 +1330,13 @@ namespace HotelManagement
 
 
             }
-
             public static bool SearchEmployee(int actID, int branchID)
             {
                 try
                 {
 
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"Employee\" Where ActID = @ActID AND BranchID = @BranchID ";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ActID", actID);
@@ -1363,35 +1350,21 @@ namespace HotelManagement
 
                     if (dataTable.Rows.Count != 0)
                     {
-
                         ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-
-
                         ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
                         BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
                         HireDate = Database.CheckNullSelectDateTime(dataTable.Rows[0]["HireDate"]);
                         Education = Database.CheckNullSelect(dataTable.Rows[0]["Education"]) as string;
                         Salary = Convert.ToInt32(dataTable.Rows[0]["Salary"]);
 
-
-
-
-
-
                         //return dataTable;
                         return true;
-
-
                     }
                     else
                     {
                         return false;
                         //return null; 
                     }
-
-
-
-
                 }
                 catch
                 {
@@ -1399,7 +1372,6 @@ namespace HotelManagement
                     return false;
                     //return null;
                 }
-
             }
             public static bool SearchEmployee(int actID)
             {
@@ -1482,8 +1454,6 @@ namespace HotelManagement
                     return false;
                 }
             }
-
-
             public static bool Update(int id , int actID, int branchID, string education, DateTime hireDate, int salary)
             {
 
@@ -1522,10 +1492,6 @@ namespace HotelManagement
 
 
             }
-
-
-
-
 
             //public static int SearchEmployeeID(int actID, int branchID)
             //{
@@ -1577,35 +1543,26 @@ namespace HotelManagement
 
             //}
 
-
         }
 
 
         public class Room
         {
-
-
-
             public static int ID { get; set; }
             public static int BranchID { get; set; }
             public static int RoomNumberID { get; set; }
-
             public static int TypeID { get; set; }
             public static bool IsEmpty { get; set; }
-
             public static List<int> facility { get; set; }
             public static int Floor { get; set; }
             public static int Capacity { get; set; }
             public static int Price { get; set; }
             public static string Description { get; set; }
 
-
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
 
             private static void MakeConnection()
             {
@@ -1623,7 +1580,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -1644,7 +1600,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -1749,67 +1704,66 @@ namespace HotelManagement
 
 
             }
-
-            public static bool SearchRoom(int branchID, int roomNumberID)
-            {
-                try
-                {
-
-
-                    MakeConnection();
-                    dataTable = new DataTable();
-
-                    cmd.CommandText = "SELECT * FROM \"Room\" Where BranchID = @BranchID AND RoomNumberID = @RoomNumberID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@BranchID" , branchID);
-                    cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
-
-                    adp.SelectCommand = cmd;
-
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+            //public static bool SearchRoom(int branchID, int roomNumberID)
+            //{
+            //    try
+            //    {
 
 
-                        RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
-                        BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
-                        IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
+            //        MakeConnection();
+            //        dataTable = new DataTable();
 
-                        Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
-                        Price  = Convert.ToInt32(dataTable.Rows[0]["Price"]);
-                        Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
-                        Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
+            //        cmd.CommandText = "SELECT * FROM \"Room\" Where BranchID = @BranchID AND RoomNumberID = @RoomNumberID ";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@BranchID" , branchID);
+            //        cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
+
+            //        adp.SelectCommand = cmd;
+
+            //        Connect();
+            //        adp.Fill(dataTable);
+            //        Disconnect();
+
+            //        if (dataTable.Rows.Count != 0)
+            //        {
+
+            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
 
 
+            //            RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
+            //            BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
+            //            IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
 
-                        //return dataTable;
-                        return true;
-
-
-                    }
-                    else
-                    {
-                        return false;
-                        //return null; 
-                    }
+            //            Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
+            //            Price  = Convert.ToInt32(dataTable.Rows[0]["Price"]);
+            //            Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
+            //            Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
 
 
 
+            //            //return dataTable;
+            //            return true;
 
-                }
-                catch
-                {
 
-                    return false;
-                    //return null;
-                }
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //            //return null; 
+            //        }
 
-            }
+
+
+
+            //    }
+            //    catch
+            //    {
+
+            //        return false;
+            //        //return null;
+            //    }
+
+            //}
             public static bool SearchRoomWithID(int id)
             {
                 try
@@ -1890,9 +1844,7 @@ namespace HotelManagement
                     //return null;
                 }
 
-            }
-
-           
+            }         
             public static bool DeleteFacilType(int roomID)
             {
 
@@ -2066,7 +2018,6 @@ namespace HotelManagement
                 }
 
             }
-
             public static Dictionary<int, string> GetFacilities()
             {
                 try
@@ -2119,9 +2070,6 @@ namespace HotelManagement
                 }
 
             }
-
-
-
             public static bool InsertFacilities(int roomID , int facilitiesID)
             {
 
@@ -2159,7 +2107,6 @@ namespace HotelManagement
 
 
             }
-
             public static bool InsertRoomType(int roomID, int typeID)
             {
 
@@ -2216,10 +2163,6 @@ namespace HotelManagement
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
 
-
-
-
-
             private static void MakeConnection()
             {
                 try
@@ -2236,7 +2179,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -2257,7 +2199,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -2396,54 +2337,51 @@ namespace HotelManagement
 
 
             }
-            public static int SearchUserID(string username)
-            {
-                try
-                {
+            //public static int SearchUserID(string username)
+            //{
+            //    try
+            //    {
 
 
-                    MakeConnection();
-                    dataTable = new DataTable();
+            //        MakeConnection();
+            //        dataTable = new DataTable();
 
-                    cmd.CommandText = "SELECT * FROM \"User\" Where Username = @Username ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@Username", username);
-
-
-                    adp.SelectCommand = cmd;
-
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+            //        cmd.CommandText = "SELECT * FROM \"User\" Where Username = @Username ";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@Username", username);
 
 
+            //        adp.SelectCommand = cmd;
 
-                        return ID;
+            //        Connect();
+            //        adp.Fill(dataTable);
+            //        Disconnect();
 
-
-                    }
-                    else
-                    {
-                        return -1;
-                    }
+            //        if (dataTable.Rows.Count != 0)
+            //        {
+            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
 
 
 
-
-                }
-                catch
-                {
-                    Disconnect();
-
-                    return -2;
-                }
+            //            return ID;
 
 
+            //        }
+            //        else
+            //        {
+            //            return -1;
+            //        }
 
+
+
+
+            //    }
+            //    catch
+            //    {
+            //        Disconnect();
+
+            //        return -2;
+            //    }
 
 
 
@@ -2452,7 +2390,10 @@ namespace HotelManagement
 
 
 
-            }
+
+
+
+            //}
             public static int Insert(int employeeID, int roleID, string username, string password, byte[] img, bool activate)
             {
 
@@ -2494,10 +2435,6 @@ namespace HotelManagement
 
 
             }
-
-
-
-
             public static bool Update( int id, int employeeID, int roleID, string username, byte[] img, bool activate)
             {
 
@@ -2538,8 +2475,6 @@ namespace HotelManagement
 
 
             }
-
-
             public static bool UpdateWithPass(int id, int employeeID, int roleID, string username , string password, byte[] img, bool activate)
             {
 
@@ -2580,13 +2515,6 @@ namespace HotelManagement
 
 
             }
-
-            
-
-
-
-
-
             public static DateTime GetLastSignin(int id)
             {
                 try
@@ -2650,10 +2578,6 @@ namespace HotelManagement
 
 
             }
-
-
-
-
             //public static bool InsertLoginHistory()
             //{
             //    try
@@ -2680,9 +2604,6 @@ namespace HotelManagement
 
             //        return false;
             //    }
-
-
-
             public static bool Delete(int id)
             {
                 try
@@ -2704,19 +2625,6 @@ namespace HotelManagement
                     return false;
                 }
             }
-
-
-
-
-
-
-
-
-
-
-            //}
-
-
             public static ChatInfo.User SearchOnlineUser(string username)
             {
                 try
@@ -2785,29 +2693,18 @@ namespace HotelManagement
 
             }
 
-
-
-
-
-
-
         }
 
         public class Role
         {
             public static int ID { get; set; }
             public static string Title {get; set; }
- 
 
 
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
-            
 
             private static void MakeConnection()
             {
@@ -2825,7 +2722,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -2846,7 +2742,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -2905,8 +2800,6 @@ namespace HotelManagement
 
 
             }
-
-
             public static string SearchRoleID(int id)
             {
                 try
@@ -2968,7 +2861,6 @@ namespace HotelManagement
 
 
             }
-
             public static Dictionary<int, string> GetAllRoles()
             {
                 try
@@ -3035,7 +2927,6 @@ namespace HotelManagement
 
 
             }
-
             public static bool Delete(int id)
             {
                 try
@@ -3062,22 +2953,15 @@ namespace HotelManagement
 
         }
 
-
         public class Module
         {
             public static int ID { get; set; }
             public static string Title { get; set; }
 
-
-
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
-
 
             private static void MakeConnection()
             {
@@ -3095,7 +2979,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -3116,7 +2999,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -3170,7 +3052,6 @@ namespace HotelManagement
 
 
             }
-
 
             public static int SearchModuleID(int id)
             {
@@ -3371,9 +3252,7 @@ namespace HotelManagement
 
         public class AccessLevel
         {
-
             //public static int ID { get; set; }
-
             public static int RoleID { get; set; }
             public static int ModuleID { get; set; }
             public static List<string> ModuleList;
@@ -3382,16 +3261,10 @@ namespace HotelManagement
             //public static bool AllowInsert { get; set; }
             //public static bool AllowDelete { get; set; }
             //public static bool AllowUpdate { get; set; }
-
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
-
-
             private static void MakeConnection()
             {
                 try
@@ -3408,7 +3281,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -3429,7 +3301,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -3809,7 +3680,6 @@ namespace HotelManagement
             //}
         }
 
-
         public class Reservation
         {
             //Actor act = new Actor();
@@ -3818,7 +3688,6 @@ namespace HotelManagement
             public static int CustomerID { get; set; }
             public static int RoomID { get; set; }
             public static DateTime DateModified { get; set; }
-
             public static DateTime StartDate { get; set; }
             public static DateTime EndDate { get; set; }
             public static int TotalPayDueDate{ get; set; }
@@ -3828,10 +3697,6 @@ namespace HotelManagement
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
-
             private static void MakeConnection()
             {
                 try
@@ -3848,7 +3713,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -3869,7 +3733,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -3887,9 +3750,6 @@ namespace HotelManagement
                     ;
                 }
             }
-
-
-
 
             public static int Insert(int userID, int customerID, int roomID, DateTime startDate, DateTime endDate, int totalPayDueDate)
             {
@@ -3942,8 +3802,7 @@ namespace HotelManagement
 
 
 
-            }
-     
+            }   
             public static bool SearchReserve(int customerID , DateTime sDate )
             {
                 try
@@ -4091,9 +3950,6 @@ namespace HotelManagement
 
 
             }
-
-
-
             public static bool Update(int id2 , DateTime Checkin , bool cancel)
             {
                 try
@@ -4211,7 +4067,6 @@ namespace HotelManagement
 
 
             }
-
             public static bool Delete(int id)
             {
                 try
@@ -4240,13 +4095,6 @@ namespace HotelManagement
                 }
 
             }
-
-
-
-
-
-
-
             //public static bool Update(int id, DateTime CancelDate)
             //{
             //    try
@@ -4363,33 +4211,22 @@ namespace HotelManagement
 
         public class Bill
         {
-
             public static int ID { get; set; }
             public static int ResID { get; set; }
             public static int TransactionID { get; set; }
             public static string BillNo { get; set; }
             public static int RoomCharge { get; set; }
-
             public static int FoodCharge { get; set; }
             public static int ServiceCharge { get; set; }
-
             public static int TotalCharge { get; set; }
-
             public static double Discount { get; set; }
-
-
             public static DateTime DateModified { get; set; }
             public static string Description { get; set; }
-
-
 
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
             private static void MakeConnection()
             {
                 try
@@ -4406,7 +4243,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -4427,7 +4263,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -4445,7 +4280,6 @@ namespace HotelManagement
                     ;
                 }
             }
-
 
             //public static int Insert(int resID , int transID , string billNo , int roomCharge , int foodCharge , int serviceCharge  , int totalCharge , double discount , string description)
             //{
@@ -4490,8 +4324,6 @@ namespace HotelManagement
 
 
             //}
-
-
             public static int Insert(int resID)
             {
 
@@ -4641,10 +4473,6 @@ namespace HotelManagement
                 }
 
             }
-
-
-
-
             public static bool SearchBill(int resID)
             {
                 try
@@ -4713,7 +4541,6 @@ namespace HotelManagement
                 }
 
             }
-
             //public static int SearchBranchID(string code)
             //{
             //    try
@@ -4768,43 +4595,28 @@ namespace HotelManagement
 
             //}
 
-
-
-
-
-
         }
 
         public class Transact
         {
-
             public static int ID { get; set; }
             public static int AccountID { get; set; }
             public static int PaymentMethodID { get; set; }
             public static int TransactionTypeID { get; set; }
             public static string TransactionNumber { get; set; }
             public static double Amount { get; set; }
-
             //public static int FoodCharge { get; set; }
             //public static int ServiceCharge { get; set; }
-
             //public static int TotalCharge { get; set; }
-
             //public static double Discount { get; set; }
-
 
             public static DateTime DateModified { get; set; }
             public static string Description { get; set; }
-
-
 
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
             private static void MakeConnection()
             {
                 try
@@ -4821,7 +4633,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -4842,7 +4653,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -4860,7 +4670,6 @@ namespace HotelManagement
                     ;
                 }
             }
-
 
             public static int Insert(int accountID, int paymentMethodID, int transTypeID, string transNum, double amount , string description)
             {
@@ -4905,7 +4714,6 @@ namespace HotelManagement
 
 
             }
-
             public static bool Update(int id , int accountID, int paymentMethodID, int transTypeID, string transNum, double amount, string description)
             {
 
@@ -4945,7 +4753,6 @@ namespace HotelManagement
 
 
             }
-
             public static bool SearchTransact(int id)
             {
                 try
@@ -5190,7 +4997,6 @@ namespace HotelManagement
                 }
 
             }
-
             //public static Dictionary<int , List<string>> A(int ID)
             //public static int SearchBranchID(string code)
             //{
@@ -5245,16 +5051,9 @@ namespace HotelManagement
             //    }
 
             //}
-
-
-
-
-
-
         }
         public class Account
         {
-
             public static int ID { get; set; }
             public static int BranchID { get; set; }
             public static string Bank { get; set; }
@@ -5262,27 +5061,17 @@ namespace HotelManagement
             public static string AccountName { get; set; }
             public static string AccountNumber{ get; set; }
             //public static double Amount { get; set; }
-
             //public static int FoodCharge { get; set; }
             //public static int ServiceCharge { get; set; }
-
             //public static int TotalCharge { get; set; }
-
             //public static double Discount { get; set; }
-
-
             //public static DateTime DateModified { get; set; }
             public static string Description { get; set; }
-
-
 
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
             private static void MakeConnection()
             {
                 try
@@ -5299,7 +5088,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -5320,7 +5108,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -5338,7 +5125,6 @@ namespace HotelManagement
                     ;
                 }
             }
-
 
             public static int Insert(int branchID , string accountName , string accountNumber , string bank , double balance , string description )
             {
@@ -5425,7 +5211,6 @@ namespace HotelManagement
 
 
             }
-
             public static bool SearchAccount(int ID)
             {
                 try
@@ -5484,7 +5269,6 @@ namespace HotelManagement
                 }
 
             }
-
             public static bool Delete (int id)
             {
                 try
@@ -5513,8 +5297,6 @@ namespace HotelManagement
                 }
 
             }
-
-
             //public static int SearchBranchID(string code)
             //{
             //    try
@@ -5568,7 +5350,6 @@ namespace HotelManagement
             //    }
 
             //}
-
             public static Dictionary<int, string> GetAccountList(int branchID)
             {
 
@@ -5638,44 +5419,26 @@ namespace HotelManagement
 
 
             }
-
-
-
-
         }
 
         public class Food
         {
-
             public static int ID { get; set; }
-
-            
             public static string Title { get; set; }
-
             public static int Price { get; set; }
             public static string Description { get; set; }
             //public static double Amount { get; set; }
-
             //public static int FoodCharge { get; set; }
             //public static int ServiceCharge { get; set; }
-
             //public static int TotalCharge { get; set; }
-
             //public static double Discount { get; set; }
-
-
             //public static DateTime DateModified { get; set; }
             //public static string Description { get; set; }
-
-
 
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
             private static void MakeConnection()
             {
                 try
@@ -5692,7 +5455,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -5713,7 +5475,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -5731,7 +5492,6 @@ namespace HotelManagement
                     ;
                 }
             }
-
 
             public static int Insert(string title , int price , string description)
             {
@@ -5807,8 +5567,7 @@ namespace HotelManagement
                 }
 
 
-            }
-          
+            }        
             public static bool SearchFood(int id)
             {
                 try
@@ -5877,7 +5636,6 @@ namespace HotelManagement
                 }
 
             }
-
             public static bool Delete(int id)
             {
                 try
@@ -5906,8 +5664,6 @@ namespace HotelManagement
                 }
 
             }
-
-
             public static int InsertOrderFood(int foodID , int resID , int count , int Total )
             {
 
@@ -5980,24 +5736,15 @@ namespace HotelManagement
 
         public class Service
         {
-
             public static int ID { get; set; }
-
-
             public static string Title { get; set; }
-
             public static int Price { get; set; }
             public static string Description { get; set; }
-
-
 
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
-
             private static void MakeConnection()
             {
                 try
@@ -6014,7 +5761,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -6035,7 +5781,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -6053,7 +5798,6 @@ namespace HotelManagement
                     ;
                 }
             }
-
 
             public static int Insert(string title, int price, string description)
             {
@@ -6131,7 +5875,6 @@ namespace HotelManagement
 
 
             }
-
             public static bool SearchService(int id)
             {
                 try
@@ -6200,7 +5943,6 @@ namespace HotelManagement
                 }
 
             }
-
             public static bool Delete(int id)
             {
                 try
@@ -6229,7 +5971,6 @@ namespace HotelManagement
                 }
 
             }
-
             public static int InsertOrderService(int serviceID, int resID, int count, int total)
             {
 
@@ -6297,9 +6038,6 @@ namespace HotelManagement
                 }
 
             }
-
-
-
         }
 
 
@@ -6357,7 +6095,6 @@ namespace HotelManagement
                 }
 
             }
-
             public static object CheckNullInsertDateTime(DateTime obj)
             {
 
@@ -6374,16 +6111,11 @@ namespace HotelManagement
 
             }
 
-
-
             //--Queries---
-
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
-
-
 
             private static void MakeConnection()
             {
@@ -6401,7 +6133,6 @@ namespace HotelManagement
 
 
             }
-
             private static void Connect()
             {
                 try
@@ -6422,7 +6153,6 @@ namespace HotelManagement
                 }
 
             }
-
             private static void Disconnect()
             {
                 try
@@ -6440,13 +6170,7 @@ namespace HotelManagement
                     ;
                 }
             }
-
-
- 
-
-           
-
-
+      
             public static DataTable Query(string query)
             {
                 try

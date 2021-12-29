@@ -46,11 +46,10 @@ namespace HotelManagement.Services
 
         public List<Branch> GetAllBranches()
         {
-            parameters = new Dictionary<string, object>();
+            
             sqlQuery = "SELECT * FROM \"BranchInfo\" ";
 
-
-            var dataTable = _database.Select(sqlQuery, DatabaseOperation.OperationType.Select, parameters);
+            var dataTable = _database.Select(sqlQuery, DatabaseOperation.OperationType.Select);
 
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;

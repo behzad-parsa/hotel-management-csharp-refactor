@@ -17,58 +17,27 @@ namespace HotelManagement
         public frmTest()
         {
             InitializeComponent();
-            //HotelManagement.Models.Actor actor = new Models.Actor()
-            //{
-            //    Firstname = "Maria",
-            //    Lastname = "Johnson",
-            //    Birthday = new DateTime(1996, 2, 2),
-            //    NationalCode = "123564456",
-            //    Nationality = "Iran",
-            //    Address = "ValiAsr",
-            //    City = "Arakis",
-            //    Gender = "Male",
-            //    Email = "Sth@yahoo.com",
-            //    Mobile = "123456789",
-            //    State = "Tehran",
-            //    Tel = "123546"
 
-
-
-            //};
-            //ActorService actorService = new ActorService();
-            //actorService.InsertActor(actor);
-
-            //ActorService actorservice = new ActorService();
-
-            //actorservice.InsertActor(new Actor()
-            //{
-            //    Firstname= "hAJ"
-            //});
-
-
-            BranchService branchService = new BranchService();
-
-            var list = branchService.GetAllBranches();
-            var branch = branchService.GetBranch(2);
-
-            Branch br = new Branch()
+            Employee employee = new Employee()
             {
-              
-                City = "Tehran",
-                Address = "BLVD",
-                Logo = branch.Logo,
-                Owner = "Sorosh" ,
-                BranchName = "Dune" ,
-                Rate = "3" , 
-                State = "Tehran" ,
-                Code = "GHJ12585" ,
-                Tel = "11111111"
-                
-                
+                ActID = 2029,
+                BranchID = 1005,
+                HireDate = DateTime.Now,
+                Education = "Bsc",
+                Salary = 150000
             };
-            var res = branchService.InsertBranch(br);
-           
 
+            EmployeeService employeeService = new EmployeeService();
+            var res = employeeService.InsertEmployee(employee);
+
+            var res2 = employeeService.GetEmployee(16);
+            var res3 = employeeService.GetEmployee(24,1);
+
+            employee.ID = employeeService.LastInsertedId;
+            employee.Education = "PHD";
+            var res4 = employeeService.UpdateEmployee(employee);
+
+            var res5 = employeeService.DeleteEmployee(employeeService.LastInsertedId);
         }
         
     }
