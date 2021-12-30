@@ -24,8 +24,7 @@ namespace HotelManagement
         BunifuImageButton btnBack;
         Panel panelContainerInside;
         BunifuImageButton btnDone;
-        //List<BunifuMetroTextbox> lstOriginalTextBox = new List<BunifuMetroTextbox>();
-        //List<BunifuMetroTextbox> lstCurrentTextBox = new List<BunifuMetroTextbox>();
+
         public CardCustomerDetail()
         {
             InitializeComponent();
@@ -33,7 +32,7 @@ namespace HotelManagement
             _customerService = new CustomerService();
         }
 
-        public CardCustomerDetail(CustomerSecond customer)
+        public CardCustomerDetail(Customer customer)
         {
             InitializeComponent();
 
@@ -51,7 +50,7 @@ namespace HotelManagement
             cmbState.SelectedItem = customer.State;
             
             if (customer.Gender == "Male") rdbMale.Checked = true;
-            else rdbFemale.Checked = true;
+            else rdbFemale.Checked = true;         
 
             dateBirth.Value = customer.Birthday;
 
@@ -100,44 +99,14 @@ namespace HotelManagement
             //lstTextBox = allTexboxes.ToList<BunifuMetroTextbox>();
         }
         
-        //private int customerID;
+        
         private enum Status
         {
             Green,
             Red,
             blue
         };
-        //private void PanelStatus(string text, Status status)
-        //{
-        //    panelCustStatus.Visible = true;
-        //    lblCustError.Text = text;
-        //    if (status == Status.Red)
-        //    {
-        //        prgbCustError.ProgressColor = Color.Red;
-        //        lblCustError.ForeColor = Color.Red;
-        //        //lblCustError.Text = text;
-
-        //    }
-        //    else if (status == Status.Green)
-        //    {
-
-        //        prgbCustError.ProgressColor = Color.Green;
-        //        lblCustError.ForeColor = Color.Green;
-        //        //lblCustError.Text = text;
-
-        //    }
-        //    else
-        //    {
-        //        prgbCustError.ProgressColor = Color.Blue;
-        //        lblCustError.ForeColor = Color.Blue;
-
-        //    }
-
-
-
-
-        //}
-
+        
         private void TextBoxColor(BunifuMetroTextbox txtBox, Status status)
         {
             if (status == Status.Red)
@@ -577,6 +546,7 @@ namespace HotelManagement
         private bool isFindActor = false;
         private bool isFindCustomer = true;
         private int CustomerID = -1;
+        //private Customer customer;
         private int ActID = -1;
         private void btnNCSearch_Click(object sender, EventArgs e)
         {
@@ -587,32 +557,33 @@ namespace HotelManagement
             {
                 searchFlag = true;
 
-                if (HotelDatabase.Actor.SearchActor(txtNCSearch.Text))
+                var actor = _actorService.GetActor(txtNCSearch.Text);
+                if (actor != null)
                 {
                     isFindActor = true;
 
-                    ActID = HotelDatabase.Actor.ID;
-                    txtFname.Text = HotelDatabase.Actor.Firstname;
-                    txtLname.Text = HotelDatabase.Actor.Lastname;
-                    txtTel.Text = HotelDatabase.Actor.Tel;
-                    txtMobile.Text = HotelDatabase.Actor.Mobile;
-                    txtCity.Text = HotelDatabase.Actor.City;
-                    txtAddress.Text = HotelDatabase.Actor.Address;
-                    txtEmail.Text = HotelDatabase.Actor.Email;
-                    cmbNational.SelectedItem = HotelDatabase.Actor.Nationality;
-                    cmbState.SelectedItem = HotelDatabase.Actor.State;
+                    ActID = actor.ID;
+                    txtFname.Text = actor.Firstname;
+                    txtLname.Text = actor.Lastname;
+                    txtTel.Text = actor.Tel;
+                    txtMobile.Text = actor.Mobile;
+                    txtCity.Text = actor.City;
+                    txtAddress.Text = actor.Address;
+                    txtEmail.Text = actor.Email;
+                    cmbNational.SelectedItem = actor.Nationality;
+                    cmbState.SelectedItem = actor.State;
 
-                    if (HotelDatabase.Actor.Gender == "Male") rdbMale.Checked = true;
+                    if (actor.Gender == "Male") rdbMale.Checked = true;
                     else rdbFemale.Checked = true;
 
-                    dateBirth.Value = HotelDatabase.Actor.Birthday;
+                    dateBirth.Value = actor.Birthday;
 
-                    var result = HotelDatabase.Customer.SearchCustomerID(ActID);
+                    //var result = HotelDatabase.Customer.SearchCustomerID(ActID);
+                    var customer = _customerService.GetCustomer(ActID , null);
+            
                     //Person Was not in Customer Table
-                    if (result == -1 )
+                    if (customer == null)//result == -1 )
                     {
-
-
                         isFindCustomer = false;
                         
                         PanelStatus(panelStatusCustomer, "Person Was successfully Found", Status.Green);
@@ -623,19 +594,17 @@ namespace HotelManagement
                         // btnEdit.Enabled = true;
                         //btnNext.Enabled = false;
                         btnSubmit.Enabled = true;
-                        
-
-
-
-
                     }
-                    //Person Is In Customer Table
-                    else if (result > 0)
-                    {
 
+                    //Person Is In Customer Table
+                    else if (customer != null)//result > 0)
+                    {
                         PanelStatus(panelStatusCustomer, "Customer Was Successfully Found", Status.Green);
                         isFindCustomer = true;
-                        CustomerID = HotelDatabase.Customer.ID;
+                        //CustomerID = HotelDatabase.Customer.ID;
+                        CustomerID = customer.ID;
+                        //this.customer = customer;
+
                         // ChbUpdate(false);
                         //panelBasic.Enabled = false;
                         //panelContact.Enabled = false;
@@ -645,30 +614,21 @@ namespace HotelManagement
                         btnSubmit.Enabled = false;
                         btnNext.Visible = true;
 
-                        CustomerSecond customer = new CustomerSecond(CustomerID, ActID, HotelDatabase.Actor.Firstname, HotelDatabase.Actor.Lastname, HotelDatabase.Actor.NationalCode,
-                            HotelDatabase.Actor.Mobile, HotelDatabase.Actor.Birthday, HotelDatabase.Actor.Gender, HotelDatabase.Actor.Nationality,
-                            HotelDatabase.Actor.Email, HotelDatabase.Actor.Tel, HotelDatabase.Actor.State, HotelDatabase.Actor.City, HotelDatabase.Actor.Address);
+                        //CustomerSecond customer = new CustomerSecond(CustomerID, ActID, HotelDatabase.Actor.Firstname, HotelDatabase.Actor.Lastname, HotelDatabase.Actor.NationalCode,
+                        //    HotelDatabase.Actor.Mobile, HotelDatabase.Actor.Birthday, HotelDatabase.Actor.Gender, HotelDatabase.Actor.Nationality,
+                        //    HotelDatabase.Actor.Email, HotelDatabase.Actor.Tel, HotelDatabase.Actor.State, HotelDatabase.Actor.City, HotelDatabase.Actor.Address);
 
                         NewBook.customerInfo = customer;
                         NewBook.statusFlag = 1;
 
-
-
-                    
                     }
                     //Exception
                     else
                     {
                         PanelStatus(panelStatusCustomer, "Unable To Complete Action", Status.Green);
                     }
-
-
-
-
-
-
-
                 }
+
                 else
                 {
                     //panelInfo.Enabled = false;
@@ -680,12 +640,6 @@ namespace HotelManagement
                     //panelEmployment.Enabled = true;
                     PanelStatus(panelStatusCustomer, "No Person Found", Status.Red);
                 }
-
-
-
-
-
-
             }
 
         }
@@ -743,32 +697,39 @@ namespace HotelManagement
                     //var result = HotelDatabase.Actor.InsertAll(txtFname.Text, txtLname.Text, dateBirth.Value.Date,
                     // txtNCSearch.Text, cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text,
                     // txtMobile.Text, RadioButtonResult(rdbMale, rdbFemale), cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
-                    var resultActor =  _actorService.InsertActor(new Actor()
+                    Actor actor = new Actor()
                     {
                         Firstname = txtFname.Text,
                         Lastname = txtLname.Text,
                         Birthday = dateBirth.Value.Date,
                         NationalCode = txtNCSearch.Text,
                         Nationality = cmbNational.SelectedItem.ToString(),
-                        Email = txtEmail.Text , 
-                        Tel = txtTel.Text , 
+                        Email = txtEmail.Text,
+                        Tel = txtTel.Text,
                         Mobile = txtMobile.Text,
-                        Gender = RadioButtonResult(rdbMale , rdbFemale) ,
+                        Gender = RadioButtonResult(rdbMale, rdbFemale),
                         State = cmbState.SelectedItem.ToString(),
-                        City = txtCity.Text , 
-                        Address = txtAddress.Text 
-                    }) ;
+                        City = txtCity.Text,
+                        Address = txtAddress.Text
+                    };
+                    var resultActor = _actorService.InsertActor(actor);
+
                     if (resultActor)
                     {
                         //ActID = result;
-                        //var resultCustomer = HotelDatabase.Customer.Insert(result);
-                        var resultCustomer = _customerService.InsertCustomer(new Customer()
-                        {
-                            ActID = _actorService.LastInsertedId
-                        });
+                        //var resultCustomer = HotelDatabase.Customer.Insert(result)
+                        actor.ID = _actorService.LastInsertedId;
+                        Customer customer = new Customer(actor);
+                        //var resultCustomer = _customerService.InsertCustomer(new Customer()
+                        //{
+                        //    ActID = _actorService.LastInsertedId
+                        //});
+                        var resultCustomer = _customerService.InsertCustomer(customer);
+                        
                         if (resultCustomer)
                         {
-                            CustomerID = _customerService.LastInsertedId;
+                            //CustomerID = _customerService.LastInsertedId;
+                            customer.ID = _customerService.LastInsertedId;
 
                             PanelStatus(panelStatusCustomer , "Action Completed Successfuly", Status.Green);
                             Current.User.Activities.Add(new Activity("Submit New Customer", txtFname.Text + " " + txtLname.Text + "'s information has been submited by " + Current.User.Firstname+" " +Current.User.Lastname));
@@ -781,9 +742,9 @@ namespace HotelManagement
                             panelContact.Enabled = false;
 
 
-                            CustomerSecond customer = new CustomerSecond(CustomerID , ActID , txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
-                                 RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
-                                 , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
+                            //CustomerSecond customer = new CustomerSecond(CustomerID , ActID , txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
+                            //     RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
+                            //     , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
 
                             NewBook.customerInfo = customer;
                             NewBook.statusFlag = 1;
@@ -810,11 +771,28 @@ namespace HotelManagement
                 if (updateFlag)
                 {
                     
-                    var reslut = HotelDatabase.Actor.UpdateAll(ActID, txtFname.Text, txtLname.Text, dateBirth.Value.Date , txtNCSearch.Text,
-                            cmbNational.SelectedItem.ToString(), txtEmail.Text,   txtTel.Text, txtMobile.Text ,
-                            RadioButtonResult(rdbMale, rdbFemale), cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
+                    //var reslut = HotelDatabase.Actor.UpdateAll(ActID, txtFname.Text, txtLname.Text, dateBirth.Value.Date , txtNCSearch.Text,
+                    //        cmbNational.SelectedItem.ToString(), txtEmail.Text,   txtTel.Text, txtMobile.Text ,
+                    //        RadioButtonResult(rdbMale, rdbFemale), cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
+                    Actor actor = new Actor()
+                    {
+                        ID = ActID,
+                        Firstname = txtFname.Text,
+                        Lastname = txtLname.Text,
+                        Birthday = dateBirth.Value.Date,
+                        NationalCode = txtNCSearch.Text,
+                        Nationality = cmbNational.SelectedItem.ToString(),
+                        Email = txtEmail.Text,
+                        Tel = txtTel.Text,
+                        Mobile = txtMobile.Text,
+                        Gender = RadioButtonResult(rdbMale, rdbFemale),
+                        State = cmbState.SelectedItem.ToString(),
+                        City = txtCity.Text,
+                        Address = txtAddress.Text
+                    };
+                    var result = _actorService.UpdateActor(actor);
 
-                    if (reslut)
+                    if (result)
                     {
                         updateFlag = false;
                         PanelStatus(panelStatusCustomer, "Information Changed Successfuly", Status.Green);
@@ -825,10 +803,10 @@ namespace HotelManagement
                         if (isFindCustomer)
                         {
                             btnSubmit.Enabled = false;
-                            CustomerSecond customer = new CustomerSecond(CustomerID, ActID, txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
-                                RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
-                                , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
-
+                            //CustomerSecond customer = new CustomerSecond(CustomerID, ActID, txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
+                            //    RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
+                            //    , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
+                            var customer = new Customer(CustomerID, actor);
                             NewBook.customerInfo = customer;
                             NewBook.statusFlag = 1;
 
@@ -858,20 +836,36 @@ namespace HotelManagement
                 {
                     btnNext.Visible = true;
                     btnSubmit.Enabled = false;
-                    var resultCustomer = HotelDatabase.Customer.Insert(ActID);
-                    if (resultCustomer > 0)
+                    //var resultCustomer = HotelDatabase.Customer.Insert(ActID);
+                    var actor = new Actor()
                     {
-                        CustomerID = resultCustomer;
-                        //NewBook.currentCustomerID = resultCustomer;
+                        ID = ActID,
+                        Firstname = txtFname.Text,
+                        Lastname = txtLname.Text,
+                        Birthday = dateBirth.Value.Date,
+                        NationalCode = txtNCSearch.Text,
+                        Nationality = cmbNational.SelectedItem.ToString(),
+                        Email = txtEmail.Text,
+                        Tel = txtTel.Text,
+                        Mobile = txtMobile.Text,
+                        Gender = RadioButtonResult(rdbMale, rdbFemale),
+                        State = cmbState.SelectedItem.ToString(),
+                        City = txtCity.Text,
+                        Address = txtAddress.Text
+                    };
+                    var customer = new Customer(actor);
+                    var resultCustomer = _customerService.InsertCustomer(customer);
+                    if (resultCustomer)
+                    {
+                        //CustomerID = resultCustomer;
+                        customer.ID = _customerService.LastInsertedId;
+      
                         PanelStatus(panelStatusCustomer, "Action Completed Successfuly", Status.Green);
-                        // NewBook.statusFlag = 1;
-                        //btnCustSubmit.Enabled = false;
-                        //btnNext.Visible = true;
-                        //isFindCutomerFlag = false;
-                        CustomerSecond customer = new CustomerSecond(CustomerID, ActID, txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
-                            RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
-                            , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
 
+                        //CustomerSecond customer = new CustomerSecond(CustomerID, ActID, txtFname.Text, txtLname.Text, txtNCSearch.Text, txtMobile.Text, dateBirth.Value.Date,
+                        //    RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
+                        //    , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
+ 
                         NewBook.customerInfo = customer;
                         NewBook.statusFlag = 1;
                     }
@@ -909,124 +903,6 @@ namespace HotelManagement
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        //        Reset();
-
-        //            if (txtNCSearch.Text != "National Code" && txtNCSearch.Text != "")
-        //            {
-        //                searchFlag = true;
-
-        //                if (HotelDatabase.Actor.SearchActor(txtNCSearch.Text))
-        //                {
-        //                    isFindActor = true;
-
-        //                    ActID = HotelDatabase.Actor.ID;
-        //                    txtFname.Text = HotelDatabase.Actor.Firstname;
-        //                    txtLname.Text = HotelDatabase.Actor.Lastname;
-        //                    txtTel.Text = HotelDatabase.Actor.Tel;
-        //                    txtMobile.Text = HotelDatabase.Actor.Mobile;
-        //                    txtCity.Text = HotelDatabase.Actor.City;
-        //                    txtAddress.Text = HotelDatabase.Actor.Address;
-        //                    txtEmail.Text = HotelDatabase.Actor.Email;
-        //                    cmbNational.SelectedItem = HotelDatabase.Actor.Nationality;
-        //                    cmbState.SelectedItem = HotelDatabase.Actor.State;
-
-        //                    if (HotelDatabase.Actor.Gender == "Male") rdbMale.Checked = true;
-        //                    else rdbFemale.Checked = true;
-
-        //                    dateBirth.Value = HotelDatabase.Actor.Birthday;
-
-        //                    var result = HotelDatabase.Customer.SearchCustomerID(ActID);
-        //                    //Person Was not in Customer Table
-        //                    if (result == -1 )
-        //                    {
-
-
-        //                        isFindCustomer = false;
-
-        //                        PanelStatus(panelStatusCustomer, "Person Was successfully Found", Status.Green);
-        //        //ChbUpdate(true);
-        //        //panelBasic.Enabled = true;
-        //        //panelContact.Enabled = true;
-        //        //btnSubmit.Enabled = true;
-        //        // btnEdit.Enabled = true;
-        //        //btnNext.Enabled = false;
-        //        btnSubmit.Enabled = true;
-
-
-
-
-
-        //                    }
-        //                    //Person Is In Customer Table
-        //                    else if (result > 0)
-        //                    {
-
-        //                        PanelStatus(panelStatusCustomer, "Customer Was Successfully Found", Status.Green);
-        //    isFindCustomer = true;
-        //                        CustomerID = HotelDatabase.Customer.ID;
-        //                        // ChbUpdate(false);
-        //                        //panelBasic.Enabled = false;
-        //                        //panelContact.Enabled = false;
-        //                        // btnSubmit.Enabled = false;
-        //                        //btnNext.Enabled = true;
-        //                        // btnEdit.Enabled = true;
-        //                        btnSubmit.Enabled = false;
-        //                        btnNext.Visible = true;
-
-        //                        Customer customer = new Customer(CustomerID, ActID, HotelDatabase.Actor.Firstname, HotelDatabase.Actor.Lastname, HotelDatabase.Actor.NationalCode,
-        //                            HotelDatabase.Actor.Mobile, HotelDatabase.Actor.Birthday, HotelDatabase.Actor.Gender, HotelDatabase.Actor.Nationality,
-        //                            HotelDatabase.Actor.Email, HotelDatabase.Actor.Tel, HotelDatabase.Actor.State, HotelDatabase.Actor.City, HotelDatabase.Actor.Address);
-
-        //    NewBook.customerInfo = customer;
-        //                        NewBook.statusFlag = 1;
-
-
-
-
-        //                    }
-        //                    //Exception
-        //                    else
-        //                    {
-        //                        PanelStatus(panelStatusCustomer, "Unable To Complete Action", Status.Green);
-        //                    }
-
-
-
-
-
-
-
-        //                }
-        //                else
-        //                {
-        //                    //panelInfo.Enabled = false;
-        //                    isFindActor = false;
-        //                   // isFindEmployee = false;
-        //                    Reset();
-        //panelBasic.Enabled = true;
-        //                    panelContact.Enabled = true;
-        //                    //panelEmployment.Enabled = true;
-        //                    PanelStatus(panelStatusCustomer, "No Person Found", Status.Red);
-        //                }
-
-
-
-
-
-
-        //            }
     }
  }
 

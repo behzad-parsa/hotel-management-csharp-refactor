@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
-
+using HotelManagement.Models;
 
 namespace HotelManagement
 {
@@ -19,15 +19,8 @@ namespace HotelManagement
         public static int backFalg = -1;
        // public static int currentCustomerID; // Wrong -- THis is Act Id Check that Later .. It must be Cust ID
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
-        public static CustomerSecond customerInfo;
+        public static Customer customerInfo;
 
-        //private int customerID;
-        //private enum Status
-        //{
-        //    Green , 
-        //    Red , 
-        //    blue
-        //};
 
         private enum Step
         {
@@ -51,10 +44,7 @@ namespace HotelManagement
             panelContainerInside.Controls.Add(customerDetail);
 
 
-
             //CardBookDetail car = new CardBookDetail();
-
-
             //panelContainerInside.Controls.Clear();
             //panelContainerInside.Controls.Add(car);
 
@@ -62,14 +52,7 @@ namespace HotelManagement
 
             
         }
-
-  
-
-
-
-
-
-       
+ 
 
         private void panelContainerInside_ControlAdded(object sender, ControlEventArgs e)
         {
@@ -78,10 +61,8 @@ namespace HotelManagement
 
         private void panelContainerInside_ControlRemoved(object sender, ControlEventArgs e)
         {
-
             
         }
-
 
         private void StepChange(int level , Step status)
         {
@@ -145,12 +126,8 @@ namespace HotelManagement
         }
         private void btnNext_Click(object sender, EventArgs e)
         {
-
-
             if (customerInfo!= null && statusFlag == 1)
             {
-
-
                 StepChange(1, Step.Forward);
                 CardGuestDetail guestDetail = new CardGuestDetail();
 
@@ -158,7 +135,6 @@ namespace HotelManagement
                 guestDetail.Top = 10;
                 panelContainerInside.Controls.Clear();
                 panelContainerInside.Controls.Add(guestDetail);
-
             }
             else if (statusFlag == 2)
             {
@@ -170,9 +146,6 @@ namespace HotelManagement
                 panelContainerInside.Controls.Add(bookDetail);
 
             }
-
-
-
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -200,11 +173,6 @@ namespace HotelManagement
                 panelContainerInside.Controls.Add(guestDetail);
 
             }
-
-
-
-
-
         }
 
         private void btnDone_Click(object sender, EventArgs e)

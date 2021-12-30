@@ -39,9 +39,21 @@ namespace HotelManagement
 
             //var res5 = employeeService.DeleteEmployee(employeeService.LastInsertedId);
 
-            CustomerService cs = new CustomerService();
-            Customer c = new Customer();
-            var res = cs.GetCustomer(21, null);
+            //Actor actor = new Actor()
+            //{
+            //    Address = "Sth",
+            //    Birthday = DateTime.Now,
+            //    Gender = "Male",
+            //    City = "NYC",
+            //    Email = "SSSS",
+            //    Firstname = "Behzad",
+            //    Lastname = "Sthe",
+            //    ID = 3 
+            //};
+            
+            //CustomerService cs = new CustomerService();
+            //Customer c = new Customer( 5 ,actor);
+            //var res = cs.GetCustomer(21, null);
             
         }
         

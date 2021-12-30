@@ -122,7 +122,6 @@
       <DependentUpon>ActionSerivce.cs</DependentUpon>
     </Compile>
     <Compile Include="Activity.cs" />
-    <Compile Include="ActorSecond.cs" />
     <Compile Include="BookList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -203,7 +202,6 @@
     <Compile Include="CustomeNumeric.Designer.cs">
       <DependentUpon>CustomeNumeric.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomerSecond.cs" />
     <Compile Include="Dashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -269,7 +267,6 @@
     <Compile Include="GradientPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GuestSecond.cs" />
     <Compile Include="HashPassword.cs" />
     <Compile Include="Invoice.cs">
       <SubType>UserControl</SubType>

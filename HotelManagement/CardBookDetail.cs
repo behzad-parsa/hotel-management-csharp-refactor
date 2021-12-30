@@ -19,7 +19,7 @@ namespace HotelManagement
         {
             InitializeComponent();
         }
-        //Dictionary<int, string> dix = new Dictionary<int, string>();
+    
 
         BunifuImageButton btnNext;
 
@@ -160,11 +160,6 @@ namespace HotelManagement
 
 
 
-
-
-
-
-
                 dgvRoom.DataSource = data;
                 dgvRoom.Columns["id"].Visible = false;
                 dgvRoom.Columns["No"].HeaderText = "No.";
@@ -180,16 +175,11 @@ namespace HotelManagement
            
             //dgvRoom.CellDoubleClick += BunifuCustomDataGrid1_CellDoubleClick;
 
-
-
-
         }
         private void CardBookDetail_Load(object sender, EventArgs e)
         {
-
             dateStart.Value = DateTime.Now;
             dateEnd.Value = DateTime.Now.AddDays(1);
-
             //LoadFreeRoom(dateStart.Value, dateEnd.Value);
             if (!isStartThread)
             {
@@ -213,18 +203,6 @@ namespace HotelManagement
 
 
         }
-
-        //private void BtnDone_Click(object sender, EventArgs e)
-        //{
-        //    NewBook.customerInfo = null;
-            
-        //    CardCustomerDetail customerDetail = new CardCustomerDetail();
-        //    customerDetail.Left = panelContainerInside.Width / 2 - customerDetail.Width / 2;
-        //    customerDetail.Top = 10;
-        //    panelContainerInside.Controls.Clear();
-        //    panelContainerInside.Controls.Add(customerDetail);
-            
-        //}
 
         private int ID = -1;
 
@@ -264,26 +242,6 @@ namespace HotelManagement
         private void btnBook_Click(object sender, EventArgs e)
         {
             
-            ////----Change User ID --------------
-            //int result = HotelDatabase.Reservation.Insert(1, NewBook.currentCustomerID, ID, dateStart.Value, dateEnd.Value, totalPrice);
-            //if (result>0)
-            //{
-            //    btnBookll.Enabled = false;
-            //    PanelStatus("Action Completed Successfuly", Status.Green);
-                
-
-
-            //}
-            //else
-            //{
-
-            //    PanelStatus("Unable To Complete Action" , Status.Red);
-
-            //}
-
-
-
-
         }
 
         private void CalculateRoomCharge(DateTime sDate , DateTime eDate)
@@ -339,9 +297,9 @@ namespace HotelManagement
                         "Your Bookin Detail : \n\n" +
                         "Room : " + lblRoom.Text + "\n" +
                         "Guest : ";
-                    for (int i = 0; i < NewBook.customerInfo.LstGuest.Count ; i++)
+                    for (int i = 0; i < CardGuestDetail.guestsAssignToCustomer.Count ; i++)
                     {
-                        var guest = NewBook.customerInfo.LstGuest[i];
+                        var guest = CardGuestDetail.guestsAssignToCustomer[i];
                         emailMsg += guest.Firstname + " " + guest.Lastname + " | ";
                     }
                     emailMsg += "\n Check-in/Out : " + dateStart.Value.ToString() + " - " + dateEnd.Value.ToString();

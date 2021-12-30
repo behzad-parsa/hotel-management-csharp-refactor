@@ -97,10 +97,15 @@ namespace HotelManagement.Services
                 "Tel= @Tel , Mobile= @Mobile , Gender= @Gender , State = @State, City = @City ," +
                 "Address = @Address WHERE ID = @ID ";
 
-            
+            object tempObject;
             foreach (var property in typeof(Actor).GetProperties())
             {
-                parameters.Add("@" +property.Name, property.GetValue(actor, null));
+                if (property.GetValue(actor, null) is null)
+                    tempObject = DBNull.Value;
+
+                else
+                    tempObject = property.GetValue(actor, null);
+                parameters.Add("@" + property.Name, tempObject);
             }
 
             return _database.InsertUpdateDelete(sqlQuery, DatabaseOperation.OperationType.Update, parameters) != DatabaseResult.Failed;

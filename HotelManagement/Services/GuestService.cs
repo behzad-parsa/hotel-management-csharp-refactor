@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HotelManagement.Models;
 using HotelManagement.DatabaseConfig;
+using System.Data;
 
 namespace HotelManagement.Services
 {
@@ -14,10 +15,11 @@ namespace HotelManagement.Services
         private readonly DatabaseOperation _database;
         private string sqlQuery;
         private Dictionary<string, object> parameters;
-
+        private readonly ActorService _actorService;
         public GuestService()
         {
             _database = new DatabaseOperation();
+            _actorService = new ActorService();
         }
 
         public bool InsertGuest(Guest guest)
@@ -29,10 +31,17 @@ namespace HotelManagement.Services
                 "VALUES " +
                 "(@ActID, @CustomerID, @DateModified)";
 
-            
+            object tempObject;
             foreach (var property in typeof(Guest).GetProperties())
             {
-                parameters.Add("@" + property.Name, property.GetValue(guest, null));
+
+                if (property.GetValue(guest, null) is null)
+                    tempObject = DBNull.Value;
+
+                else
+                    tempObject = property.GetValue(guest, null);
+
+                parameters.Add("@" + property.Name, tempObject);
             }
 
            var result = _database.InsertUpdateDelete(sqlQuery, DatabaseOperation.OperationType.Update, parameters);
@@ -40,24 +49,29 @@ namespace HotelManagement.Services
             return (result != DatabaseResult.Failed);
         }
 
-        //public bool UpdateGuest(Guest Guest)
-        //{
-        //    parameters = new Dictionary<string, object>();
-        //    sqlQuery = "UPDATE \"Guest\" " +
-        //        "Set Firstname = @Firstname , Lastname = @Lastname  , Birthday=@Birthday ," +
-        //        "NationalCode = @NationalCode , Nationality = @Nationality , Email = @Email ," +
-        //        "Tel= @Tel , Mobile= @Mobile , Gender= @Gender , State = @State, City = @City ," +
-        //        "Address = @Address WHERE ID = @ID ";
+        //Guest's Main Information Is On The Actor Entity So They Must Updated On Actor Table , 
+        //Therefor , passing acotr Object to ActorService is Enough
+        public bool UpdateGuest(Actor actor) => _actorService.UpdateActor(actor);
+        
 
+        public DataTable GetAllGuestsAssignToSingleCustomer(int customerID)
+        {
+            parameters = new Dictionary<string, object>();
 
-        //    foreach (var property in typeof(Guest).GetProperties())
-        //    {
-        //        parameters.Add("@" + property.Name, property.GetValue(Guest, null));
-        //    }
+            sqlQuery = "SELECT ActID ,  NationalCode AS NC ,  Firstname +' '+Lastname AS Name  , DateModified AS Date , Gender , Birthday , Mobile  " +
+                "FROM Actor a , Guest g  " +
+                "WHERE " +
+                "a.id = g.ActID AND g.CustomerID = @CustomerID AND g.DateModified = '" + DateTime.Now.Date + "'";
 
-        //    return _database.InsertUpdateDelete(sqlQuery, DatabaseOperation.OperationType.Update, parameters) != DatabaseResult.Failed;
+            parameters.Add("@CustomerID", customerID);
 
-        //}
+            var dataTable = _database.Select(sqlQuery, DatabaseOperation.OperationType.Select, parameters);
+
+            if (dataTable == null || dataTable.Rows.Count == 0)
+                return null;
+
+            return dataTable;
+        }
 
         public bool DeleteGuest(Guest guest)
         {

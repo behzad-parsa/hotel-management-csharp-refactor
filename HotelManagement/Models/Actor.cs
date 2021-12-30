@@ -22,5 +22,25 @@ namespace HotelManagement.Models
         public string City { get; set; }
         public string Address { get; set; }
 
+        public Actor()
+        {
+
+        }
+        public Actor(Actor actor)
+        {
+            this.ID =actor.ID;
+
+            foreach (var baseProp in this.GetType().GetProperties())
+            {
+                foreach (var actorProp in actor.GetType().GetProperties())
+                {
+                    if (actorProp.Name == baseProp.Name)
+                    {
+                        baseProp.SetValue(this, actorProp.GetValue(actor) , null);
+                    }
+                }
+
+            }        
+        }
     }
 }

@@ -388,202 +388,201 @@ namespace HotelManagement
             }
 
 
+           ////Not Implemented
+           // public static bool UpdateGuest(int id, string firstname, string lastname, DateTime birthday, string nationalCode ,string mobile, string gender)
+           // {
+           //     try
+           //     {
 
-           //Not Implemented
-            public static bool UpdateGuest(int id, string firstname, string lastname, DateTime birthday, string nationalCode ,string mobile, string gender)
-            {
-                try
-                {
+           //         MakeConnection();
 
-                    MakeConnection();
-
-                    cmd.CommandText = "Update \"Actor\" Set Firstname = @Firstname , Lastname = @Lastname  , Birthday =  @Birthday , NationalCode = @NationalCode ,Mobile =  @Mobile , Gender = @Gender   Where ID = @ID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    cmd.Parameters.AddWithValue("@Firstname", firstname);
-                    cmd.Parameters.AddWithValue("@Lastname ", lastname);
-                    cmd.Parameters.AddWithValue("@Birthday", birthday);
-                    cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
-                    cmd.Parameters.AddWithValue("@Mobile", Database.CheckNullInsert(mobile));
-                    cmd.Parameters.AddWithValue("@Gender", gender);
+           //         cmd.CommandText = "Update \"Actor\" Set Firstname = @Firstname , Lastname = @Lastname  , Birthday =  @Birthday , NationalCode = @NationalCode ,Mobile =  @Mobile , Gender = @Gender   Where ID = @ID ";
+           //         cmd.Parameters.Clear();
+           //         cmd.Parameters.AddWithValue("@ID", id);
+           //         cmd.Parameters.AddWithValue("@Firstname", firstname);
+           //         cmd.Parameters.AddWithValue("@Lastname ", lastname);
+           //         cmd.Parameters.AddWithValue("@Birthday", birthday);
+           //         cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
+           //         cmd.Parameters.AddWithValue("@Mobile", Database.CheckNullInsert(mobile));
+           //         cmd.Parameters.AddWithValue("@Gender", gender);
 
 
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
+           //         Connect();
+           //         cmd.ExecuteNonQuery();
+           //         Disconnect();
 
-                    return true;
+           //         return true;
 
-                }
-                catch
-                {
-                    Disconnect();
-                    return false;
-                }
+           //     }
+           //     catch
+           //     {
+           //         Disconnect();
+           //         return false;
+           //     }
 
-            }
+           // }
 
         }
 
 
-        public class Guest
-        {
+        //public class Guest
+        //{
 
-            public static int ActID { get; set; }
-            public static int CustomerID { get; set; }
+        //    public static int ActID { get; set; }
+        //    public static int CustomerID { get; set; }
 
-            public static DateTime DateModified { get; set; }
+        //    public static DateTime DateModified { get; set; }
 
-            private static SqlConnection con = new SqlConnection();
-            private static SqlCommand cmd = new SqlCommand();
-            private static SqlDataAdapter adp = new SqlDataAdapter();
-            private static DataTable dataTable = new DataTable();
+        //    private static SqlConnection con = new SqlConnection();
+        //    private static SqlCommand cmd = new SqlCommand();
+        //    private static SqlDataAdapter adp = new SqlDataAdapter();
+        //    private static DataTable dataTable = new DataTable();
 
-            private static void MakeConnection()
-            {
-                try
-                {
-                    con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
-                    cmd.Connection = con;
+        //    private static void MakeConnection()
+        //    {
+        //        try
+        //        {
+        //            con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
+        //            cmd.Connection = con;
 
-                }
-                catch
-                {
+        //        }
+        //        catch
+        //        {
 
-                    ;
-                }
-
-
-            }
-            private static void Connect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Closed)
-                    {
-
-                        con.Open();
-
-                    }
+        //            ;
+        //        }
 
 
-                }
-                catch
-                {
+        //    }
+        //    private static void Connect()
+        //    {
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Closed)
+        //            {
 
-                    ;
-                }
+        //                con.Open();
 
-            }
-            private static void Disconnect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
-
-                    }
-
-                }
-                catch
-                {
-
-                    ;
-                }
-            }
-
-            //Implemented
-            public static int Insert(int actID, int customerID)
-            {
-
-                try
-                {
-
-                    MakeConnection();
-                    //dataTable = new DataTable();
-                    cmd.CommandText = "Insert Into \"Guest\" ( ActID , CustomerID , DateModified) Values (@ActID , @CustomerID , @DateModified)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ActID", actID);
-                    cmd.Parameters.AddWithValue("@CustomerID", customerID);
-                    cmd.Parameters.AddWithValue("@DateModified", DateTime.Now.Date);
+        //            }
 
 
-                    // DateTime.Now.ToString("h:mm:ss tt")
+        //        }
+        //        catch
+        //        {
+
+        //            ;
+        //        }
+
+        //    }
+        //    private static void Disconnect()
+        //    {
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Open)
+        //            {
+        //                con.Close();
+
+        //            }
+
+        //        }
+        //        catch
+        //        {
+
+        //            ;
+        //        }
+        //    }
+
+        //    //Implemented
+        //    public static int Insert(int actID, int customerID)
+        //    {
+
+        //        try
+        //        {
+
+        //            MakeConnection();
+        //            //dataTable = new DataTable();
+        //            cmd.CommandText = "Insert Into \"Guest\" ( ActID , CustomerID , DateModified) Values (@ActID , @CustomerID , @DateModified)";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@ActID", actID);
+        //            cmd.Parameters.AddWithValue("@CustomerID", customerID);
+        //            cmd.Parameters.AddWithValue("@DateModified", DateTime.Now.Date);
 
 
-                    Connect();
-
-                    cmd.ExecuteNonQuery();
-                    //cmd.CommandText = Database.QueryLastID;
-                    //int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-
-                    Disconnect();
-
-                    return 1;
-
-                }
-                catch
-                {
-
-                    return -1;
-                }
+        //            // DateTime.Now.ToString("h:mm:ss tt")
 
 
-            }
+        //            Connect();
+
+        //            cmd.ExecuteNonQuery();
+        //            //cmd.CommandText = Database.QueryLastID;
+        //            //int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+
+        //            Disconnect();
+
+        //            return 1;
+
+        //        }
+        //        catch
+        //        {
+
+        //            return -1;
+        //        }
+
+
+        //    }
             
-            //public static bool SearchGuest(  int customerID , DateTime date)
-            //{
-            //    try
-            //    {
+        //    //public static bool SearchGuest(  int customerID , DateTime date)
+        //    //{
+        //    //    try
+        //    //    {
 
 
-            //        MakeConnection();
-            //        dataTable = new DataTable();
+        //    //        MakeConnection();
+        //    //        dataTable = new DataTable();
 
-            //        cmd.CommandText = "SELECT * FROM \"Guest\" Where CustomerID = @CustomerID AND DateModified = @Date";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@CustomerID", customerID);
-            //        //cmd.Parameters.AddWithValue("@ActID", actID);
-            //        cmd.Parameters.AddWithValue("@Date", date);
+        //    //        cmd.CommandText = "SELECT * FROM \"Guest\" Where CustomerID = @CustomerID AND DateModified = @Date";
+        //    //        cmd.Parameters.Clear();
+        //    //        cmd.Parameters.AddWithValue("@CustomerID", customerID);
+        //    //        //cmd.Parameters.AddWithValue("@ActID", actID);
+        //    //        cmd.Parameters.AddWithValue("@Date", date);
 
-            //        adp.SelectCommand = cmd;
+        //    //        adp.SelectCommand = cmd;
 
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
+        //    //        Connect();
+        //    //        adp.Fill(dataTable);
+        //    //        Disconnect();
 
-            //        if (dataTable.Rows.Count != 0)
-            //        {
+        //    //        if (dataTable.Rows.Count != 0)
+        //    //        {
 
-            //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
-            //            CustomerID = Convert.ToInt32(dataTable.Rows[0]["CustomerID"]);
-            //            DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
+        //    //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
+        //    //            CustomerID = Convert.ToInt32(dataTable.Rows[0]["CustomerID"]);
+        //    //            DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
 
 
 
-            //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-            //            //Image = (byte[])dataTable.Rows[0]["Image"];
+        //    //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
+        //    //            //Image = (byte[])dataTable.Rows[0]["Image"];
 
 
-            //            return true;
+        //    //            return true;
 
 
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //        }
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            return false;
+        //    //        }
 
 
 
 
-            //    }
-            //    catch
-            //    {
+        //    //    }
+        //    //    catch
+        //    //    {
 
-            //        return false;
-            //    }
+        //    //        return false;
+        //    //    }
 
 
 
@@ -595,36 +594,36 @@ namespace HotelManagement
 
 
 
-            //}
-            //Imp
-            public static bool Delete(int actID , int customerID, DateTime date)
-            {
-                try
-                {
+        //    //}
+        //    //Imp
+        //    public static bool Delete(int actID , int customerID, DateTime date)
+        //    {
+        //        try
+        //        {
 
 
-                    MakeConnection();
-                    dataTable = new DataTable();
+        //            MakeConnection();
+        //            dataTable = new DataTable();
 
-                    cmd.CommandText = "Delete FROM \"Guest\" Where CustomerID = @CustomerID AND DateModified = @Date And ActID = @ActID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@CustomerID", customerID);
-                    cmd.Parameters.AddWithValue("@ActID", actID);
-                    cmd.Parameters.AddWithValue("@Date", date);
+        //            cmd.CommandText = "Delete FROM \"Guest\" Where CustomerID = @CustomerID AND DateModified = @Date And ActID = @ActID";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@CustomerID", customerID);
+        //            cmd.Parameters.AddWithValue("@ActID", actID);
+        //            cmd.Parameters.AddWithValue("@Date", date);
 
-                    //adp.SelectCommand = cmd;
+        //            //adp.SelectCommand = cmd;
 
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            Disconnect();
 
-                    return true;
-                }
-                catch
-                {
+        //            return true;
+        //        }
+        //        catch
+        //        {
 
-                    return false;
-                }
+        //            return false;
+        //        }
 
 
 
@@ -636,260 +635,260 @@ namespace HotelManagement
 
 
 
-            }
+        //    }
 
-        }
+        //}
 
 
-        public class Customer
-        {
+        //public class Customer
+        //{
 
-            public static int ID { get; set; }
-            public static int ActID { get; set; }
+        //    public static int ID { get; set; }
+        //    public static int ActID { get; set; }
 
 
-            private static SqlConnection con = new SqlConnection();
-            private static SqlCommand cmd = new SqlCommand();
-            private static SqlDataAdapter adp = new SqlDataAdapter();
-            private static DataTable dataTable = new DataTable();
+        //    private static SqlConnection con = new SqlConnection();
+        //    private static SqlCommand cmd = new SqlCommand();
+        //    private static SqlDataAdapter adp = new SqlDataAdapter();
+        //    private static DataTable dataTable = new DataTable();
 
 
 
-            private static void MakeConnection()
-            {
-                try
-                {
-                    con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
-                    cmd.Connection = con;
+        //    private static void MakeConnection()
+        //    {
+        //        try
+        //        {
+        //            con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
+        //            cmd.Connection = con;
 
-                }
-                catch
-                {
+        //        }
+        //        catch
+        //        {
 
-                    ;
-                }
+        //            ;
+        //        }
 
 
-            }
+        //    }
 
-            private static void Connect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Closed)
-                    {
+        //    private static void Connect()
+        //    {
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Closed)
+        //            {
 
-                        con.Open();
+        //                con.Open();
 
-                    }
+        //            }
 
 
-                }
-                catch
-                {
+        //        }
+        //        catch
+        //        {
 
-                    ;
-                }
+        //            ;
+        //        }
 
-            }
+        //    }
 
-            private static void Disconnect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
+        //    private static void Disconnect()
+        //    {
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Open)
+        //            {
+        //                con.Close();
 
-                    }
+        //            }
 
-                }
-                catch
-                {
+        //        }
+        //        catch
+        //        {
 
-                    ;
-                }
-            }
+        //            ;
+        //        }
+        //    }
 
-            //IMP
-            public static int Insert(int actID)
-            {
+        //    //IMP
+        //    public static int Insert(int actID)
+        //    {
 
-                try
-                {
+        //        try
+        //        {
 
-                    MakeConnection();
-                    //dataTable = new DataTable();
-                    cmd.CommandText = "Insert Into \"Customer\" (ActID) Values (@ActID)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ActID", actID);
+        //            MakeConnection();
+        //            //dataTable = new DataTable();
+        //            cmd.CommandText = "Insert Into \"Customer\" (ActID) Values (@ActID)";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@ActID", actID);
 
 
 
-                    // DateTime.Now.ToString("h:mm:ss tt")
+        //            // DateTime.Now.ToString("h:mm:ss tt")
 
 
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            cmd.CommandText = Database.QueryLastID;
+        //            int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+        //            Disconnect();
 
-                    return insertedID;
+        //            return insertedID;
 
-                }
-                catch
-                {
-                    Disconnect();
-                    return -1;
-                }
+        //        }
+        //        catch
+        //        {
+        //            Disconnect();
+        //            return -1;
+        //        }
 
 
-            }
+        //    }
 
-            //public static bool SearchCustomer(int actID)
-            //{
-            //    try
-            //    {
+        //    //public static bool SearchCustomer(int actID)
+        //    //{
+        //    //    try
+        //    //    {
 
 
-            //        MakeConnection();
-            //        dataTable = new DataTable();
+        //    //        MakeConnection();
+        //    //        dataTable = new DataTable();
 
-            //        cmd.CommandText = "SELECT * FROM \"Customer\" Where ActID = @ActID ";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@ActID", actID);
+        //    //        cmd.CommandText = "SELECT * FROM \"Customer\" Where ActID = @ActID ";
+        //    //        cmd.Parameters.Clear();
+        //    //        cmd.Parameters.AddWithValue("@ActID", actID);
 
 
-            //        adp.SelectCommand = cmd;
+        //    //        adp.SelectCommand = cmd;
 
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
+        //    //        Connect();
+        //    //        adp.Fill(dataTable);
+        //    //        Disconnect();
 
-            //        if (dataTable.Rows.Count != 0)
-            //        {
+        //    //        if (dataTable.Rows.Count != 0)
+        //    //        {
 
-            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-            //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
+        //    //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+        //    //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
 
 
-            //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-            //            //Image = (byte[])dataTable.Rows[0]["Image"];
+        //    //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
+        //    //            //Image = (byte[])dataTable.Rows[0]["Image"];
 
 
-            //            return true;
+        //    //            return true;
 
 
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //        }
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            return false;
+        //    //        }
 
 
 
 
-            //    }
-            //    catch
-            //    {
+        //    //    }
+        //    //    catch
+        //    //    {
 
-            //        return false;
-            //    }
+        //    //        return false;
+        //    //    }
 
-            //}
+        //    //}
 
-            //public static int SearchCustomerWithID(int ID)
-            //{
-            //    try
-            //    {
+        //    //public static int SearchCustomerWithID(int ID)
+        //    //{
+        //    //    try
+        //    //    {
 
 
-            //        MakeConnection();
-            //        dataTable = new DataTable();
+        //    //        MakeConnection();
+        //    //        dataTable = new DataTable();
 
-            //        cmd.CommandText = "SELECT * FROM \"Customer\" Where ID = @ID ";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@ID", ID);
+        //    //        cmd.CommandText = "SELECT * FROM \"Customer\" Where ID = @ID ";
+        //    //        cmd.Parameters.Clear();
+        //    //        cmd.Parameters.AddWithValue("@ID", ID);
 
 
-            //        adp.SelectCommand = cmd;
+        //    //        adp.SelectCommand = cmd;
 
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
+        //    //        Connect();
+        //    //        adp.Fill(dataTable);
+        //    //        Disconnect();
 
-            //        if (dataTable.Rows.Count != 0)
-            //        {
+        //    //        if (dataTable.Rows.Count != 0)
+        //    //        {
 
-            //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
+        //    //            ActID = Convert.ToInt32(dataTable.Rows[0]["ActID"]);
 
 
 
-            //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-            //            //Image = (byte[])dataTable.Rows[0]["Image"];
+        //    //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
+        //    //            //Image = (byte[])dataTable.Rows[0]["Image"];
 
 
-            //            return ActID;
+        //    //            return ActID;
 
 
-            //        }
-            //        else
-            //        {
-            //            return -1;
-            //        }
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            return -1;
+        //    //        }
 
 
 
 
-            //    }
-            //    catch
-            //    {
+        //    //    }
+        //    //    catch
+        //    //    {
 
-            //        return -2;
-            //    }
+        //    //        return -2;
+        //    //    }
 
-            //}
-            //IMP
-            public static int SearchCustomerID(int actID)
-            {
-                try
-                {
+        //    //}
+        //    //IMP
+        //    public static int SearchCustomerID(int actID)
+        //    {
+        //        try
+        //        {
 
 
-                    MakeConnection();
-                    dataTable = new DataTable();
+        //            MakeConnection();
+        //            dataTable = new DataTable();
 
-                    cmd.CommandText = "SELECT * FROM \"Customer\" Where ActID = @ActID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ActID", actID);
+        //            cmd.CommandText = "SELECT * FROM \"Customer\" Where ActID = @ActID ";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@ActID", actID);
 
 
-                    adp.SelectCommand = cmd;
+        //            adp.SelectCommand = cmd;
 
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
+        //            Connect();
+        //            adp.Fill(dataTable);
+        //            Disconnect();
 
-                    if (dataTable.Rows.Count != 0)
-                    {
+        //            if (dataTable.Rows.Count != 0)
+        //            {
 
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-                        return ID;
-                    }
-                    else
-                    {
-                        return -1;
-                    }
-                }
-                catch
-                {
+        //                ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+        //                return ID;
+        //            }
+        //            else
+        //            {
+        //                return -1;
+        //            }
+        //        }
+        //        catch
+        //        {
 
-                    return -2;
-                }
+        //            return -2;
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
 
         public class Branch
@@ -6049,6 +6048,22 @@ namespace HotelManagement
                 }
 
             }
+            public static object CheckNullInsertDateTime(DateTime obj)
+            {
+
+                if (obj == DateTime.MinValue)
+                {
+
+                    return DBNull.Value;
+                }
+                else
+                {
+                    return obj;
+
+                }
+
+            }
+
             public static object CheckNullSelect(object obj)
             {
 
@@ -6075,21 +6090,6 @@ namespace HotelManagement
                 else
                 {
                     return Convert.ToDateTime(obj);
-
-                }
-
-            }
-            public static object CheckNullInsertDateTime(DateTime obj)
-            {
-
-                if (obj == DateTime.MinValue)
-                {
-
-                    return DBNull.Value;
-                }
-                else
-                {
-                    return obj;
 
                 }
 
