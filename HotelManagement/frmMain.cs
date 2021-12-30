@@ -42,7 +42,7 @@ namespace HotelManagement
             
 
 
-            //Current.User.SearchUser("behzad75");
+            Current.User.SearchUser("behzad75");
 
 
             HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
@@ -217,7 +217,6 @@ namespace HotelManagement
         private void btnRoom_Click(object sender, EventArgs e)
         {
 
-
             if (Current.User.AccessLevel.Contains("Room"))
             {
                 MoveSidePanel(btnRoom);
@@ -227,11 +226,7 @@ namespace HotelManagement
             else
             {
                 MessageBox.Show(accessErrorMsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
-
-        
-
 
         }
 

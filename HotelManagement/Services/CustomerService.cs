@@ -54,6 +54,23 @@ namespace HotelManagement.Services
                 return null;
 
             return Mapper.ConvertRowToObj<Customer>(dataTable.Rows[0]);
+        }   
+        public Customer GetCustomer(int actID , string optional = null)
+        {
+            parameters = new Dictionary<string, object>();
+
+            sqlQuery = "SELECT  a.ID AS ActID , c.ID AS ID , a.* " +
+                "FROM \"Actor\" AS a  ,\"Customer\" AS c "+
+                "wHERE  c.ActID = a.ID AND a.ID = @ActID";
+
+            parameters.Add("@ActID", actID);
+
+            var dataTable = _database.Select(sqlQuery, DatabaseOperation.OperationType.Select, parameters);
+
+            if (dataTable == null || dataTable.Rows.Count == 0)
+                return null;
+
+            return Mapper.ConvertRowToObj<Customer>(dataTable.Rows[0]);
         }
 
 

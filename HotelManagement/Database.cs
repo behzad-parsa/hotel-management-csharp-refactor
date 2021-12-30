@@ -1224,7 +1224,7 @@ namespace HotelManagement
 
         }
 
-        //----------------------------------------------------------------------
+      
         public class Employee
         {
             public static int ID { get; set; }
@@ -1544,8 +1544,7 @@ namespace HotelManagement
             //}
 
         }
-
-
+        //----------------------------------------------------------------------
         public class Room
         {
             public static int ID { get; set; }
@@ -2114,20 +2113,10 @@ namespace HotelManagement
                 {
 
                     MakeConnection();
-
                     cmd.CommandText = "Insert Into \"RoomTypeRel\" (RoomID , RoomTypeID) Values (@RoomID , @RoomTypeID)";
                     cmd.Parameters.Clear();
-
-
                     cmd.Parameters.AddWithValue("@RoomID", roomID);
                     cmd.Parameters.AddWithValue("@RoomTypeID", typeID);
-
-
-
-
-
-
-
 
                     Connect();
                     cmd.ExecuteNonQuery();
@@ -2138,15 +2127,11 @@ namespace HotelManagement
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
             }
 
         }
-
 
         public class User
         {
@@ -3682,7 +3667,6 @@ namespace HotelManagement
 
         public class Reservation
         {
-            //Actor act = new Actor();
             public static int ID { get; set; }
             public static int UserID { get; set; }
             public static int CustomerID { get; set; }

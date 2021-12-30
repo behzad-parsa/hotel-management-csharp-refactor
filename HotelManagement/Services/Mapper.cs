@@ -30,6 +30,8 @@ namespace HotelManagement.Services
 
             return obj;
         }
+
+
         public static List<T> ConvertDataTableToList<T> (DataTable dataTable)
         {
             List<T> objectList = new List<T>();

@@ -18,26 +18,31 @@ namespace HotelManagement
         {
             InitializeComponent();
 
-            Employee employee = new Employee()
-            {
-                ActID = 2029,
-                BranchID = 1005,
-                HireDate = DateTime.Now,
-                Education = "Bsc",
-                Salary = 150000
-            };
+            //Employee employee = new Employee()
+            //{
+            //    ActID = 2029,
+            //    BranchID = 1005,
+            //    HireDate = DateTime.Now,
+            //    Education = "Bsc",
+            //    Salary = 150000
+            //};
 
-            EmployeeService employeeService = new EmployeeService();
-            var res = employeeService.InsertEmployee(employee);
+            //EmployeeService employeeService = new EmployeeService();
+            //var res = employeeService.InsertEmployee(employee);
 
-            var res2 = employeeService.GetEmployee(16);
-            var res3 = employeeService.GetEmployee(24,1);
+            //var res2 = employeeService.GetEmployee(16);
+            //var res3 = employeeService.GetEmployee(24,1);
 
-            employee.ID = employeeService.LastInsertedId;
-            employee.Education = "PHD";
-            var res4 = employeeService.UpdateEmployee(employee);
+            //employee.ID = employeeService.LastInsertedId;
+            //employee.Education = "PHD";
+            //var res4 = employeeService.UpdateEmployee(employee);
 
-            var res5 = employeeService.DeleteEmployee(employeeService.LastInsertedId);
+            //var res5 = employeeService.DeleteEmployee(employeeService.LastInsertedId);
+
+            CustomerService cs = new CustomerService();
+            Customer c = new Customer();
+            var res = cs.GetCustomer(21, null);
+            
         }
         
     }

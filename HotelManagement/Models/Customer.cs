@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.Models
 {
-    public class Customer
+    public class Customer : Actor
     {
-        public int ID { get; set; }
+        public new int ID { get; set; }
         public int ActID { get; set; }
     }
 }

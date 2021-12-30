@@ -8,10 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using HotelManagement.Models;
+using HotelManagement.Services;
+
 namespace HotelManagement
 {
     public partial class CardCustomerDetail : UserControl
     {
+
+        private readonly CustomerService _customerService;
+        private readonly ActorService _actorService; 
+
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
         BunifuImageButton btnNext;
         BunifuImageButton btnBack;
@@ -22,9 +29,10 @@ namespace HotelManagement
         public CardCustomerDetail()
         {
             InitializeComponent();
-
-
+            _actorService = new ActorService();
+            _customerService = new CustomerService();
         }
+
         public CardCustomerDetail(CustomerSecond customer)
         {
             InitializeComponent();
@@ -732,22 +740,40 @@ namespace HotelManagement
                 {
                     ValidationFlag = false;
 
-                    var result = HotelDatabase.Actor.InsertAll(txtFname.Text, txtLname.Text, dateBirth.Value.Date,
-                     txtNCSearch.Text, cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text,
-                     txtMobile.Text, RadioButtonResult(rdbMale, rdbFemale), cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
-                    if (result > 0)
+                    //var result = HotelDatabase.Actor.InsertAll(txtFname.Text, txtLname.Text, dateBirth.Value.Date,
+                    // txtNCSearch.Text, cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text,
+                    // txtMobile.Text, RadioButtonResult(rdbMale, rdbFemale), cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
+                    var resultActor =  _actorService.InsertActor(new Actor()
                     {
-                        ActID = result;
-                        var resultCustomer = HotelDatabase.Customer.Insert(result);
-                        if (resultCustomer > 0)
+                        Firstname = txtFname.Text,
+                        Lastname = txtLname.Text,
+                        Birthday = dateBirth.Value.Date,
+                        NationalCode = txtNCSearch.Text,
+                        Nationality = cmbNational.SelectedItem.ToString(),
+                        Email = txtEmail.Text , 
+                        Tel = txtTel.Text , 
+                        Mobile = txtMobile.Text,
+                        Gender = RadioButtonResult(rdbMale , rdbFemale) ,
+                        State = cmbState.SelectedItem.ToString(),
+                        City = txtCity.Text , 
+                        Address = txtAddress.Text 
+                    }) ;
+                    if (resultActor)
+                    {
+                        //ActID = result;
+                        //var resultCustomer = HotelDatabase.Customer.Insert(result);
+                        var resultCustomer = _customerService.InsertCustomer(new Customer()
                         {
-                            CustomerID = resultCustomer;
-                            //NewBook.currentCustomerID = resultCustomer;
+                            ActID = _actorService.LastInsertedId
+                        });
+                        if (resultCustomer)
+                        {
+                            CustomerID = _customerService.LastInsertedId;
+
                             PanelStatus(panelStatusCustomer , "Action Completed Successfuly", Status.Green);
                             Current.User.Activities.Add(new Activity("Submit New Customer", txtFname.Text + " " + txtLname.Text + "'s information has been submited by " + Current.User.Firstname+" " +Current.User.Lastname));
 
-                            //NewBook.statusFlag = 1;
-                            //btnCustSubmit.Enabled = false;
+
                             btnNext.Visible = true;
                             btnSubmit.Enabled = false;
 
@@ -759,14 +785,8 @@ namespace HotelManagement
                                  RadioButtonResult(rdbMale, rdbFemale), cmbNational.SelectedItem.ToString(), txtEmail.Text, txtTel.Text
                                  , cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
 
-
-
                             NewBook.customerInfo = customer;
                             NewBook.statusFlag = 1;
-
-                            //NewBook.customerInfo = customerInfo;
-
-
 
                         }
                         else

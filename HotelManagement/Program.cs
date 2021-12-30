@@ -18,6 +18,7 @@ namespace HotelManagement
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new frmLogin());
             Application.Run(new frmTest());
+            //Application.Run(new frmMain());
         }
     }
 }
