@@ -10,7 +10,6 @@ namespace HotelManagement.Models
     {
         public new int ID { get; set; }
         public int ActID { get; set; }
-        //public List<Guest> LstGuest { get; internal set; }
 
         public Customer()
         {

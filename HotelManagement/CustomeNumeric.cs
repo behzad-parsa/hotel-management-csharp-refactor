@@ -25,21 +25,6 @@ namespace HotelManagement
             ValueChange?.Invoke(this, EventArgs.Empty);
         }
 
-        //public int Age
-        //{
-        //    get
-        //    {
-        //        return _age;
-        //    }
-
-        //    set
-        //    {
-        //        //#3
-        //        _age = value;
-        //        OnAgeChanged();
-        //    }
-        //}
-
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             int num = Convert.ToInt32(txtTitle.Text);

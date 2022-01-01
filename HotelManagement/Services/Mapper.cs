@@ -10,7 +10,7 @@ namespace HotelManagement.Services
 {
     public class Mapper
     {
-        //Convert DataTable To Tagert Object (or Model)
+        //Convert a Row of DataTable To Tagert Object (or Model)
         public static T ConvertRowToObj<T>(DataRow dataRow)
         {
             T obj = Activator.CreateInstance<T>();
@@ -19,11 +19,17 @@ namespace HotelManagement.Services
             {
                 foreach (PropertyInfo property in typeof(T).GetProperties())
                 {
-                    if (property.Name == column.ColumnName)
-                        property.SetValue(obj, dataRow[column.ColumnName], null);
+                    
 
-                    else
-                        continue;
+                    if (property.Name == column.ColumnName)
+                    {
+                        if ((object)dataRow[column.ColumnName] != (object)DBNull.Value)
+                            property.SetValue(obj, dataRow[column.ColumnName], null);
+                        else
+                            property.SetValue(obj, null, null);
+                        break;
+                    }
+         
                 }
 
             }
@@ -31,7 +37,7 @@ namespace HotelManagement.Services
             return obj;
         }
 
-
+        //Convert All Rows of DataTable to the List Of targetObjects
         public static List<T> ConvertDataTableToList<T> (DataTable dataTable)
         {
             List<T> objectList = new List<T>();

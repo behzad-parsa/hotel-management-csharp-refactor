@@ -24,7 +24,6 @@ namespace HotelManagement
               +"  Where t.TransactionTypeID = tt.id AND t.PaymentMethodID = pm.id AND t.AccountID = a.id  ";
             var data =  HotelDatabase.Database.Query(query);
             dgvTransact.DataSource = data;
-            //dgvTransact.Columns["Account"].wra
             dgvTransact.Columns["Tid"].Visible = false ;
             
         }
@@ -32,16 +31,10 @@ namespace HotelManagement
         private void CardTransact_Load(object sender, EventArgs e)
         {
             LoadData();
-
         }
         int transID = -10;
         private void dgvTransact_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //if (dgvTransact.CurrentRow != null)
-            //{
-            //    //index = ;
-            //    transID = Convert.ToInt32(dgvTransact["Tid", dgvTransact.CurrentRow.Index].Value);
-            //}
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -61,21 +54,14 @@ namespace HotelManagement
                         PanelStatus("Action Completed Successfuly", Status.Green);
                         LoadData();
                         Current.User.Activities.Add(new Activity("Delete Transaction", "A Transaction has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname));
-
                     }
                     else
                     {
                         PanelStatus("Unable to Complete Action", Status.Red);
                     }
                 }
-
-
             }
-
         }
-
-
-
 
         private enum Status
         {
@@ -92,33 +78,22 @@ namespace HotelManagement
                 prgbCustError.ProgressColor = Color.Red;
                 lblCustError.ForeColor = Color.Red;
                 //lblCustError.Text = text;
-
             }
             else if (status == Status.Green)
             {
-
                 prgbCustError.ProgressColor = Color.Green;
                 lblCustError.ForeColor = Color.Green;
                 //lblCustError.Text = text;
-
             }
             else
             {
                 prgbCustError.ProgressColor = Color.Blue;
                 lblCustError.ForeColor = Color.Blue;
-
             }
-
-
-
-
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-
-
-
             var bmp = Theme.DarkBack(this.ParentForm);
 
             using (Panel p = new Panel())
@@ -137,23 +112,12 @@ namespace HotelManagement
                     {
                         LoadData();
                         dgvTransact.ClearSelection();
-                        Current.User.Activities.Add(new Activity("Create New Transaction", "New Transaction has been created by " + Current.User.Firstname + " " + Current.User.Lastname));
-
-
+                        Current.User.Activities.Add(
+                            new Activity("Create New Transaction", "New Transaction has been created by " + Current.User.Firstname + " " + Current.User.Lastname)
+                            );
                     }
-
-
                 }
-
-            }
-
-
-
-
-
-
-
-   
+            } 
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -161,15 +125,9 @@ namespace HotelManagement
             if (transID < 0)
             {
                 MessageBox.Show("Select Row");
-
             }
             else
             {
-
-
-
-
-
                 var bmp = Theme.DarkBack(this.ParentForm);
 
                 using (Panel p = new Panel())
@@ -189,10 +147,6 @@ namespace HotelManagement
                         {
                             LoadData();
                             Current.User.Activities.Add(new Activity("Edit Transaction", "Transaction information has been changed by " + Current.User.Firstname + " " + Current.User.Lastname));
-
-
-
-
                         }
                         int rowIndex = -1;
 
@@ -205,40 +159,21 @@ namespace HotelManagement
 
                         dgvTransact.ClearSelection();
                         dgvTransact.Rows[rowIndex].Selected = true;
-                        //transID = -1;
-
                     }
-
-
-
-
                 }
-
             }
-
-
-
-
-
-
-
-                //var res = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-   
-
         }
 
         private void dgvTransact_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvTransact.CurrentRow != null)
             {
-                //index = ;
                 transID = Convert.ToInt32(dgvTransact["Tid", dgvTransact.CurrentRow.Index].Value);
             }
         }
 
         private void bunifuCards1_Paint(object sender, PaintEventArgs e)
         {
-
         }
     }
 }

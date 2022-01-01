@@ -16,7 +16,6 @@ namespace HotelManagement
     {
 
         public int ServiceID;
-
         public bool completeActionFlag = false;
         private bool addFlag;
         public enum Action
@@ -25,11 +24,9 @@ namespace HotelManagement
             Edit
         }
 
-
         public ActionSerivce(Action action)
         {
             InitializeComponent();
-
 
             if (action == Action.Add)
             {
@@ -62,23 +59,12 @@ namespace HotelManagement
                     txtTitle.Text = HotelDatabase.Service.Title;
                     txtPrice.Text = HotelDatabase.Service.Price.ToString();
                     txtDecription.Text = HotelDatabase.Service.Description;
-
-
-
                 }
                 else
                 {
-
-
                     PanelStatus("Unable To Complete Action", Status.Red);
-
-
-
                 }
-
-
             }
-
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -86,21 +72,12 @@ namespace HotelManagement
             this.Dispose();
         }
 
-
-
-
-
         //SideWays Method ----------------------------
         private void TextBoxEnter(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
-
             txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
-
             txtBox.ForeColor = Color.Black;
-
-
-
         }
 
         private enum Status
@@ -117,39 +94,26 @@ namespace HotelManagement
             {
                 prgbCustError.ProgressColor = Color.Red;
                 lblCustError.ForeColor = Color.Red;
-                //lblCustError.Text = text;
-
             }
             else if (status == Status.Green)
             {
-
                 prgbCustError.ProgressColor = Color.Green;
                 lblCustError.ForeColor = Color.Green;
-                //lblCustError.Text = text;
-
             }
             else
             {
                 prgbCustError.ProgressColor = Color.Blue;
                 lblCustError.ForeColor = Color.Blue;
-
             }
-
-
-
-
         }
         private void TextBoxColor(BunifuMetroTextbox txtBox, Status status)
         {
             if (status == Status.Red)
             {
                 txtBox.BorderColorIdle = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
-
                 txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
             }
             else
@@ -158,8 +122,8 @@ namespace HotelManagement
             }
 
         }
+
         private int txtCount = 0;
-        //private bool validationFlag = false;
         private bool validationFlag = false;
         private bool TextBoxCheck(BunifuMetroTextbox txtBox, string txt)
         {
@@ -168,12 +132,6 @@ namespace HotelManagement
                 TextBoxColor(txtBox, Status.Red);
                 return false;
             }
-            //else if (txt == "National Code")
-            //{
-            //    TextBoxColor(txtBox, Status.blue);
-            //    txtCount++;
-            //    return true;
-            //}
             else
             {
                 TextBoxColor(txtBox, Status.Green);
@@ -185,11 +143,9 @@ namespace HotelManagement
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-
             //---Validation----
             TextBoxCheck(txtPrice, "");
             TextBoxCheck(txtTitle, "");
-
 
             if (txtCount == 2)
             {
@@ -202,19 +158,12 @@ namespace HotelManagement
                 {
                     PanelStatus("Price Must Be Numeric", Status.Red);
                 }
-
-
             }
             else
             {
-
                 PanelStatus("Please Fill The Blank", Status.Red);
-
-
             }
             txtCount = 0;
-
-
 
             if (validationFlag)
             {
@@ -227,11 +176,9 @@ namespace HotelManagement
 
                     if (res > 0)
                     {
-
                         PanelStatus("Action Completed Successfully", Status.Green);
                         completeActionFlag = true;
                         this.Dispose();
-
                     }
                     else
                     {
@@ -244,41 +191,16 @@ namespace HotelManagement
                 {
                     if (HotelDatabase.Service.Update(ServiceID, txtTitle.Text, Convert.ToInt32(txtPrice.Text), txtDecription.Text))
                     {
-
-
                         PanelStatus("Action Completed Successfully", Status.Green);
                         completeActionFlag = true;
                         this.Dispose();
-
-
                     }
                     else
                     {
-
                         completeActionFlag = false;
                         PanelStatus("Unable To Complete Action --- Update", Status.Red);
-
                     }
-
-
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
         }
     }

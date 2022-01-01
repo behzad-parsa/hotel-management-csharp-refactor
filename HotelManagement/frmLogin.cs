@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using System.Threading;
 using System.Windows.Forms;
 using System.Net.Mail;
 using System.Net;
@@ -73,17 +72,7 @@ namespace HotelManagement
             lblTime.Text = startTime.ToString();
             if (startTime == new TimeSpan(0,0,0))
             {
-
-                //LoginPanelAnimation();
-                //step1Flag = false;
-                //btnCheck.ButtonText = "Check";
-                //labelHeader.Text = "Enter Your Email :";
-                //lblTime.Visible = false;
-                //timerReset.Stop();
-                //startTime = new TimeSpan(0, 9, 0);
-                //pictureLock.Image = Properties.Resources.login;
                 ResetForgotPanel();
-
             }
         }
 
@@ -95,10 +84,7 @@ namespace HotelManagement
 
  
              prgWaiting.Visible = false; 
-            
-            //prgWaiting.Visible = true;
 
-            
            
         }
 
@@ -132,16 +118,8 @@ namespace HotelManagement
             }
             if(lblPage.Text=="Login")
             {
-                //LoginPanelAnimation();
-
-                //pictureLock.Image = Properties.Resources.login;
                 ResetForgotPanel();
-
-
-
             }
-
-
         }
 
         private int countDownTime ;
@@ -154,39 +132,27 @@ namespace HotelManagement
                 new frmMain().Show();
                 this.Hide();
             }
-                //pictureLock.Image = Properties.Resources.unlock;
-
-
-            }
+        }
 
         int go = 1;
         private void LogoPosition()
         {
             if (panel1.Left == 0 )
             {
-
                 pictureLock.Top += go;
-
                 if (pictureLock.Top>50)
                 {
                     timer1.Stop();
                 }
-
             }
-
             if (panel2.Left ==0)
             {
-
                 pictureLock.Top -= go;
                 if (pictureLock.Top <34)
                 {
-
                     timer1.Stop();
-
                 }
-
             }
-
         }
 
         void line()
@@ -242,59 +208,39 @@ namespace HotelManagement
             }
         }
 
-
-
         private void LblCLickMethod(object sender, EventArgs e)
         {
             Label lbl = (Label)sender;
 
             lblPage = lbl;
             timer2.Start();
-
-           
         }
 
         private void PasswordVisibility(bool status)
         {
             if (status)
             {
-                //textBox2.PasswordChar = '\0';
-                //pictureBox2.Image = Properties.Resources.show;
                 txtPassword.isPassword = false;
                 pictureEye.Image = Properties.Resources.Invisible;
-
-
             }
             else
             {
                 txtPassword.isPassword = true;
                 pictureEye.Image = Properties.Resources.Eye;
-
             }
-
         }
         
         private void pictureBox2_Click(object sender, EventArgs e)
         {
 
-            
-
             if (txtPassword.isPassword)
             {
-                //textBox2.PasswordChar = '\0';
-                //pictureBox2.Image = Properties.Resources.show;
-                //txtPassword.isPassword = false;
-                //pictureEye.Image = Properties.Resources.Invisible;
                 PasswordVisibility(true);
-
             }
             else
             {
-                //txtPassword.isPassword = true;
-                //pictureEye.Image = Properties.Resources.Eye;
                 PasswordVisibility(false);
             }
-
         }
 
 
@@ -320,8 +266,6 @@ namespace HotelManagement
                 txtPassword.LineIdleColor = Color.Red;
                 lblErrorLogin.Visible = true;
                 lblErrorLogin.Text = "Please Fill The Blank";
-
-
             }
             else
             {
@@ -330,9 +274,6 @@ namespace HotelManagement
                     lblErrorLogin.Visible = true;
                     lblErrorLogin.Text = "Username Cannot Be Null";
                     txtUsername.LineIdleColor = Color.Red;
-
-
-
                 }
 
                 else if (txtPassword.Text == null || txtPassword.Text == "")
@@ -340,9 +281,6 @@ namespace HotelManagement
                     lblErrorLogin.Visible = true;
                     lblErrorLogin.Text = "Password Cannot Be Null";
                     txtPassword.LineIdleColor = Color.Red;
-
-
-
                 }
                 else
                 {
@@ -354,7 +292,6 @@ namespace HotelManagement
 
                         HashPassword hashPass = new HashPassword();
                         
-
                         //Check The Password
                         if (hashPass.ComparePass(Current.User.Password, txtPassword.Text))
                         {
@@ -386,37 +323,23 @@ namespace HotelManagement
                             {
                                 lblErrorLogin.Visible = true;
                                 lblErrorLogin.Text = "Access Denied \nYour Activation has been Canceled .";
-                            }
-                            
-                   
-
+                            }                          
                         }
                         else
                         {
                             lblErrorLogin.Visible = true;
                             lblErrorLogin.Text = "Username Or Password Is Wrong";
                         }
-
-                       
-
                     }
                     else
                     {
                         lblErrorLogin.Visible = true;
                         lblErrorLogin.Text = "Username Or Password Is Wrong";
                     }
-
-
                     this.Cursor = Cursors.Default;
                 }
 
             }
-
-          
-
-
-
-
 
         }
 
@@ -441,7 +364,6 @@ namespace HotelManagement
         }
         private string GenerateStrCode()
         {
-
             string str = "qwertyuiopasdfghjklzxcvbnm1234567890";
             string rndStr ="" ;
 
@@ -450,15 +372,10 @@ namespace HotelManagement
             {
                 rndStr += str[rnd.Next(0 , str.Length-1)];
             }
-
-
-
-
             return rndStr;
         }
         private string GeneratePassCode()
         {
-
             string str = "qwertyuiopasdfghjklzxcvbnm1234567890";
             string rndStr = "";
 
@@ -467,10 +384,6 @@ namespace HotelManagement
             {
                 rndStr += str[rnd.Next(0, str.Length - 1)];
             }
-
-
-
-
             return rndStr;
         }
 
@@ -485,19 +398,13 @@ namespace HotelManagement
             {
                 if (txtForgotEmail.Text != "Email" && !string.IsNullOrEmpty(txtForgotEmail.Text))
                 {
-
                     validationFlag = true;
-
-
                 }
                 else
                 {
-
                     LabelStatus(LblErrorFrogot, "Please Fill The Blank", Status.Red);
                     txtForgotEmail.LineIdleColor = Color.Red;
                 }
-
-
 
                 if (validationFlag)
                 {
@@ -506,7 +413,6 @@ namespace HotelManagement
                     {
                         rndStr = GenerateStrCode();
                         string body = "Your Confirmation Code is: \n " + rndStr;
-
 
                         if (Communication.SendMail(txtForgotEmail.Text.Trim(), Current.User.Username, "Confirm Code", body))
                         {
@@ -524,26 +430,17 @@ namespace HotelManagement
                             timerReset.Start();
                             step1Flag = true;
                             LabelStatus(LblErrorFrogot, "The Code Was Sent, Please Check Your Mail", Status.Green);
-
                         }
                         else
                         {
-
                             LabelStatus(LblErrorFrogot, "Unable To Complete Action", Status.Red);
                         }
-
                     }
                     else
                     {
-
                         LabelStatus(LblErrorFrogot, "Couldn't Find This Mail", Status.Red);
                     }
-
-
-
                 }
-
-
             }
 
             else
@@ -551,40 +448,27 @@ namespace HotelManagement
                 rndStr = GenerateStrCode();
                 string body = "Your Confirmation Code is: \n " + rndStr;
 
-
                 if (Communication.SendMail(saveEmail, Current.User.Username, "Confirm Code", body))
                 {
-                    //txtForgotEmail.HintText = "";
-                    //labelHeader.Text = "Enter The Code :";
-                   // btnCheck.ButtonText = "Send Again";
-                    
+    
                     txtForgotEmail.Text = null;
-                    //txtForgotEmail.HintText = "Confirm Code";
                     lblTime.Visible = true;
-                    startTime = new TimeSpan(0, 9, 0);
-                    
+                    startTime = new TimeSpan(0, 9, 0);                 
                     timerReset.Start();
                     step1Flag = true;
                     LabelStatus(LblErrorFrogot, "The Code Was Sent, Check Your Mail", Status.Green);
-                    //saveEmail = txtForgotEmail.Text.Trim();
+
                 }
                 else
                 {
-
                     LabelStatus(LblErrorFrogot, "Unable To Complete Action", Status.Red);
                 }
             }
-
-
-
-
-
         }
         public enum Status
         {
             Red,
             Green
-
         }
 
         private void LabelStatus(Control lbl  , string text, Status status)
@@ -594,18 +478,11 @@ namespace HotelManagement
             if (status ==  Status.Red)
             {
                 lbl.ForeColor = Color.Brown;
-
-
             }
             else
             {
-                lbl.ForeColor = Color.Cyan;
-                
+                lbl.ForeColor = Color.Cyan;              
             }
-
-
-
-
         } 
 
 
@@ -635,11 +512,6 @@ namespace HotelManagement
                         LabelStatus(LblErrorFrogot, "Confirmed ,\n Check Your Mail To Get New Password", Status.Green);
                         timerReset.Stop();
                     }
-                    //behzad.afb2012 @gmail.com
-
-
-
-
                 }
                 else
                 {

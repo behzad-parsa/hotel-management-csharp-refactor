@@ -19,20 +19,13 @@ namespace HotelManagement
 {
     public partial class Dashboard : UserControl
     {
+        List<ActivityItem> lstActivityItem;
+
         public Dashboard()
         {
             InitializeComponent();
-
-            //lblTemp.Parent = pictureBox5;
-            //labelCity.Parent = pictureBox5;
-            //labelLast.Parent = pictureBox5;
-            //labelDate.Parent = pictureBox5;
-            //lblStatus.Parent = pictureBox5;
-            //pictureBox1.Parent = pictureBox5;
-            //lblTime.Parent = pictureBox5;
             lblTime.Text = DateTime.Now.ToString("hh:mm tt");
         }
-        List<ActivityItem> lstActivityItem;
 
         private void LoadRecentActivity()
         {
@@ -91,11 +84,6 @@ namespace HotelManagement
             //panelAcitvity.Controls.Add(item2);
 
 
-
-
-
-
-
             labelDate.Text = DateTime.Now.ToString("dddd dd, \nMMMM");
             //var h = GetLastUpdate();
 
@@ -122,7 +110,7 @@ namespace HotelManagement
             //}
             UpdateWeather();
             AggregateQuery();
-            //MessageBox.Show(Math.Floor(2.8).ToString());
+
             Timer weatherCheck = new Timer();
             weatherCheck.Interval = 4 * 60 * 60 * 1000;
             weatherCheck.Tick += WeatherCheck_Tick;
@@ -189,13 +177,8 @@ namespace HotelManagement
             {
                 City targetCity;
                 GetCityList();
-                //DateTime date;
                 if (File.Exists("WeatherData.txt"))
                 {
-                    //string content = 
-                    //string[] word = content.Split('-');
-                    //lblTemp.Text = string.Format("{0}°C", word[1]);
-                    //labelLast.Text = "Last Update On " + word[0];
                     return File.ReadAllText("WeatherData.txt"); ;
                 }
                 else
@@ -214,17 +197,12 @@ namespace HotelManagement
                         else
                         {
                             targetCity = searchCity;
-
-
                         }
-
                     }
                     else
                     {
                         targetCity = null;
-
                     }
-                    // File.WriteAllText("WeatherData.txt", DateTime.Now.ToString());
                     content = targetCity.ID.ToString() + "-" + targetCity.Name + "-" + "Temp" + "-" + "Status" + "-" + DateTime.Now.AddDays(-1);
                     File.WriteAllText("WeatherData.txt", content);
                     return content;
@@ -233,12 +211,9 @@ namespace HotelManagement
             catch 
             {
                 return 0 + "-" + "Not Found" + "-" + "Temp" + "-" + "Status" + "-" + DateTime.Now;
-                
-
-            }
-   
-
+            } 
         }
+
         private void UpdateWeather()
         {
            //[0] ID 
@@ -246,8 +221,6 @@ namespace HotelManagement
            //[2] Temp
            //[3] Status
            //[4] Last Update
-
-
             string[] content= GetLastContent().Split('-');
 
             City city = new City(Convert.ToInt32(content[0]), content[1]);
@@ -272,10 +245,7 @@ namespace HotelManagement
 
                     string contentWeather = city.ID.ToString() + "-" +city.Name+"-"+temp+"-"+status+"-"+lastUpdate;
                      File.WriteAllText("WeatherData.txt", contentWeather);
-                }
-            
-
-
+                }            
              }
 
             lblTemp.Text = temp;
@@ -283,16 +253,10 @@ namespace HotelManagement
             SetWeatherPics(status);
             labelLast.Text = "Last Update On : " + lastUpdate.ToString("MM/dd/yyyy hh:mm tt");
             labelCity.Text = city.Name;
-
-
-
-
-
         }
 
         private void AggregateQuery()
         {
-
             string query = "Select Count( Distinct  res.CustomerID ) From Customer c  , Reservation res , [User] u  , Employee e Where c.ID = res.CustomerID And GETDATE() Between res.StartDate And res.EndDate  "+
                             "And res.UserID = u.ID And u.EmployeeID = e.ID And e.BranchID = " + Current.User.BranchID;
 
@@ -328,26 +292,18 @@ namespace HotelManagement
                 {
                     while (reader.Read())
                     {
-
                         // deserialize only when there's "{" character in the stream
                         if (reader.TokenType == JsonToken.StartObject)
                         {
                             city = serializer.Deserialize<City>(reader);
-   
-                            lst.Add(city);
-
-                            //}
-                            
-
+                            lst.Add(city);                          
                         }
-                    }
-                   
+                    }                
                 }
                 return lst;
             }
             catch 
             {
-
                 return null ;
             }
         }
@@ -357,17 +313,13 @@ namespace HotelManagement
             try
             {
                 var path = Path.GetDirectoryName(
-                    System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-               string directoryPath = path.Substring(6);
+                System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+                string directoryPath = path.Substring(6);
                 List<City> lstCity;
-              // var jsonFile = Directory.GetFiles(directoryPath, "*.json");
+                // var jsonFile = Directory.GetFiles(directoryPath, "*.json");
                 if (File.Exists("IranCity.Json"))
                 {
-
-                    OpenWeatherAPI.lstCity = ReadJsonFile(directoryPath);
-                    
-
-
+                    OpenWeatherAPI.lstCity = ReadJsonFile(directoryPath);                  
                 }
                 else
                 {
@@ -376,7 +328,6 @@ namespace HotelManagement
                     {
                         client.DownloadFile("http://bulk.openweathermap.org/sample/city.list.json.gz", "city.list.json.gz");
                     }
-
 
                     //Decompress
                     DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
@@ -417,34 +368,17 @@ namespace HotelManagement
                     //Create New JSon File Includ IR Cities
                     var json = JsonConvert.SerializeObject(lstCity);
                     File.WriteAllText("IranCity.Json", json);
-
-
-
-
-
-
-
                 }
-
-
-
-
             }
             catch 
             {
-
                 ;
             }
-
-
-
-
         }
         public void Decompress(FileInfo fileToDecompress)
         {
             using (FileStream originalFileStream = fileToDecompress.OpenRead())
-            {
-                
+            {            
                 string currentFileName = fileToDecompress.FullName;
                 string newFileName = currentFileName.Remove(currentFileName.Length - fileToDecompress.Extension.Length);
 
@@ -452,18 +386,10 @@ namespace HotelManagement
                 {
                     using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
                     {
-                        decompressionStream.CopyTo(decompressedFileStream);
-
-                        
-
+                        decompressionStream.CopyTo(decompressedFileStream);                     
                     }
                 }
-
-
-            }
-            
-
-
+            }           
         }
 
         private void SetWeatherPics(string status)
@@ -510,18 +436,11 @@ namespace HotelManagement
                     picStatus.Image = Properties.Resources.loading_circles;
                     break;
             }
-
-
-
-
-
-
         }
 
 
         private void bunifuCustomLabel2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btnNote_Click(object sender, EventArgs e)
@@ -532,26 +451,20 @@ namespace HotelManagement
             }
             catch 
             {
-
                 MessageBox.Show("Doesn't Exist On This OS");
-            }
-            
-
+            }           
         }
 
         private void btnCal_Click(object sender, EventArgs e)
-        {
-            
+        {           
             try
             {
                 Process.Start("Calc.exe");
             }
             catch
             {
-
                 MessageBox.Show("Doesn't Exist On This OS");
             }
-
         }
 
         private void btnWord_Click(object sender, EventArgs e)
@@ -562,11 +475,8 @@ namespace HotelManagement
             }
             catch
             {
-
                 MessageBox.Show("Doesn't Exist On This OS");
-            }
-
-            
+            }       
         }
 
         private void btnGoogle_Click(object sender, EventArgs e)
@@ -581,25 +491,5 @@ namespace HotelManagement
                 MessageBox.Show("Doesn't Exist On This OS");
             }
         }
-
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    Image img = null;
-        //    OpenFileDialog open = new OpenFileDialog();
-        //    if (open.ShowDialog() == DialogResult.OK)
-        //    {
-        //        img = Image.FromFile(open.FileName);
-
-
-
-        //    }
-        //    MemoryStream m = new MemoryStream();
-        //    img.Save(m, img.RawFormat);
-        //    var h = m.GetBuffer();
-
-        //    HotelDatabase.Branch.Update(h);
-        //    //string query = String.Format("Update BranchInfo Set Logo = {0} Where ID = {1}", "55", 1);
-        //    //HotelDatabase.Database.Query(query);
-        //}
     }
 }

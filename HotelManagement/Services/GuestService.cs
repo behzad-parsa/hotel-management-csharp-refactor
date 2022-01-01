@@ -77,16 +77,16 @@ namespace HotelManagement.Services
         {
             parameters = new Dictionary<string, object>();
            
-            sqlQuery = "DELETE FROM \"Guest\"" +
+            sqlQuery = "DELETE FROM \"Guest\" " +
                 "WHERE " +
                 "CustomerID = @CustomerID AND " +
-                "DateModified = @DateModified And " +
+                "DateModified = @DateModified AND " +
                 "ActID = @ActID";
 
-            foreach (var property in typeof(Guest).GetProperties())
-            {
-                parameters.Add("@" + property.Name, property.GetValue(guest, null));
-            }
+            parameters.Add("@CustomerID" ,guest.CustomerID  );
+            parameters.Add("@DateModified" , guest.DateModified);
+            parameters.Add("@ActID" , guest.ActID);
+
 
            var result = _database.InsertUpdateDelete(sqlQuery, DatabaseOperation.OperationType.Delete, parameters);
 

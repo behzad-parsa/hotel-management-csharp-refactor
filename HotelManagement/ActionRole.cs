@@ -14,9 +14,7 @@ namespace HotelManagement
 {
     public partial class ActionRole : Form
     {
-
         public int RoleID;
-
         public bool completeActionFlag = false;
         private bool addFlag;
         public enum Action
@@ -27,7 +25,6 @@ namespace HotelManagement
         public ActionRole(Action action)
         {
             InitializeComponent();
-
             if (action == Action.Add)
             {
                 addFlag = true;
@@ -78,20 +75,13 @@ namespace HotelManagement
                     if (i == Math.Ceiling((double)dicAllModules.Count / 2) + 1) chbModule.Location = new Point(chbModule.Location.X, 0);
                     panelRight.Controls.Add(chbModule);
                 }
-                //lstCheckBox.Add(chbModule);
-                //if (i < 12) panelLeftFacility.Controls.Add(chbModule);
-                //else
-                //{
-                //    if (i == 12) chbModule.Location = new Point(chbModule.Location.X, lstCheckBox[0].Location.Y);
-                //    panelRightFacility.Controls.Add(chbModule);
-                //}
+
             }
             //---------Edit
             if (!addFlag)
             {
                 if (HotelDatabase.Role.SearchRoleID(RoleID) != null)
                 {
-
                     txtRole.Text = HotelDatabase.Role.Title;
 
                     //var role = dicRoles.ElementAt(RoleID);
@@ -109,21 +99,11 @@ namespace HotelManagement
                                 var chb = dicChb.ElementAt(i).Key;
                                 chb.Checked = true;
                             }
-
                         }
                     }
-
                 }
-
-
-
-            }
-            
+            }        
         }
-
-
-
-
 
         private void Reset()
         {
@@ -156,23 +136,12 @@ namespace HotelManagement
             var id = temp.Key;
             if (checkBox.Checked)
             {
-
-
                 lstChoosedModuleID.Add(id);
-
-
             }
             else
             {
-
                 lstChoosedModuleID.Remove(id);
-
-
-
             }
-
-
-
         }
 
 
@@ -251,7 +220,6 @@ namespace HotelManagement
                 TextBoxColor(txtBox, Status.Green);
                 txtCount++;
                 return true;
-
             }
         }
 
@@ -278,7 +246,6 @@ namespace HotelManagement
             else
             {
                 PanelStatus(panelCustStatus,"Please Fill The Blank", Status.Red);
-
             }
             txtCount = 0;
 
@@ -335,7 +302,6 @@ namespace HotelManagement
                         }
                         if (counter == lstChoosedModuleID.Count)
                         {
-
                             PanelStatus(panelCustStatus, "Completed ", Status.Green);       
                             completeActionFlag = true;
                             this.Dispose();

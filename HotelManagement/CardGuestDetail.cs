@@ -442,18 +442,12 @@ namespace HotelManagement
                 if (txtCount == 3 & txtNCSearch.Text != "" && txtNCSearch.Text != "National Code")
                 {
                     if (dateBirth.Value.Date != DateTime.Now.Date)
-                    {
-
                         ValidationFlag = true;
-                    }
                     else
-                    {
                         PanelStatus(panelStatusGuest, "Choose Birthday", Status.Red);
-                    }
                 }
                 else
                 {
-
                     PanelStatus(panelStatusGuest, "Please Fill The Blank", Status.Red);
                 }
                 txtCount = 0;

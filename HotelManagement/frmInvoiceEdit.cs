@@ -29,11 +29,6 @@ namespace HotelManagement
             {
                 txtDes.Text = HotelDatabase.Bill.Description.ToString();
             }
-            //else
-            ////{
-            ////    txtDes.Text = 
-            ////}
-            
 
         }
 
@@ -49,24 +44,17 @@ namespace HotelManagement
 
             }
 
-
-
-
-
-
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            //InvoiceDetail g = new InvoiceDetail();
             discount = Convert.ToDouble(txtDis.Text.Trim());
             if (txtDes.Text != null)
             {
                 description = txtDes.Text;
             }
 
-            this.Dispose();
-            
+            this.Dispose(); 
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)

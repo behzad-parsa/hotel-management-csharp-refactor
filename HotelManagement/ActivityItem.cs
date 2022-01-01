@@ -28,7 +28,6 @@ namespace HotelManagement
             lblDate.Text = Theme.LastTime(activity.Date);
             lblDescription.Text = activity.Description;
             lblTitle.Text = activity.Title.ToUpper();
-
         }
 
         private void ActivityItem_Load(object sender, EventArgs e)
@@ -58,9 +57,7 @@ namespace HotelManagement
                 {
                     var lbl = item as BunifuCustomLabel;
                     lbl.ForeColor = Color.FromArgb(red, green, blue);
-
                 }
-
             }
         }
     }

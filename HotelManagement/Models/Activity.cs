@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 
 namespace HotelManagement
 {
-    //public enum ActivityType
-    //{
-
-
-
-
-    //}
    public class Activity
     {
         public DateTime Date { get; set; }

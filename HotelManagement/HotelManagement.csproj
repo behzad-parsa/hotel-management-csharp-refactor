@@ -121,7 +121,7 @@
     <Compile Include="ActionSerivce.Designer.cs">
       <DependentUpon>ActionSerivce.cs</DependentUpon>
     </Compile>
-    <Compile Include="Activity.cs" />
+    <Compile Include="Models\Activity.cs" />
     <Compile Include="BookList.cs">
       <SubType>UserControl</SubType>
     </Compile>

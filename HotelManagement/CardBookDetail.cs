@@ -15,14 +15,7 @@ namespace HotelManagement
     public partial class CardBookDetail : UserControl
     {
         BunifuImageButton btnDone;
-        public CardBookDetail()
-        {
-            InitializeComponent();
-        }
-    
-
         BunifuImageButton btnNext;
-
         private static Communication communication;
         private Panel panelContainerInside;
 
@@ -32,6 +25,13 @@ namespace HotelManagement
             Red,
             blue
         };
+
+        public CardBookDetail()
+        {
+            InitializeComponent();
+        }
+
+     
         private void PanelStatus(Control Panel, string text, Status status)
         {
             BunifuCircleProgressbar prgb = null;
@@ -49,7 +49,6 @@ namespace HotelManagement
                     prgb = item as BunifuCircleProgressbar;
 
                 }
-
             }
 
             lbl.Text = text;
@@ -57,27 +56,17 @@ namespace HotelManagement
             {
                 prgb.ProgressColor = Color.Red;
                 lbl.ForeColor = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
-
                 prgb.ProgressColor = Color.Green;
                 lbl.ForeColor = Color.Green;
-
-
             }
             else
             {
                 prgb.ProgressColor = Color.Blue;
                 lbl.ForeColor = Color.Blue;
-
             }
-
-
-
-
         }
 
         private readonly object _lock = new object();
@@ -105,7 +94,6 @@ namespace HotelManagement
             " )  " +
            " ) ";
 
-
             var data = HotelDatabase.Database.Query(query);
 
             if (data != null)
@@ -114,8 +102,6 @@ namespace HotelManagement
 
                 data.Columns.Add("Facilities");
 
-
-
                 var facilityData = HotelDatabase.Database.Query("Select DISTINCT r.id , f.Title From Room as r , facilities f , RoomFacilities rf Where r.BranchID = " + Current.User.BranchID + " And r.id = rf.RoomID ANd  f.id = rf.FacilitiesID ORder BY r.id ASC");
 
                 string d = null;
@@ -123,8 +109,6 @@ namespace HotelManagement
                 int j_val;
                 for (int i = 0, j = i + 1; i < facilityData.Rows.Count; i++, j++)
                 {
-
-
                     i_val = Convert.ToInt32(facilityData.Rows[i]["id"]);
                     if (j < facilityData.Rows.Count)
                     {
@@ -137,11 +121,8 @@ namespace HotelManagement
 
                     d += "- " + facilityData.Rows[i]["Title"].ToString() + "\n";
 
-
                     if (i_val != j_val)
                     {
-
-
                         foreach (DataRow dr in data.Rows) // search whole table
                         {
                             if (Convert.ToInt32(dr["ID"]) == i_val) // if id==2
@@ -152,13 +133,9 @@ namespace HotelManagement
                             }
                         }
                         d = null;
-
                     }
 
-
                 }
-
-
 
                 dgvRoom.DataSource = data;
                 dgvRoom.Columns["id"].Visible = false;
@@ -167,20 +144,16 @@ namespace HotelManagement
             }
             else
             {
-                //dgvRoom.Refresh();
                 dgvRoom.DataSource = null;
                 lblNothing.Visible = true;
 
-            }
-           
-            //dgvRoom.CellDoubleClick += BunifuCustomDataGrid1_CellDoubleClick;
-
+            }        
         }
         private void CardBookDetail_Load(object sender, EventArgs e)
         {
             dateStart.Value = DateTime.Now;
             dateEnd.Value = DateTime.Now.AddDays(1);
-            //LoadFreeRoom(dateStart.Value, dateEnd.Value);
+
             if (!isStartThread)
             {
                 isStartThread = true;
@@ -189,7 +162,6 @@ namespace HotelManagement
             }
 
 
-            //lblBookCustName.Text = NewBook.customerInfo.Firstname + " " + NewBook.customerInfo.Lastname + " - " + NewBook.customerInfo.NationalCode;
             panelContainerInside = (this.Parent.Parent as NewBook).Controls["panelContainerInside"] as Panel;
 
 
