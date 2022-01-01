@@ -18,7 +18,6 @@ namespace HotelManagement
         {
             InitializeComponent();
         }
-
         private void EditAccount_Load(object sender, EventArgs e)
         {
             if (HotelDatabase.Account.SearchAccount(accountID))
@@ -30,10 +29,7 @@ namespace HotelManagement
                 if (HotelDatabase.Account.Description != null)
                 {
                     txtDescription.Text = HotelDatabase.Account.Description;
-
                 }
-
-
             }
         }
 
@@ -54,8 +50,6 @@ namespace HotelManagement
             {
                 PanelStatus("Action Completed Successfuly", Status.Green);
                 this.Dispose();
-                //    Thread.Sleep(3000);
-                //    this.Dispose();
                 completeFlag = true;
             }
 
@@ -80,27 +74,17 @@ namespace HotelManagement
             {
                 prgbCustError.ProgressColor = Color.Red;
                 lblCustError.ForeColor = Color.Red;
-                //lblCustError.Text = text;
-
             }
             else if (status == Status.Green)
             {
-
                 prgbCustError.ProgressColor = Color.Green;
                 lblCustError.ForeColor = Color.Green;
-                //lblCustError.Text = text;
-
             }
             else
             {
                 prgbCustError.ProgressColor = Color.Blue;
                 lblCustError.ForeColor = Color.Blue;
-
             }
-
-
-
-
         }
     }
 }

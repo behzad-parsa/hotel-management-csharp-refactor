@@ -55,23 +55,17 @@ namespace HotelManagement
             private static SqlDataAdapter adp = new SqlDataAdapter();
             private static DataTable dataTable = new DataTable();
 
-
-
             private static void MakeConnection()
             {
                 try
                 {
                     con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
                     cmd.Connection = con;
-
                 }
                 catch
                 {
-
                     ;
                 }
-
-
             }
             private static void Connect()
             {
@@ -79,19 +73,13 @@ namespace HotelManagement
                 {
                     if (con.State == ConnectionState.Closed)
                     {
-
                         con.Open();
-
                     }
-
-
                 }
                 catch
                 {
-
                     ;
                 }
-
             }
             private static void Disconnect()
             {
@@ -100,13 +88,10 @@ namespace HotelManagement
                     if (con.State == ConnectionState.Open)
                     {
                         con.Close();
-
                     }
-
                 }
                 catch
                 {
-
                     ;
                 }
             }
@@ -114,8 +99,6 @@ namespace HotelManagement
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
 
@@ -123,7 +106,6 @@ namespace HotelManagement
                         "Where u.EmployeeID = e.id And e.ActID = a.id And Email = @Email  ";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@Email", email);
-
 
                     adp.SelectCommand = cmd;
 
@@ -139,56 +121,31 @@ namespace HotelManagement
                         Password = dataTable.Rows[0]["Password"].ToString();
                         RoleID = Convert.ToInt32(dataTable.Rows[0]["RoleID"]);
                         Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-                        //Image = (byte[])dataTable.Rows[0]["Image"];
-
 
                         return true;
-
-
                     }
                     else
                     {
                         return false;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
-
-
-
-
-
-
-
-
-
             }
+
             public static bool SearchUser(string username)
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     //cmd.CommandText = "SELECT * "+
                     //   " FROM [User] u , Actor a, Employee e , Role r"+
                     //    "Where Username = '@Username' And u.EmployeeID = e.ID And e.ActID = a.ID And u.RoleID = r.id";
                     cmd.CommandText = "SELECT *  FROM [User] u , Actor a, Employee e , Role r " +
                              " Where Username = '"+username +"' And u.EmployeeID = e.ID And e.ActID = a.ID And u.RoleID = r.id";
-                    //cmd.Parameters.Clear();
-                    //cmd.Parameters.AddWithValue("@Username", username);
-
 
                     adp.SelectCommand = cmd;
 
@@ -219,7 +176,6 @@ namespace HotelManagement
                         NationalCode = dataTable.Rows[0]["NationalCode"].ToString();
                         Email = dataTable.Rows[0]["Email"].ToString();
 
-
                         //Branch Part
                         if (HotelDatabase.Branch.SearchBranchWithID(BranchID))
                         {
@@ -234,46 +190,24 @@ namespace HotelManagement
                             string address = HotelDatabase.Branch.Address;
                             //BranchName = dataTable.Rows[0]["BranchName"].ToString();
                             Branch = new BranchSecond(BranchID, code, owner, branchName, rate, logo, tel, state, city, address);
-
                         }
 
                         //AccessLevel
-
                         AccessLevel =  HotelDatabase.Module.SearchModule(RoleID);
-
                         Activities = new List<Activity>();
                         //Random rnd = new Random();
-                        //AccessLevel.RemoveAt(rnd.Next(0, 7));
-                
+                        //AccessLevel.RemoveAt(rnd.Next(0, 7));               
                         return true;
-
-
                     }
                     else
                     {
                         return false;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
-
-
-
-
-
-
-
-
-
             }         
             public static bool UpdatePassword(string pass)
             {
@@ -287,51 +221,34 @@ namespace HotelManagement
                     cmd.Parameters.AddWithValue("@Password", pass);
                     cmd.Parameters.AddWithValue("@ID", ID);
                     // DateTime.Now.ToString("h:mm:ss tt")
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
             }
             public static bool UpdateUsername(string username)
             {
                 try
                 {
-
                     MakeConnection();
-                    //dataTable = new DataTable();
                     cmd.CommandText = "Update \"User\" SET Username = @Username Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@Username", username);
                     cmd.Parameters.AddWithValue("@ID", ID);
-                    // DateTime.Now.ToString("h:mm:ss tt")
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
             }
             public static bool UpdateProfilePicture(byte[] image)
             {
@@ -339,76 +256,46 @@ namespace HotelManagement
                 {
 
                     MakeConnection();
-                    //dataTable = new DataTable();
                     cmd.CommandText = "Update \"User\" SET Image = @Image Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@Image", image);
                     cmd.Parameters.AddWithValue("@ID", ID);
-                    // DateTime.Now.ToString("h:mm:ss tt")
-
 
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
             }
+
             public static bool InsertLoginHistory()
             {
                 try
-                {
-                    
+                {               
                     MakeConnection();
-                    //dataTable = new DataTable();
                     cmd.CommandText = "Insert Into \"LoginHistory\" (UserID , DateTime) Values(@UserID , @DateTime)";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@UserID", ID);
-                    cmd.Parameters.AddWithValue("@DateTime", DateTime.Now);
-                   // DateTime.Now.ToString("h:mm:ss tt")
-
-
+                    cmd.Parameters.AddWithValue("@DateTime", DateTime.Now);      
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
 
             public static DataTable GetLoginHistory()
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
 
@@ -418,9 +305,7 @@ namespace HotelManagement
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@UserID", ID);
 
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
@@ -434,46 +319,18 @@ namespace HotelManagement
                         //RoleID = Convert.ToInt32(dataTable.Rows[0]["RoleID"]);
                         //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
                         //Image = (byte[])dataTable.Rows[0]["Image"];
-
-
                         return dataTable;
-
-
                     }
                     else
                     {
                         return null;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return null;
                 }
-
-
-
-
-
-
-
-
-
-
-
             }
-
-
-
-
-
         }
     }
-
- 
- 
 }

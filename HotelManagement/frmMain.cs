@@ -31,16 +31,13 @@ namespace HotelManagement
         private void frmMain_Load(object sender, EventArgs e)
         {          
             Current.User.SearchUser("behzad75");
-
             HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
             lblTopName.Text ="Hello, "+ Current.User.Firstname ;
             lblBranchName.Text = HotelDatabase.Branch.BranchName + "  Hotel";
             picProfileTop.Image = Image.FromStream(new MemoryStream(Current.User.Image));
     
             AddControlsToPanel(new Dashboard());
-
             ChatForm.chat.ConnectToChatServer();
-
             refreshOnlineList = new Timer();
             refreshOnlineList.Interval = 2000;
             refreshOnlineList.Tick += RefreshOnlineList_Tick;
@@ -50,13 +47,10 @@ namespace HotelManagement
 
         private void RefreshOnlineList_Tick(object sender, EventArgs e)
         {
-
             if (ChatForm.chat.IsConnect)
             {
                 ChatForm.chat.sndMcg(ChatInfo.SendType.OnlineListRequest, null, null, DateTime.MinValue);
-
             }
-
         }
 
         private const string accessErrorMsg = "Access Denied ,\nYou Don't have Enough Permissions To Access Contents.";
@@ -96,7 +90,6 @@ namespace HotelManagement
   
         private void panelLeftSlide_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void btnSlideMenu_Click(object sender, EventArgs e)
@@ -227,13 +220,9 @@ namespace HotelManagement
 
         private byte[] ConvertPicToByte(Image img)
         {
-
-
             MemoryStream Ms = new MemoryStream();
             img.Save(Ms, img.RawFormat);
-
             return Ms.GetBuffer();
-
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -250,7 +239,6 @@ namespace HotelManagement
                 if (panelTop.BackColor == Color.FromArgb(255,255,255))
                 {
                     btnSize.Image = Properties.Resources.minB;
-
                 }
                 else
                 {

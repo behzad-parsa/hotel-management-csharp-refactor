@@ -13,22 +13,18 @@ namespace HotelManagement
 {
     public partial class NewTransact : Form
     {
-
-        //public int transID;
         public bool completeFlag = false ;
-
+        Dictionary<int, string> lstAccount = new Dictionary<int, string>();
+        Dictionary<int, string> lstPaymentType = new Dictionary<int, string>();
+        Dictionary<int, string> lstTranactionType = new Dictionary<int, string>();
 
         public NewTransact()
         {
             InitializeComponent();
         }
-        Dictionary<int, string> lstAccount = new Dictionary<int, string>();
-        Dictionary<int, string> lstPaymentType = new Dictionary<int, string>();
-        Dictionary<int, string> lstTranactionType = new Dictionary<int, string>();
+
         private void NewTransact_Load(object sender, EventArgs e)
         {
-
-
             //----cmb Account | Branch Later ------
 
             lstAccount = HotelDatabase.Account.GetAccountList(1);
@@ -36,35 +32,26 @@ namespace HotelManagement
             {
                 cmbAccount.Items.Add(item.Value);
             }
-            //-----PaymentMethod---------------------
+            //----- PaymentMethod ---------------------
             
             lstPaymentType = HotelDatabase.Transact.GetPaymentMethod();
-
             FillPanel(panelPaymentMethod, lstPaymentType, false);
 
             //int counter = 0;
             //List<RadioButton> lstRadioButton = new List<RadioButton>();
             //foreach (var item in lstPaymentType)
             //{
-
             //    RadioButton rdb = new RadioButton();
             //    rdb.Text = item.Value;
             //    rdb.CheckedChanged += new EventHandler(RadioButtonActivePay);
-
             //    panelPaymentMethod.Controls.Add(rdb);
             //    if (counter > 0)
             //    {
             //        rdb.Location = new Point(lstRadioButton[lstRadioButton.Count - 1].Location.X, lstRadioButton[lstRadioButton.Count - 1].Location.Y + 40);
-
-
             //    }
             //    lstRadioButton.Add(rdb);
             //    counter++;
             //}
-
-
-
-
 
 
             //TransactionType
@@ -89,20 +76,15 @@ namespace HotelManagement
             //    lstRadioButton2.Add(rdb);
             //    counter2++;
             //}
-
-
-
-
         }
+
         private void FillPanel(Panel panel , Dictionary<int ,string> lst , bool isType)
         {
-            //lstPaymentType = HotelDatabase.Transact.GetPaymentMethod();
-
             int counter = 0;
             List<RadioButton> lstRadioButton = new List<RadioButton>();
+
             foreach (var item in lst)
             {
-
                 RadioButton rdb = new RadioButton();
                 rdb.Text = item.Value;
                 if (isType)
@@ -114,18 +96,14 @@ namespace HotelManagement
                     rdb.CheckedChanged += new EventHandler(RadioButtonActivePay);
                 }
                 
-
                 panel.Controls.Add(rdb);
                 if (counter > 0)
                 {
                     rdb.Location = new Point(lstRadioButton[lstRadioButton.Count - 1].Location.X, lstRadioButton[lstRadioButton.Count - 1].Location.Y + 40);
-
-
                 }
                 lstRadioButton.Add(rdb);
                 counter++;
             }
-
         }
 
         private string checkedValuePaymentType;
@@ -136,21 +114,18 @@ namespace HotelManagement
 
             if (rdb.Checked)
             {
-
                 checkedValuePaymentType  = rdb.Text;
             }
-
         }
+
         private void RadioButtonActiveTrans(object sender, EventArgs e)
         {
             var rdb = sender as RadioButton;
 
             if (rdb.Checked)
             {
-
                 checkValueTransType = rdb.Text;
             }
-
         }
 
 
@@ -168,17 +143,13 @@ namespace HotelManagement
             if (status == Status.Red)
             {
                 prgbCustError.ProgressColor = Color.Red;
-                lblCustError.ForeColor = Color.Red;
-                //lblCustError.Text = text;
-
+                lblCustError.ForeColor = Color.Red;           
             }
             else if (status == Status.Green)
             {
-
                 prgbCustError.ProgressColor = Color.Green;
                 lblCustError.ForeColor = Color.Green;
                 //lblCustError.Text = text;
-
             }
             else
             {
@@ -186,10 +157,6 @@ namespace HotelManagement
                 lblCustError.ForeColor = Color.Blue;
 
             }
-
-
-
-
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -203,7 +170,6 @@ namespace HotelManagement
             {
                 txtBox.BorderColorIdle = Color.Red;
 
-
             }
             else if (status == Status.Green)
             {
@@ -214,8 +180,8 @@ namespace HotelManagement
             {
                 txtBox.BorderColorIdle = Color.FromArgb(128, 128, 128);
             }
-
         }
+
         private int txtCount;
         private bool validationFlag = false;
         private bool TextBoxCheck(BunifuMetroTextbox txtBox, string txt)
@@ -225,12 +191,6 @@ namespace HotelManagement
                 TextBoxColor(txtBox, Status.Red);
                 return false;
             }
-            //else if (txt == "National Code")
-            //{
-            //    TextBoxColor(txtBox, Status.blue);
-            //    txtCount++;
-            //    return true;
-            //}
             else
             {
                 TextBoxColor(txtBox, Status.Green);
@@ -243,34 +203,24 @@ namespace HotelManagement
         {
             //---Validation
 
-
-           // MessageBox.Show(txtAmount.Text + " ---- " + txtAmount.Text.GetType());
-
             if (txtAmount.Text != null && txtAmount.Text != "")
             {
-
                 bool isNumeric = double.TryParse(txtAmount.Text, out double num);
 
                 if (isNumeric)
                 {
                     validationFlag = true;
-
                 }
                 else
                 {
                     PanelStatus("Amount Must Be Numric" , Status.Red);
                 }
-
-
             }
             else
             {
                 TextBoxCheck(txtAmount, "");
                 PanelStatus("Please Fill The Blank", Status.Red);
             }
-           // txtCount = 0;
-
-
 
             if (validationFlag)
             {
@@ -289,8 +239,6 @@ namespace HotelManagement
                     PanelStatus("Unable to Complete Action", Status.Red);
                 }
             }
-
-
         }
     }
 }

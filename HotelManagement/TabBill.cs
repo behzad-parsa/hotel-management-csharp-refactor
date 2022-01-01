@@ -18,17 +18,12 @@ namespace HotelManagement
         }
         private void ActiveTab(Control lblTab)
         {
-
-            //lblTab.Enabled = true;
             lineTab.Width = lblTab.Width;
             lineTab.Left = lblTab.Left;
             lblTab.ForeColor = Color.Black;
         }
         private void DeactiveTab(Control lblTab)
         {
-
-            //lblTab.Enabled = false;
-
             lblTab.ForeColor = Color.DarkGray;
         }
 
@@ -42,14 +37,9 @@ namespace HotelManagement
             {
                 DeactiveTab(lblTab);
             }
-
-
-
-
         }
         private void AddControlsToPanel(Control contain)
         {
-
             panelContainer.Controls.Clear();
             panelContainer.Controls.Add(contain);
         }
@@ -59,7 +49,6 @@ namespace HotelManagement
             ActiveTab(lblInvoice, true);
             ActiveTab(lblAccount, false);
             ActiveTab(lblTransact, false);
-            //this.AutoScroll = true;
             panelContainer.AutoScroll = true;
             AddControlsToPanel(new Invoice());
         }
@@ -69,7 +58,6 @@ namespace HotelManagement
             ActiveTab(lblInvoice, false);
             ActiveTab(lblAccount, true);
             ActiveTab(lblTransact, false);
-            //this.AutoScroll = false;
             panelContainer.AutoScroll = false ;
             AddControlsToPanel(new CardAccounts());
         }
@@ -80,8 +68,6 @@ namespace HotelManagement
             ActiveTab(lblAccount, false);
             ActiveTab(lblTransact, true);
             panelContainer.AutoScroll = false ;
-            //this.AutoScroll = false;
-
             AddControlsToPanel(new CardTransact());
         }
 

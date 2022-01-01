@@ -17,10 +17,6 @@ namespace HotelManagement
     {
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
         public bool completeFlag = false;
-
-
-
-
         
         public NewAccount()
         {
@@ -50,27 +46,17 @@ namespace HotelManagement
             {
                 prgbCustError.ProgressColor = Color.Red;
                 lblCustError.ForeColor = Color.Red;
-                //lblCustError.Text = text;
-
             }
             else if (status == Status.Green)
             {
-
                 prgbCustError.ProgressColor = Color.Green;
                 lblCustError.ForeColor = Color.Green;
-                //lblCustError.Text = text;
-
             }
             else
             {
                 prgbCustError.ProgressColor = Color.Blue;
                 lblCustError.ForeColor = Color.Blue;
-
             }
-
-
-
-
         }
 
         private void TextBoxColor(BunifuMetroTextbox txtBox, Status status)
@@ -78,19 +64,15 @@ namespace HotelManagement
             if (status == Status.Red)
             {
                 txtBox.BorderColorIdle = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
-
                 txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
             }
             else
             {
                 txtBox.BorderColorIdle = Color.FromArgb(128, 128, 128);
             }
-
         }
         private bool TextBoxCheck(BunifuMetroTextbox txtBox, string txt)
         {
@@ -99,28 +81,19 @@ namespace HotelManagement
                 TextBoxColor(txtBox, Status.Red);
                 return false;
             }
-            //else if (txt == "National Code")
-            //{
-            //    TextBoxColor(txtBox, Status.blue);
-            //    txtCount++;
-            //    return true;
-            //}
             else
             {
                 TextBoxColor(txtBox, Status.Green);
                 txtCount++;
                 return true;
-
             }
         }
+
         private int txtCount = 0;
         private bool validFlag = false;
         private void TextBoxEnter(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
-
-
-  
             txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
             txtBox.ForeColor = Color.Black;
             if (!txtBoxList.ContainsKey(txtBox))
@@ -132,9 +105,8 @@ namespace HotelManagement
             {
                 txtBox.Text = null;
             }
-
-
         }
+
         private void TextBoxLeave(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
@@ -145,65 +117,52 @@ namespace HotelManagement
                 txtBox.Text = defualtText;
                 txtBox.ForeColor = Color.Gray;
             }
-
-
         }
+
         private void TextBoxClearText()
         {
             foreach (Control items in panelCustLeft.Controls)
             {
-
                 if (items is BunifuMetroTextbox )
                 {
                     string text;
                     var item = items as BunifuMetroTextbox;
                     txtBoxList.TryGetValue(item, out text);
-
                     items.Text = text;
-
                 }
-
-
             }
-
         }
+
         private void TextBoxClearBorderColor()
         {
-
             TextBoxColor(txtAccountName, Status.Green);
             TextBoxColor(txtAccountNumber, Status.Green);
             TextBoxColor(txtBalance, Status.Green);
             TextBoxColor(txtBank, Status.blue);
             TextBoxColor(txtDescription, Status.Green);
-
-
         }
+
         private void btnOk_Click(object sender, EventArgs e)
         {
-
             TextBoxCheck(txtAccountName, "Account Name");
             TextBoxCheck(txtAccountNumber, "Account Number");
             TextBoxCheck(txtBalance, "Balance");
             TextBoxCheck(txtBank, "Bank");
 
-
             if (txtCount == 4)
             {
-
                 validFlag = true;
                 if (txtDescription.Text == "Description")
                 {
                     txtDescription.Text = null;
-
                 }
-
             }
             else
             {
                 PanelStatus("Please Fill The Blank" , Status.Red);
             }
-            txtCount = 0;
 
+            txtCount = 0;
 
             if (validFlag)
             {
@@ -214,28 +173,12 @@ namespace HotelManagement
                 {
                     PanelStatus("Action Completed Successfuly", Status.Green);
                     completeFlag = true;
-                    //    Thread.Sleep(3000);
-                    //    this.Dispose();
-
                 }
-
                 else
                 {
                     PanelStatus("Unable to Complete Action", Status.Red);
                 }
-
-
-
-
             }
-
-            //if (completeFlag)
-            //{
-            //    Thread.Sleep(3000);
-            //    this.Dispose();
-            //}
-
-
         }
 
         private void txtBalance_OnValueChanged(object sender, EventArgs e)
@@ -247,9 +190,7 @@ namespace HotelManagement
                 if (balance<0)
                 {
                     txtBalance.Text = "0";
-
                 }
-
             }
         }
     }

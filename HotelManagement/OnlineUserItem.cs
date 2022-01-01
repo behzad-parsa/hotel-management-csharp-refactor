@@ -27,8 +27,6 @@ namespace HotelManagement
             lblBranchName.Text = user.Branch;
             picProfile.Image = Image.FromStream(new MemoryStream(user.Image));
             this.Cursor = Cursors.Hand;
-
-
         }
     }
 }

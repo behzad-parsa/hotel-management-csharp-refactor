@@ -33,18 +33,11 @@ namespace HotelManagement
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 var img = Image.FromFile(openFileDialog1.FileName);
-                //selectPic = true;
                 if (Current.User.UpdateProfilePicture(ConvertPicToByte(img)))
                 {
                     picPhoto.Image = img;
-                }
-                
-
-
+                }               
             }
-
-
-
         }
 
         private void Setting_Load(object sender, EventArgs e)
@@ -71,46 +64,15 @@ namespace HotelManagement
             HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
             lblBranch.Text = HotelDatabase.Branch.BranchName;
 
-
-
-            //Get Access To Parants (Theme Part)
-
-           
+            //Get Access To Parants (Theme Part)      
             panelLeft = (this.Parent.Parent as frmMain).Controls["panelLeftSlide"] as GradientPanel;
             panelTop = (this.Parent.Parent as frmMain).Controls["panelTop"] as GradientPanel;
             //panelMoveSide = (this.Parent.Parent as frmMain).Controls["panelSide"] as GradientPanel;
             //var g = panelLeft.Controls.Find("panelSide", true);
              panelMoveSide = panelLeft.Controls["panelSide"] as GradientPanel;
             panels.Add(panelTop);
-            panels.Add(panelLeft);
-           
+            panels.Add(panelLeft);     
             panels.Add(panelMoveSide);
-            //foreach (DataRow row in loginHistory.Rows)
-            //{
-            //    ListViewItem item = new ListViewItem(row[0].ToString());
-
-            //    item.SubItems.Add(row[i].ToString());
-            //    listView1.Items.Add(item);
-
-            //}
-            //listView1.View = View.Details;
-            //ListViewItem l = new ListViewItem("d");
-            //l.SubItems.Add("Dd");
-            //listView1.Items.Add(l);
-            //for (int i = 0; i < loginHistory.Rows.Count; i++)
-            //{
-
-            //    DataRow dr = loginHistory.Rows[i];
-            //    ListViewItem listitem = new ListViewItem(dr["ID"].ToString());
-            //    listitem.SubItems.Add(dr["DateTime"].ToString());
-            //    //listitem.SubItems.Add(dr["fk_int_District_ID"].ToString());
-            //    //listitem.SubItems.Add(dr["fk_int_Company_ID"].ToString());
-            //    listView1.Items.Add(listitem);
-            //}
-
-
-            //bunifuCustomDataGrid2.DataSource = loginHistory;
-
 
             //Loading Login History
             var loginHistory = Current.User.GetLoginHistory();
@@ -127,8 +89,6 @@ namespace HotelManagement
                 dgvLoginHistory.DataSource = null;
             }
 
-
-
             //Loading Weather
             if (File.Exists("WeatherData.txt"))
             {
@@ -142,45 +102,36 @@ namespace HotelManagement
             }
   
         }
-        string[] weatherDataContent;
 
+        string[] weatherDataContent;
 
         private byte[] ConvertPicToByte(Image img)
         {
-
-
-
             MemoryStream Ms = new MemoryStream();
             img.Save(Ms, img.RawFormat);
-
-
-
             return Ms.GetBuffer();
-
         }
 
         private void bunifuCustomDataGrid1_SelectionChanged(object sender, EventArgs e)
         {
             dgvLoginHistory.ClearSelection();
         }
+
         string currentTheme;
         private void ActiveRadioButton(object sender , EventArgs e )
         {
             var rdb = sender as RadioButton;
-
             if (rdb.Checked)
             {
                 //Theme(rdb.Text, panels);
                 currentTheme = rdb.Text;
-
             }
-
-
         }
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
 
-            var bmp = HotelManagement.Theme.DarkBack(this.ParentForm);
+            var bmp = Theme.DarkBack(this.ParentForm);
 
             using (Panel p = new Panel())
             {
@@ -196,74 +147,14 @@ namespace HotelManagement
 
                     if (editSetting.compeletFlag)
                     {
-
                         if(!string.IsNullOrEmpty(editSetting.username)) lblUsername.Text = editSetting.username;
                         Current.User.SearchUser(editSetting.username);
                         Current.User.Activities.Add(new Activity("Edit Profile Information", "information has been changed by " + Current.User.Firstname + " " + Current.User.Lastname));
 
                     }
-
-
-
                 }
-
             }
-
-
-
-
-
-
-
         }
-        //0 top
-        //1 left
-        //2move side
-
-         
-        //private void Theme(string name  , List<GradientPanel> panels)
-        //{
-        //    switch (name)
-        //    {
-        //        case "Default":
-        //            panels[0].BackColor = Color.FromArgb(60, 141, 188);
-        //            panels[1].BackColor = Color.FromArgb(49, 70, 89);
-        //            panels[2].ColorLeft = Color.FromArgb(79, 172, 254);
-        //            panels[2].ColorRight = Color.FromArgb(0, 242, 254);
-
-        //           // panels[2].BackColor = Color.FromArgb(42, 88, 173);
-        //            //this.Parent.Parent.Refresh();
-        //            break;
-
-        //        case "Theme 2":
-        //            panels[0].BackColor = Color.FromArgb(255, 255, 255);
-        //            panels[1].BackColor = Color.FromArgb(142, 121, 186);
-        //            panels[2].ColorLeft = Color.Empty;
-        //            panels[2].ColorRight = Color.Empty;
-
-        //            panels[2].BackColor = Color.FromArgb(107, 207, 234);
-        //            //this.Parent.Parent.Refresh();
-        //            break;
-
-        //        case "Theme 3":
-        //            panels[0].BackColor = Color.FromArgb(255, 255, 255);
-        //            panels[1].BackColor = Color.FromArgb(63, 148, 219);
-        //            panels[2].ColorLeft = Color.Empty;
-        //            panels[2].ColorRight = Color.Empty;
-
-        //            panels[2].BackColor = Color.FromArgb(42, 88, 173);
-        //            //this.Parent.Parent.Refresh();
-        //            break;
-
-
-
-        //    }
-
-
-
-
-        //}
-
         private void btnSet_Click(object sender, EventArgs e)
         {
             //Theme(currentTheme, panels);
@@ -272,16 +163,15 @@ namespace HotelManagement
 
         private void panel13_Paint(object sender, PaintEventArgs e)
         {
-
         }
+
         public static bool updateWeatherFlag = false;
 
         private void btnExchangeCity_Click(object sender, EventArgs e)
         {
             if (File.Exists("WeatherData.txt"))
             {
-
-                var bmp = HotelManagement.Theme.DarkBack(this.ParentForm);
+                var bmp = Theme.DarkBack(this.ParentForm);
 
                 using (Panel p = new Panel())
                 {
@@ -300,13 +190,8 @@ namespace HotelManagement
                             lblCity.Text = dialogCity.city.Name;
                             updateWeatherFlag = true;
                         }
-
-
-
                     }
-
                 }
-    
             }
             else
             {

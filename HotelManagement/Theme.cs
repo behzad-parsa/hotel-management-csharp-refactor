@@ -11,7 +11,6 @@ namespace HotelManagement
 {
     public class Theme
     {
-
         private static void ChangeLabelForColor( GradientPanel panel ,  int red , int green , int blue)
         {
             foreach (var item in panel.Controls)
@@ -20,11 +19,8 @@ namespace HotelManagement
                 {
                     var lbl = item as BunifuCustomLabel;
                     lbl.ForeColor = Color.FromArgb(red, green, blue);
-
                 }
-
-            }
-            
+            }    
         }
 
         private static void ChangeIcons(GradientPanel panel , string color)
@@ -32,16 +28,14 @@ namespace HotelManagement
             var power = panel.Controls["btnPower"] as BunifuImageButton;
             var logout = panel.Controls["btnLogout"] as BunifuImageButton;
             var size = panel.Controls["btnSize"] as BunifuImageButton;
-
             var form = panel.FindForm();
+
             if (color == "White")
             {
                 power.Image = Properties.Resources.powerW;
                 logout.Image = Properties.Resources.LogW;
                 if (form.WindowState == FormWindowState.Normal) size.Image = Properties.Resources.maxW;
                 else size.Image = Properties.Resources.minW;
-                //size.Image = Properties
-
             }
             else if(color == "Black")
             {
@@ -49,10 +43,7 @@ namespace HotelManagement
                 logout.Image = Properties.Resources.logB;
                 if (form.WindowState == FormWindowState.Normal) size.Image = Properties.Resources.maxB;
                 else size.Image = Properties.Resources.minB;
-            }
-            
-
-
+            }          
         }
 
         //0 top
@@ -69,12 +60,9 @@ namespace HotelManagement
                     ChangeIcons(panels[0], "White");
 
                     panels[1].BackColor = Color.FromArgb(49, 70, 89);
-
                     panels[2].BackColor = Color.Empty;
-
                     panels[2].ColorLeft = Color.FromArgb(79, 172, 254);
                     panels[2].ColorRight = Color.FromArgb(0, 242, 254);
-
                     // panels[2].BackColor = Color.FromArgb(42, 88, 173);
                     //this.Parent.Parent.Refresh();
                     break;
@@ -86,9 +74,7 @@ namespace HotelManagement
                     panels[1].BackColor = Color.FromArgb(142, 121, 186);
                     panels[2].ColorLeft = Color.Empty;
                     panels[2].ColorRight = Color.Empty;
-
-                    panels[2].BackColor = Color.FromArgb(107, 207, 234);
-                    //this.Parent.Parent.Refresh();
+                    panels[2].BackColor = Color.FromArgb(107, 207, 234);            
                     break;
 
                 case "Theme 3":
@@ -98,23 +84,13 @@ namespace HotelManagement
                     panels[1].BackColor = Color.FromArgb(63, 148, 219);
                     panels[2].ColorLeft = Color.Empty;
                     panels[2].ColorRight = Color.Empty;
-
                     panels[2].BackColor = Color.FromArgb(42, 88, 173);
-                    //this.Parent.Parent.Refresh();
                     break;
-
-
-
             }
-
-
-
-
         }
 
         public static Bitmap DarkBack(Control form)
-        {
-           
+        {       
             Bitmap bmp = new Bitmap(form.ClientRectangle.Width, form.ClientRectangle.Height);
             using (Graphics G = Graphics.FromImage(bmp))
             {
@@ -127,17 +103,12 @@ namespace HotelManagement
                     G.FillRectangle(brsh, form.ClientRectangle);
                 }
             }
-
             return bmp;
-
-
-
         }
+
         public static string LastTime(DateTime date)
         {
-
             var duration = DateTime.Now - date;
-
             string lastTime = string.Empty;
 
             if (duration.Days > 7)
@@ -166,21 +137,16 @@ namespace HotelManagement
                 }
                 else if (duration.Minutes >= 1)
                 {
-
                     lastTime = duration.Minutes.ToString() + " MINUTES AGO";
-
                 }
                 else
                 {
                     lastTime = "Just Now";
                 }
-
             }
 
             return lastTime ;
         }
-
-
 
     }
 }

@@ -35,28 +35,17 @@ namespace HotelManagement
                 lblEmptyFood.Visible = false;
                 dgvFood.DataSource = data;
                 dgvFood.Columns["ID"].Visible = false;
-
             }
             else
             {
                 lblEmptyFood.Visible = true;
-                dgvFood.DataSource = null;
+               dgvFood.DataSource = null;
 
             }
-
-
-
         }
+
         private void LoadBookingData()
         {
-
-            //dgvBooking.Rows.Insert(5, "df", "f", DateTime.Now.Date);
-            //string query = "Select  res.id As ResID,  rn.Title As RoomNo , Firstname + ' ' + Lastname As Name  ,StartDate as CheckIn , EndDate as CheckOut , res.DateModified as Date " +
-            //    " From Reservation res , Room r , RoomNumber rn , Customer cus , Actor a  " +
-            //    " Where res.RoomID = r.ID And r.RoomNumberID = rn.ID And res.CustomerID = cus.ID And cus.ActID = a.ID  And " +
-            //    " res.startDate <= '" +DateTime.Now.Date +"' And res.EndDate >= '" +DateTime.Now.Date +"' And res.CancelDate IS Null And r.BranchID = "+Current.User.BranchID ;
-
-
             string query = "Select  res.id As ResID,  rn.Title As RoomNo , Firstname + ' ' + Lastname As Name  ,StartDate as CheckIn , EndDate as CheckOut , res.DateModified as Date " +
               " From Reservation res , Room r , RoomNumber rn , Customer cus , Actor a  " +
               " Where res.RoomID = r.ID And r.RoomNumberID = rn.ID And res.CustomerID = cus.ID And cus.ActID = a.ID  And " +
@@ -68,18 +57,16 @@ namespace HotelManagement
             {
                 lblEmptyBooking.Visible = false;
                 dgvBooking.DataSource = bookingData;
-
                 dgvBooking.Columns["ResID"].Visible = false;
-
             }
             else
             {
                 lblEmptyBooking.Visible = true;
                 dgvBooking.DataSource = null;
-            }
-       
-
+            }    
         }
+
+
         private void LoadOrderData()
         { 
             string query = "Select Distinct orderf.ID as OrderID , Firstname + ' ' + Lastname +' - '+ rn.Title AS BookDetail  , f.Title  , Count As Qty  , f.Price , Total , orderf.DateModified As Date " +
@@ -93,7 +80,6 @@ namespace HotelManagement
                 lblEmptyList.Visible = false;
                 dgvOrder.DataSource = data;
                 dgvOrder.Columns["OrderID"].Visible = false;
-
                 dgvOrder.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 dgvOrder.Columns["Qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 dgvOrder.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -107,47 +93,25 @@ namespace HotelManagement
                 lblEmptyList.Visible = true;
                 dgvOrder.DataSource = null;
             }
-
-
-            //dgvOrder.Columns["Total"].Width = 50;
-            //dgvOrder.Columns["BookDetail"].Width = 200;
         }
+
+
         DataTable _bookingData;
         DataTable _orderData;
         private void NewFood_Load(object sender, EventArgs e)
         {
-
-            //dgvBooking.ClearSelection();
-
             LoadFoodData();
-
             LoadBookingData();
-
             LoadOrderData();
-
         }
 
         private void txtEmpNationalCode_OnValueChanged(object sender, EventArgs e)
         {
-
             _bookingData.DefaultView.RowFilter = string.Format("RoomNo LIKE '{0}%'", txtEmpNationalCode.Text);
-
         }
-
-
-
-
-
-
-
-
-
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
-
-
             var bmp = Theme.DarkBack(this.ParentForm);
 
             using (Panel p = new Panel())
@@ -160,25 +124,18 @@ namespace HotelManagement
 
                 using (ActionFood actionFood = new ActionFood(ActionFood.Action.Add))
                 {
-                    //actionFood.FoodID = FoodID;
                     actionFood.ShowDialog();
                     if (actionFood.completeActionFlag)
                     {
                         LoadFoodData();
                         dgvFood.ClearSelection();
-                        Current.User.Activities.Add(new Activity("Submit New Food", "New Food has been submited to menu by " + Current.User.Firstname + " " + Current.User.Lastname));
-
-
+                        Current.User.Activities.Add(
+                            new Activity("Submit New Food", 
+                            "New Food has been submited to menu by " + Current.User.Firstname + " " + Current.User.Lastname)
+                            );
                     }
-
-
-
-
                 }
-
             }
-
-      
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -189,7 +146,6 @@ namespace HotelManagement
             }
             else
             {
-
                 var bmp = Theme.DarkBack(this.ParentForm);
 
                 using (Panel p = new Panel())
@@ -221,15 +177,9 @@ namespace HotelManagement
 
                             dgvFood.ClearSelection();
                             dgvFood.Rows[rowIndex].Selected = true;
-
-
                         }
                     }
-
                 }
-
-
-      
             }
             
         }
@@ -238,9 +188,7 @@ namespace HotelManagement
         {
             if (dgvFood.CurrentRow != null)
             {
-
                 FoodID = Convert.ToInt32(dgvFood["ID", dgvFood.CurrentRow.Index].Value);
-
             }
         }
 
@@ -256,34 +204,29 @@ namespace HotelManagement
                 if (res == DialogResult.Yes)
                 {
                     if (HotelDatabase.Food.Delete(FoodID))
-                    {
-                        
+                    {                       
                         LoadFoodData();
                         dgvFood.ClearSelection();
-                        Current.User.Activities.Add(new Activity("Delete a Food", "a Food has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname));
-
+                        Current.User.Activities.Add(
+                            new Activity("Delete a Food", "a Food has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname)
+                            );
                     }
                     else
                     {
                         MessageBox.Show("Unable TO Compelete Action ", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
-                }
-                    
+                }                 
             }
         }
         int price;
         private void dgvFood_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             panelStatusOrder.Visible = false;
-
-
             price = Convert.ToInt32(dgvFood["Price", dgvFood.CurrentRow.Index].Value);
-            //int temp = (price * numQuantity.Value);
+
             lblPrice.Text = price.ToString();
             lblTotal.Text = (price * numQuantity.Value).ToString();
             lblFood.Text = Convert.ToString(dgvFood["Title", dgvFood.CurrentRow.Index].Value); 
-
 
             doubleClickDGVFoodFlag = true;
         }
@@ -298,7 +241,6 @@ namespace HotelManagement
 
         private void customeNumeric1_ValueChange(object sender, EventArgs e)
         {
-            //int temp = 
             lblTotal.Text = (price * numQuantity.Value).ToString();
         }
 
@@ -308,16 +250,14 @@ namespace HotelManagement
             {
                 if (HotelDatabase.Food.InsertOrderFood(FoodID, ResID, numQuantity.Value, Convert.ToInt32(lblTotal.Text)) > 0)
                 {
-                    //doubleClickDGVBookingFlag = false;
-                    //doubleClickDGVFoodFlag = false;
-                    //numQuantity
                     PanelStatus(panelStatusOrder, "Action Completed", Status.Green);
                     LoadOrderData();
                     dgvFood.ClearSelection();
                     dgvBooking.ClearSelection();
                     dgvOrder.ClearSelection();
-                    Current.User.Activities.Add(new Activity("Submit New Food Order", "New Food order has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
-
+                    Current.User.Activities.Add(
+                        new Activity("Submit New Food Order", "New Food order has been submited by " + Current.User.Firstname + " " + Current.User.Lastname)
+                        );
                 }
                 else
                 {
@@ -326,38 +266,32 @@ namespace HotelManagement
             }
             else if (!doubleClickDGVFoodFlag)
             {
-
                 PanelStatus(panelStatusOrder, "Food Not Selected", Status.Red);
             }
             else if (!doubleClickDGVBookingFlag)
             {
                 PanelStatus(panelStatusOrder, "Book Not Selected", Status.Red);
-            }
-          
+            }         
         }
-
-
-
 
         private void TextBoxEnter(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
-
             txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
-
             txtBox.ForeColor = Color.Black;
+
             if (!txtBoxList.ContainsKey(txtBox))
             {
                 txtBoxList.Add(txtBox, txtBox.Text);
             }
+
             txtBoxList.TryGetValue(txtBox, out string defualtText);
             if (txtBox.Text == defualtText)
             {
                 txtBox.Text = null;
             }
-
-
         }
+
         private void TextBoxLeave(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
@@ -369,13 +303,7 @@ namespace HotelManagement
                 txtBox.ForeColor = Color.DarkGray;
                 LoadBookingData();
             }
-
-            //LoadBookingData();
-
         }
-
-
-
 
 
         private enum Status
@@ -395,14 +323,11 @@ namespace HotelManagement
                 if (item is BunifuCustomLabel)
                 {
                     lbl = item as BunifuCustomLabel;
-
                 }
                 else
                 {
                     prgb = item as BunifuCircleProgressbar;
-
                 }
-
             }
 
             lbl.Text = text;
@@ -410,44 +335,32 @@ namespace HotelManagement
             {
                 prgb.ProgressColor = Color.Red;
                 lbl.ForeColor = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
 
                 prgb.ProgressColor = Color.Green;
                 lbl.ForeColor = Color.Green;
-
-
             }
             else
             {
                 prgb.ProgressColor = Color.Blue;
                 lbl.ForeColor = Color.Blue;
-
             }
-
-
-
-
         }
+
         int OrderFoodID = -10;
 
         private void dgvOrder_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvOrder.CurrentRow != null)
             {
-
                 OrderFoodID = Convert.ToInt32( dgvOrder["OrderID", dgvOrder.CurrentRow.Index].Value );
-
             }
-
         }
 
         private void dgvOrder_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dgvBooking_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -455,7 +368,6 @@ namespace HotelManagement
             if (dgvBooking.CurrentRow != null)
             {
                 ResID = Convert.ToInt32(dgvBooking["ResID" , dgvBooking.CurrentRow.Index].Value);
-
             }
         }
 
@@ -472,28 +384,26 @@ namespace HotelManagement
                 {
                     if (HotelDatabase.Food.DeleteOrderFood(OrderFoodID))
                     {
-
                         LoadOrderData();
                         dgvOrder.ClearSelection();
                         Current.User.Activities.Add(new Activity("Delete Food Order", "an Order from Food List has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname));
-
                     }
                     else
                     {
                         MessageBox.Show("Unable TO Compelete Action ", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                 }
-
             }
         }
 
         private void btnReportFood_Click(object sender, EventArgs e)
         {
-
             if (foodData != null)
             {
-                Current.User.Activities.Add(new Activity("Creat New Report", "the report from the dood menu has been created by " + Current.User.Firstname + " " + Current.User.Lastname));
+                Current.User.Activities.Add(
+                    new Activity("Creat New Report", 
+                    "the report from the dood menu has been created by " + Current.User.Firstname + " " + Current.User.Lastname)
+                    );
 
                 StiReport report = new StiReport();
                 report.Load("Report/FoodReport.mrt");
@@ -501,19 +411,15 @@ namespace HotelManagement
                 txtTitle = report.GetComponentByName("txtTitle") as StiText;
                 txtTitle.Text = "Food Menu";
 
-
                 Report.SetHotelComponents(report, Current.User.Branch);
                 report.RegBusinessObject("Food", foodData);
                 report.Compile();
-
                 report.Show();
             }
             else
             {
                 MessageBox.Show("List Is Empty");
-            }
-   
-        }
-        
+            } 
+        }       
     }
 }

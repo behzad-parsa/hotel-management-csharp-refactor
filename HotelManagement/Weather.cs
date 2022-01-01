@@ -186,7 +186,6 @@ namespace OpenWeatherApi
     public class Clouds
     {
         private const string AllSelector = "all";
-
         public double All { get; private set; }
 
         public Clouds(JToken cloudsData)
@@ -196,8 +195,6 @@ namespace OpenWeatherApi
     }
     public class Query
     {
-
-
         private const string BaseAdress = "http://api.openweathermap.org/data/2.5/";
         private const string ValidCod = "200";
         private const string COD = "cod";
@@ -229,8 +226,7 @@ namespace OpenWeatherApi
         public int ID { get; private set; }
         public string Name { get; private set; }
         public int Cod { get; private set; }
-        
-        
+            
         public Query(string apiKey, string queryStr)
         {
             Weathers = new List<Weather>();
@@ -272,7 +268,6 @@ namespace OpenWeatherApi
             }
             catch 
             {
-
                 ;
             }
            
@@ -335,20 +330,19 @@ namespace OpenWeatherApi
     public class Rain
     {
         private const string ThreeHour = "3h";
-
         public double H3 { get; private set; }
-
         public Rain(JToken rainData)
         {
             if (rainData.SelectToken(ThreeHour) != null)
                 H3 = double.Parse(rainData.SelectToken(ThreeHour).ToString());
         }
+
     }
     public class Snow
     {
         private const string ThreeHour = "3h";
-
         public double H3 { get; private set; }
+
         public Snow(JToken snowData)
         {
             if (snowData.SelectToken(ThreeHour) != null)
@@ -394,7 +388,6 @@ namespace OpenWeatherApi
     public class Temperature
     {
         private double current_kel_temp, temp_kel_min, temp_kel_max;
-
         public double CelsiusCurrent { get; private set; }
         public double FahrenheitCurrent { get; private set; }
         public double KelvinCurrent
@@ -583,6 +576,7 @@ namespace OpenWeatherApi
             return false;
         }
     }
+
     public class Coord
     {
         private const string Long = "long";
@@ -597,9 +591,9 @@ namespace OpenWeatherApi
             Latitude = double.Parse(coordData.SelectToken(Lat).ToString());
         }
     }
+
     public class City
     {
-
         public int ID { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
@@ -608,9 +602,7 @@ namespace OpenWeatherApi
         {
             this.ID = id;
             this.Name = name;
-
         }
-
 
     }
 }

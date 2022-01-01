@@ -21,18 +21,16 @@ namespace HotelManagement
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
         public static Customer customerInfo;
 
-
         private enum Step
         {
             Back,
-            Forward
-         
+            Forward   
         };
         public NewBook()
         {
             InitializeComponent();
-   
         }
+
         private void NewBook_Load(object sender, EventArgs e)
         {
             CardCustomerDetail customerDetail = new CardCustomerDetail();
@@ -42,33 +40,25 @@ namespace HotelManagement
            // this.ClientSize.Width / 2 - _thePanel.Size.Width / 2
             panelContainerInside.Controls.Clear();
             panelContainerInside.Controls.Add(customerDetail);
-
-
             //CardBookDetail car = new CardBookDetail();
             //panelContainerInside.Controls.Clear();
             //panelContainerInside.Controls.Add(car);
-
-            btnNext.Visible = false;
-
-            
+            btnNext.Visible = false;       
         }
  
 
         private void panelContainerInside_ControlAdded(object sender, ControlEventArgs e)
         {
-
         }
 
         private void panelContainerInside_ControlRemoved(object sender, ControlEventArgs e)
-        {
-            
+        {      
         }
 
         private void StepChange(int level , Step status)
         {
             if (status == Step.Back)
             {
-
                 if (level == 1)
                 {
                     picS.Image = Properties.Resources.play_button_blue;
@@ -86,13 +76,6 @@ namespace HotelManagement
                     lineThree.LineColor = Color.FromArgb(221, 221, 221);
                     lineTwo.LineColor = Color.FromArgb(0, 109, 240);
                 }
-                //else if (level == 3)
-                //{
-                //    picThree.Image = Properties.Resources._1288812_64;
-                //    lineTwo.LineColor = Color.FromArgb(33, 173, 140);
-                //    picThree.Image = Properties.Resources._1288812_64;
-                //}
-
             }
             else if (status == Step.Forward)
             {
@@ -101,28 +84,21 @@ namespace HotelManagement
                     picS.Image = Properties.Resources.play_button_green;
                     lineOne.LineColor = Color.FromArgb(33, 173, 140);
                     picOne.Image = Properties.Resources.success;
-
                     picTwo.Image = Properties.Resources.TwoBluee;
                     lineTwo.LineColor = Color.FromArgb(0, 109, 240); //blue
                 }
                 else if(level == 2)
-                {
-
-
-                    
+                {               
                     picTwo.Image = Properties.Resources.success;
                     lineTwo.LineColor = Color.FromArgb(33, 173, 140);
                     picThree.Image = Properties.Resources.ThreeBluee;
                     lineThree.LineColor = Color.FromArgb(0, 109, 240);
-
                 }
                 else if(level == 3)
                 {
                     picThree.Image = Properties.Resources.success;
                 }
-
             }
-
         }
         private void btnNext_Click(object sender, EventArgs e)
         {
@@ -130,7 +106,6 @@ namespace HotelManagement
             {
                 StepChange(1, Step.Forward);
                 CardGuestDetail guestDetail = new CardGuestDetail();
-
                 guestDetail.Left = panelContainerInside.Width / 2 - guestDetail.Width / 2 ;
                 guestDetail.Top = 10;
                 panelContainerInside.Controls.Clear();
@@ -144,18 +119,15 @@ namespace HotelManagement
                 bookDetail.Top = 10;
                 panelContainerInside.Controls.Clear();
                 panelContainerInside.Controls.Add(bookDetail);
-
             }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-
             if (backFalg == 1)
             {
                 statusFlag = 1;
-                StepChange(1, Step.Back);
-                
+                StepChange(1, Step.Back);              
                 CardCustomerDetail customerDetail= new CardCustomerDetail(customerInfo);
                 customerDetail.Left = panelContainerInside.Width / 2 - customerDetail.Width / 2;
                 customerDetail.Top = 10;
@@ -164,14 +136,12 @@ namespace HotelManagement
             }
             else if (backFalg == 2)
             {
-                //statusFlag = 2;
                 StepChange(2, Step.Back);
                 CardGuestDetail guestDetail = new CardGuestDetail();
                 guestDetail.Left = panelContainerInside.Width / 2 - guestDetail.Width / 2;
                 guestDetail.Top = 10;
                 panelContainerInside.Controls.Clear();
                 panelContainerInside.Controls.Add(guestDetail);
-
             }
         }
 

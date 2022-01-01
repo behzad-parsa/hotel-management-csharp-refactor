@@ -20,25 +20,16 @@ namespace HotelManagement
         private void TabUser_Load(object sender, EventArgs e)
         {
             AddControlsToPanel(new NewEmployee());
-
         }
-
-
-
 
         private void ActiveTab(Control lblTab)
         {
-
-            //lblTab.Enabled = true;
             lineTab.Width = lblTab.Width;
             lineTab.Left = lblTab.Left;
             lblTab.ForeColor = Color.Black;
         }
         private void DeactiveTab(Control lblTab)
         {
-
-            //lblTab.Enabled = false;
-
             lblTab.ForeColor = Color.DarkGray;
         }
 
@@ -52,15 +43,11 @@ namespace HotelManagement
             {
                 DeactiveTab(lblTab);
             }
-
-
-
-
         }
+
         private void AddControlsToPanel(Control contain)
         {
             contain.Dock = DockStyle.Fill;
-
             panelContainer.Controls.Clear();
             panelContainer.Controls.Add(contain);
         }
@@ -98,8 +85,7 @@ namespace HotelManagement
             ActiveTab(lblEmployeeList, false);
             ActiveTab(lblNewUser, false);
             ActiveTab(lblUserList, true);
-            AddControlsToPanel(new btnReportUser());
-            
+            AddControlsToPanel(new btnReportUser());   
         }
     }
 }

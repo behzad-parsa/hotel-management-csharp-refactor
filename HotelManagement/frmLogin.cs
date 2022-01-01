@@ -24,7 +24,6 @@ namespace HotelManagement
         {
             InitializeComponent();
             this.Size = new Size(426, 703);
-            //pictureBox2.Image = Properties.Resources.icons8_Eye_96px_1;
         }
 
         //Move Location On Runing
@@ -46,7 +45,6 @@ namespace HotelManagement
         TimeSpan oneSecond = new TimeSpan(0, 0, 1);
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            //LblErrorFrogot.Visible = false;
             timer1.Tick += new EventHandler(timer1_go);
             timer2.Tick += new EventHandler(timer2_go);
             timer3.Tick += new EventHandler(timer3_go);
@@ -56,11 +54,8 @@ namespace HotelManagement
             timer3.Interval = 1000;
             timer1.Start();
             PasswordVisibility(true);
-            //pictureLock.Image = Properties.Resources.padlock;
             timerReset.Interval = 1000;
             timerReset.Tick += TimerReset_Tick;
-
-
 
             timerProgress.Interval = 2000;
             timerProgress.Tick += TimerProgress_Tick;
@@ -81,21 +76,15 @@ namespace HotelManagement
         private void TimerProgress_Tick(object sender, EventArgs e)
         {
             var timer = sender as Timer;
-
- 
-             prgWaiting.Visible = false; 
-
-           
+             prgWaiting.Visible = false;         
         }
 
         private void timer1_go(object sender , EventArgs e)
         {
             LogoPosition();
-
         }
         private void ResetForgotPanel()
         {
-
             LoginPanelAnimation();
             step1Flag = false;
             btnCheck.ButtonText = "Check";
@@ -114,7 +103,6 @@ namespace HotelManagement
             {
                 ForgotPassPanelAnimation();
                 pictureLock.Image = Properties.Resources.password;
-
             }
             if(lblPage.Text=="Login")
             {
@@ -183,7 +171,6 @@ namespace HotelManagement
             {
                 timer1.Start();
                 line();
-
                 panel1.Left -= move_speed;
                 panel2.Left -= move_speed;
                 if (panel2.Left == 0)
@@ -198,7 +185,6 @@ namespace HotelManagement
             {
                 timer1.Start();
                 line();
-
                 panel2.Left += move_speed;
                 panel1.Left += move_speed;
                 if (panel1.Left == 0)
@@ -243,9 +229,6 @@ namespace HotelManagement
             }
         }
 
-
-
-
         void TextBoxes_Enter(object sender, EventArgs e)
         {
             Control control = sender as Control;
@@ -253,8 +236,7 @@ namespace HotelManagement
         }
 
         private void txtUsername_MouseClick(object sender, MouseEventArgs e)
-        {
-            
+        {          
             txtUsername.ForeColor = Color.Black;
         }
 
@@ -285,13 +267,10 @@ namespace HotelManagement
                 else
                 {
                     this.Cursor = Cursors.WaitCursor;
-                   // Current.User.Username = txtUsername.Text.ToLower();
                     //Check The Username
                     if (Current.User.SearchUser(txtUsername.Text.ToLower().Trim()))
                     {
-
-                        HashPassword hashPass = new HashPassword();
-                        
+                        HashPassword hashPass = new HashPassword();                      
                         //Check The Password
                         if (hashPass.ComparePass(Current.User.Password, txtPassword.Text))
                         {
@@ -302,22 +281,9 @@ namespace HotelManagement
                                 //NextPage
                                 //countDownTime = 5;
                                // pictureLock.Image = Properties.Resources.unlock;
-                                Current.User.InsertLoginHistory();
-                                //timer3.Start();
-
-                                //using (frmMain main = new frmMain())
-                                //{
-                                    new frmMain().Show();
-                                    this.Hide();
-
-                                    //main.Show();
-                                    ////this.Hide();
-                                //}
-
-
-                                //timer3.Stop();
-
-
+                                Current.User.InsertLoginHistory();                          
+                                new frmMain().Show();
+                                this.Hide();
                             }
                             else
                             {
@@ -355,7 +321,6 @@ namespace HotelManagement
             lblErrorLogin.Visible = false;
             txtPassword.LineIdleColor = Color.FromArgb(0, 173, 239); ;
             txtPassword.ForeColor = Color.Black;
-
         }
 
         private void txtPassword_MouseClick(object sender, MouseEventArgs e)
@@ -417,12 +382,8 @@ namespace HotelManagement
                         if (Communication.SendMail(txtForgotEmail.Text.Trim(), Current.User.Username, "Confirm Code", body))
                         {
                             saveEmail = txtForgotEmail.Text.Trim();
-                            //txtForgotEmail.HintText = "";
                             labelHeader.Text = "Enter The Code :";
                             btnCheck.ButtonText = "Send Again";
-                            //LblErrorFrogot.Visible = true;
-                            
-                            //txtForgotEmail.HintText = "Confirm Code";
 
                             txtForgotEmail.Text = null;
                             sendAgainFlag = true;
@@ -492,16 +453,8 @@ namespace HotelManagement
             if (step1Flag)
             {
                 step1Flag = false;
-
-                //timerProgress.Stop();
-               // prgWaiting.Visible = true;
-                
-                //timerProgress.Start();
                 if (txtForgotEmail.Text == rndStr)
                 {
-
-                    //Current.User.UpdatePassword();
-
                     var pass = GeneratePassCode();
                     HashPassword hp = new HashPassword();
                     if (Current.User.UpdatePassword(hp.ConvertPass(pass)))
@@ -515,11 +468,7 @@ namespace HotelManagement
                 }
                 else
                 {
-                    //prgWaiting.Visible = false;
-                    //timerProgress.Interval = 1000;
-                    //timerProgress.Start();
                 }
-               // timerProgress.Stop();
             }
         }
 

@@ -31,23 +31,14 @@ namespace HotelManagement
             ActiveTab(lblService, true);
             AddControlsToPanel(new OrderService());
         }
-
-
-
-
         private void ActiveTab(Control lblTab)
         {
-
-            //lblTab.Enabled = true;
             lineTab.Width = lblTab.Width;
             lineTab.Left = lblTab.Left;
             lblTab.ForeColor = Color.Black;
         }
         private void DeactiveTab(Control lblTab)
         {
-
-            //lblTab.Enabled = false;
-
             lblTab.ForeColor = Color.DarkGray;
         }
 
@@ -61,11 +52,8 @@ namespace HotelManagement
             {
                 DeactiveTab(lblTab);
             }
-
-
-
-
         }
+
         private void AddControlsToPanel(Control contain)
         {
             contain.Dock = DockStyle.Fill;

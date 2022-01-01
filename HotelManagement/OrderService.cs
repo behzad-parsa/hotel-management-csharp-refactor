@@ -31,7 +31,7 @@ namespace HotelManagement
         {
             string query = "Select * From Service";
             var data = serviceData = HotelDatabase.Database.Query(query);
-            //data.DefaultView.Sort = "Date DESC";
+
             if (data != null)
             {
                 lblEmptyService.Visible = false;
@@ -43,15 +43,11 @@ namespace HotelManagement
                 lblEmptyService.Visible = true;
                 dgvService.DataSource = null;
             }
-
-
-
-
         }
+
+
         private void LoadBookingData()
         {
-
-            //dgvBooking.Rows.Insert(5, "df", "f", DateTime.Now.Date);
             string query = "Select  res.id As ResID,  rn.Title As RoomNo , Firstname + ' ' + Lastname As Name  ,StartDate as CheckIn , EndDate as CheckOut , res.DateModified as Date " +
                 " From Reservation res , Room r , RoomNumber rn , Customer cus , Actor a  " +
                 " Where res.RoomID = r.ID And r.RoomNumberID = rn.ID And res.CustomerID = cus.ID And cus.ActID = a.ID  And " +
@@ -71,14 +67,8 @@ namespace HotelManagement
                 lblbookingEmpty.Visible = true;
                 dgvBooking.DataSource = null;
             }
-
-            //dgvBooking.Rows[2].Selected = true;
-            //dgvBooking.ClearSelection();
-            //dgvBooking.Refresh();
-            //dgvBooking.Update();
-
-
         }
+
         private void LoadOrderData()
         {
             string query = "Select Distinct os.ID as OrderID , Firstname + ' ' + Lastname +' - '+ rn.Title AS BookDetail  , s.Title  , Count As Qty  , s.Price , Total , os.DateModified As Date " +
@@ -86,16 +76,12 @@ namespace HotelManagement
                 " Where os.ServiceID = s.ID And res.CustomerID = cus.ID And cus.ActID = a.ID And res.RoomID = r.ID And r.RoomNumberID = rn.ID And os.ResID = res.ID  And r.BranchID = " + Current.User.BranchID;
             var data = _orderData = HotelDatabase.Database.Query(query);
 
-
-
-
             if (data != null)
             {
                 lblOrderListEmpty.Visible = false;
 
                 dgvOrder.DataSource = data;
                 dgvOrder.Columns["OrderID"].Visible = false;
-
                 dgvOrder.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 dgvOrder.Columns["Qty"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 dgvOrder.Columns["Price"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -110,16 +96,10 @@ namespace HotelManagement
                 lblOrderListEmpty.Visible = true;
                 dgvOrder.DataSource = null;
             }
-            //dgvOrder.Columns["Total"].Width = 50;
-            //dgvOrder.Columns["BookDetail"].Width = 200;
         }
+
         DataTable _bookingData;
         DataTable _orderData;
-
-
-
-
-
 
         private void OrderService_Load(object sender, EventArgs e)
         {
@@ -142,9 +122,9 @@ namespace HotelManagement
             if (dgvService.CurrentRow != null)
             {
                 ServiceID = Convert.ToInt32(dgvService["ID", dgvService.CurrentRow.Index].Value);
-
             }
         }
+
         int price;
         private void dgvService_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -163,7 +143,6 @@ namespace HotelManagement
             if (dgvBooking.CurrentRow != null)
             {
                 ResID = Convert.ToInt32(dgvBooking["ResID", dgvBooking.CurrentRow.Index].Value);
-
             }
         }
 
@@ -171,13 +150,9 @@ namespace HotelManagement
         {
             doubleClickBookFlag = true;
 
-
-             lblFor.Text = dgvBooking["Name", dgvBooking.CurrentRow.Index].Value.ToString() + " - " + dgvBooking["RoomNo", dgvBooking.CurrentRow.Index].Value.ToString();
-
-
+            lblFor.Text = dgvBooking["Name", dgvBooking.CurrentRow.Index].Value.ToString() + " - " + dgvBooking["RoomNo", dgvBooking.CurrentRow.Index].Value.ToString();
 
             panelStatusOrder.Visible = false;   
-
         }
 
         private void dgvOrder_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -185,10 +160,7 @@ namespace HotelManagement
             if (dgvOrder.CurrentRow!=null)
             {
                 OrderID = Convert.ToInt32(dgvOrder["OrderID", dgvOrder.CurrentRow.Index].Value);
-
             }
-
-
         }
 
         private void numQuantity_ValueChange(object sender, EventArgs e)
@@ -196,18 +168,13 @@ namespace HotelManagement
             lblTotal.Text = (price * numQuantity.Value).ToString();
         }
 
-
-
-
-
         // Sideways Mehtods ---------------------------------------------------
         private void TextBoxEnter(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
-
             txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
-
             txtBox.ForeColor = Color.Black;
+
             if (!txtBoxList.ContainsKey(txtBox))
             {
                 txtBoxList.Add(txtBox, txtBox.Text);
@@ -217,13 +184,10 @@ namespace HotelManagement
             {
                 txtBox.Text = null;
             }
-
-
         }
         private void TextBoxLeave(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
-
             if (txtBox.Text == null || txtBox.Text == "")
             {
                 txtBoxList.TryGetValue(txtBox, out string defualtText);
@@ -231,9 +195,6 @@ namespace HotelManagement
                 txtBox.ForeColor = Color.DarkGray;
                 LoadBookingData();
             }
-            //LoadBookingData();
-
-
         }
 
         private enum Status
@@ -253,14 +214,11 @@ namespace HotelManagement
                 if (item is BunifuCustomLabel)
                 {
                     lbl = item as BunifuCustomLabel;
-
                 }
                 else
                 {
                     prgb = item as BunifuCircleProgressbar;
-
                 }
-
             }
 
             lbl.Text = text;
@@ -268,27 +226,17 @@ namespace HotelManagement
             {
                 prgb.ProgressColor = Color.Red;
                 lbl.ForeColor = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
-
                 prgb.ProgressColor = Color.Green;
                 lbl.ForeColor = Color.Green;
-
-
             }
             else
             {
                 prgb.ProgressColor = Color.Blue;
                 lbl.ForeColor = Color.Blue;
-
             }
-
-
-
-
         }
 
         private void txtEmpNationalCode_OnValueChanged(object sender, EventArgs e)
@@ -296,15 +244,10 @@ namespace HotelManagement
             _bookingData.DefaultView.RowFilter = string.Format("RoomNo LIKE '{0}%'", txtEmpNationalCode.Text);
         }
 
-
-
-
-
         //Card Service Methods => ADD DELETE UPDATE ------------------------------
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
             var bmp = Theme.DarkBack(this.ParentForm);
 
             using (Panel p = new Panel())
@@ -323,35 +266,23 @@ namespace HotelManagement
                     {
                         LoadServiceData();
                         dgvService.ClearSelection();
-                        Current.User.Activities.Add(new Activity("Submit New Service", "New Service has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
-
+                        Current.User.Activities.Add(
+                            new Activity("Submit New Service", "New Service has been submited by " + Current.User.Firstname + " " + Current.User.Lastname)
+                            );
 
                     }
-
-
-
-
                 }
-
-            }
-
-
-       
-
+            }   
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-
             if (ServiceID < 0)
             {
                 MessageBox.Show("Please Select Row");
             }
             else
             {
-
-
-
                 var bmp = Theme.DarkBack(this.ParentForm);
 
                 using (Panel p = new Panel())
@@ -369,12 +300,12 @@ namespace HotelManagement
 
                         if (actionService.completeActionFlag)
                         {
-
                             LoadServiceData();
                             int rowIndex = -1;
 
-                            Current.User.Activities.Add(new Activity("Edit Service", "Service's information has been edited by " + Current.User.Firstname + " " + Current.User.Lastname));
-
+                            Current.User.Activities.Add(
+                                new Activity("Edit Service", 
+                                "Service's information has been edited by " + Current.User.Firstname + " " + Current.User.Lastname));
 
                             DataGridViewRow row = dgvService.Rows
                                 .Cast<DataGridViewRow>()
@@ -385,24 +316,10 @@ namespace HotelManagement
 
                             dgvService.ClearSelection();
                             dgvService.Rows[rowIndex].Selected = true;
-
-
                         }
                     }
-
                 }
-
-   
             }
-
-
-
-
-
-
-
-
-
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -418,19 +335,15 @@ namespace HotelManagement
                 {
                     if (HotelDatabase.Service.Delete(ServiceID))
                     {
-
                         LoadServiceData();
                         dgvService.ClearSelection();
                         Current.User.Activities.Add(new Activity("Delete Service","a Service has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname));
-
                     }
                     else
                     {
                         MessageBox.Show("Unable TO Compelete Action ", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                 }
-
             }
         }
 
@@ -440,16 +353,15 @@ namespace HotelManagement
             {
                 if (HotelDatabase.Service.InsertOrderService(ServiceID, ResID, numQuantity.Value, Convert.ToInt32(lblTotal.Text)) > 0)
                 {
-                    //doubleClickDGVBookingFlag = false;
-                    //doubleClickDGVFoodFlag = false;
-                    //numQuantity
                     PanelStatus(panelStatusOrder, "Action Completed", Status.Green);
                     LoadOrderData();
                     dgvService.ClearSelection();
                     dgvBooking.ClearSelection();
                     dgvOrder.ClearSelection();
-                    Current.User.Activities.Add(new Activity("Submit New Service Order", "New Service order has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
-
+                    Current.User.Activities.Add
+                        (new Activity("Submit New Service Order",
+                        "New Service order has been submited by " + Current.User.Firstname + " " + Current.User.Lastname)
+                        );
                 }
                 else
                 {
@@ -458,7 +370,6 @@ namespace HotelManagement
             }
             else if (!doubleClickServiceFlag)
             {
-
                 PanelStatus(panelStatusOrder, "Service Not Selected", Status.Red);
             }
             else if (!doubleClickBookFlag)
@@ -480,33 +391,28 @@ namespace HotelManagement
                 {
                     if (HotelDatabase.Service.DeleteOrderService(OrderID))
                     {
-
                         LoadOrderData();
                         dgvOrder.ClearSelection();
-                        Current.User.Activities.Add(new Activity("Delete Service Order","an Order from Services List has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname));
-
+                        Current.User.Activities.Add(
+                            new Activity("Delete Service Order",
+                            "an Order from Services List has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname));
                     }
                     else
                     {
                         MessageBox.Show("Unable TO Compelete Action ", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                 }
-
             }
-
-
-
-
-
-
         }
 
         private void btnServiceReport_Click(object sender, EventArgs e)
         {
             if (serviceData != null)
             {
-                Current.User.Activities.Add(new Activity("Creat New Report", "A List of Services Report has been created by " + Current.User.Firstname + " " + Current.User.Lastname));
+                Current.User.Activities.Add(
+                    new Activity("Creat New Report", 
+                    "A List of Services Report has been created by " + Current.User.Firstname + " " + Current.User.Lastname)
+                    );
 
                 StiReport report = new StiReport();
                 report.Load("Report/FoodReport.mrt");
@@ -514,15 +420,11 @@ namespace HotelManagement
                 txtTitle = report.GetComponentByName("txtTitle") as StiText;
                 txtTitle.Text = "List Of Services";
 
-
                 Report.SetHotelComponents(report, Current.User.Branch);
                 report.RegBusinessObject("Food", serviceData);
                 report.Compile();
-
                 report.Show();
-
-            }
-        
+            }      
             else
             {
                 MessageBox.Show("List Is Empty");

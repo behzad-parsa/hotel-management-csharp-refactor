@@ -24,8 +24,6 @@ namespace HotelManagement
         public City city;
         private void DialogCity_Load(object sender, EventArgs e)
         {
-            //var g = OpenWeatherAPI.lstCity as DataTable;
-            //var g = OpenWeatherAPI.lstCity.f
             //var g  = OpenWeatherAPI.lstCity.OrderBy(x=>x.Name)
             dataCity = new DataTable();
             //g.DataSet = OpenWeatherAPI.lstCity;
@@ -39,22 +37,15 @@ namespace HotelManagement
 
             }
             //dgvCities.Sort()
-
             dgvCities.DataSource = dataCity;
             dgvCities.Columns["Id"].Visible = false;
             //dgvCities.Columns["Country"].Visible = false;
-
-
         }
         private void TextBoxEnter(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
-
-      
+    
             txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
-
-     
-
             txtBox.ForeColor = Color.Black;
             if (!txtBoxList.ContainsKey(txtBox))
             {
@@ -65,9 +56,8 @@ namespace HotelManagement
             {
                 txtBox.Text = null;
             }
-
-
         }
+
         private void TextBoxLeave(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
@@ -78,8 +68,6 @@ namespace HotelManagement
                 txtBox.Text = defualtText;
                 txtBox.ForeColor = Color.DarkGray;
             }
-
-
         }
         private void picClose_Click(object sender, EventArgs e)
         {
@@ -88,11 +76,7 @@ namespace HotelManagement
         
         private void txtEmpNationalCode_OnValueChanged(object sender, EventArgs e)
         {
-
             (dgvCities.DataSource as DataTable).DefaultView.RowFilter = string.Format("Name Like '{0}%'", txtSearch.Text);
-
-            
-            //(dgvCities.DataSource as DataTable).DefaultView.RowFilter = string.Format("Name Like '%{0}%'", txtSearch.Text);
         }
 
         private void dgvCities_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -102,20 +86,15 @@ namespace HotelManagement
             if (File.Exists("WeatherData.txt"))
             {
                 city = OpenWeatherAPI.lstCity.Find(x => x.ID == id);
-
                 string contentWeather = city.ID.ToString() + "-" + city.Name + "-" + "Temp" + "-" + "Status" + "-" + DateTime.Now;
                 File.WriteAllText("WeatherData.txt", contentWeather);
                 this.Dispose();
-
             }
             else
             {
                 MessageBox.Show("Can't Complete Action", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
             this.Dispose();
-
-
         }
     }
 }

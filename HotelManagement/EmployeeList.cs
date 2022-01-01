@@ -30,7 +30,7 @@ namespace HotelManagement
         {
             cmbKeyword.SelectedIndex = 0;
 
-            ///ADD Branch Later
+            //ADD Branch Later
            //data = HotelDatabase.Database.Query("Select  e.id AS Eid , a.id As Aid , NationalCode, Firstname , Lastname , Gender , Birthday , Salary , HireDate  From Actor a  , Employee e Where e.ActID = a.ID ");
            // BindingSource bindingSource = new BindingSource();          
             ckBox = new CheckBox();
@@ -112,7 +112,6 @@ namespace HotelManagement
             }
         }
 
-
         void ckBox_CheckedChanged(object sender, EventArgs e)
         {
             for (int j = 0; j < this.dgvEmployee.RowCount; j++)
@@ -121,9 +120,6 @@ namespace HotelManagement
             }
             this.dgvEmployee.EndEdit();
         }
-
-
-
 
         private void TextBoxEnter(object sender, EventArgs e)
         {
@@ -152,9 +148,6 @@ namespace HotelManagement
             }
         }
 
-
-
-
         private void bunifuCustomDataGrid1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
         }
@@ -165,13 +158,6 @@ namespace HotelManagement
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            //dgvEmployee.DataSource = data.Select("Firstname like 'Be%'");
-            //DataTable tblFiltered =data.AsEnumerable()
-            //.Where(row => row.Field<String>("Firstname") == "Beh")
-            //.CopyToDataTable();
-            //  dgvEmployee.DataSource = tblFiltered;
-
             var originalData = HotelDatabase.Database.Query(originalQuery);
             dgvEmployee.DataSource = originalData;
             dgvEmployee.Columns["Eid"].Visible = false;
@@ -181,12 +167,7 @@ namespace HotelManagement
             txtKeyword.Text = "Keyword";
             txtMinSalary.Text = "Min";
             txtMaxSalary.Text = "Max";
-            //dateBirthMin.Value = DateTime.Now;
-            //dateHireMin.Value = DateTime.Now;
-            //DataView dv1 = data.DefaultView;
-            //dv1.RowFilter = "Firstname = 'Behzad' or Firstname Like 'kim*'";
-            //DataTable dtNew = dv1.ToTable();
-            //dgvEmployee.DataSource = dtNew;
+
         }
 
 
@@ -209,7 +190,6 @@ namespace HotelManagement
             query = query + saveValueBirthMin;
 
             FilterData();
-
         }
 
 
@@ -249,7 +229,6 @@ namespace HotelManagement
             }
             saveValueHireMin = hireMin + "'" + dateHireMin.Value.Date + "'";
 
-            //saveValueMax = dateBirthMax.Value.Date;
             query += saveValueHireMin;
 
             FilterData();

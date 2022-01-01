@@ -16,17 +16,9 @@ namespace HotelManagement
         {
             InitializeComponent();
         }
-
-        //private void panelEmpLeft_Paint(object sender, PaintEventArgs e)
-        //{
-
-        //}
-
         private void Invoice_Load(object sender, EventArgs e)
         {
-
             panelContainer.Controls.Add(new CardInvoice());
-
         }
     }
 }

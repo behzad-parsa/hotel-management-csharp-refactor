@@ -11,12 +11,9 @@ using System.IO;
 using System.Drawing.Imaging;
 
 namespace HotelManagement
-{
-    
-
+{ 
     public partial class InvoiceDetail : UserControl
     {
-
         public static int CustomerID;
         public static int ResID;
         public static int BillID;
@@ -24,7 +21,6 @@ namespace HotelManagement
         private double newDiscount;
         private string newDescription;
         public static int TranID;
-
 
         ScreenCapture capScreen = new ScreenCapture();
         public InvoiceDetail()
@@ -74,8 +70,7 @@ namespace HotelManagement
         //}
 
         private void InvoiceDetail_Load(object sender, EventArgs e)
-        {
-            
+        {        
             if (payFlag)
             {
                 btnPay.Text = "Pay Info";
@@ -88,9 +83,7 @@ namespace HotelManagement
                 btnPay.Text = "Pay Invoice";
                 btnEdit.Enabled = true;
                 picPaid.Visible = false;
-            }
-           
-          
+            }       
             
             string query = "Select res.* , cust.* , a.* , r.* , rn.Title As RoomNum , b.* , b.DateModified as BillDate  , b.id As Bid, u.* , e.* , bi.BranchName AS Bname , bi.State As Bstate, bi.Tel As Btel , bi.City as Bcity , bi.Address as Baddress  " +
                 "From Reservation res , Customer cust , Actor a , Room r , RoomNumber rn , Bill b , [dbo].[User] u , Employee e , BranchInfo bi Where res.id = " + ResID + "AND res.CustomerID = cust.id And " +
@@ -110,67 +103,42 @@ namespace HotelManagement
             DateTime checkin = Convert.ToDateTime(data.Rows[0]["StartDate"]);
             DateTime checkout = Convert.ToDateTime(data.Rows[0]["EndDate"]);
             lblCheckinout.Text = checkin.ToString("MM-dd-yyyy") + " / " + checkout.ToString("MM-dd-yyyy");
-
             lblRoomCount.Text = (checkout - checkin).Days.ToString() +" Days";
             lblRoomNumber.Text = data.Rows[0]["RoomNum"].ToString();
-
             lblCustName.Text = data.Rows[0]["Firstname"].ToString() + " " + data.Rows[0]["Lastname"].ToString();
             lblCustStateCity.Text = data.Rows[0]["State"].ToString() + ", " + data.Rows[0]["City"].ToString();
-
             lblCustTel.Text = data.Rows[0]["Mobile"].ToString();
             lblCustEmail.Text = data.Rows[0]["Email"].ToString();
-
             lblSubtotal.Text = data.Rows[0]["TotalCharge"].ToString();
-
-
-
-
             lblBillNo.Text = data.Rows[0]["BillNo"].ToString();
             lblRoomAmount.Text = data.Rows[0]["RoomCharge"].ToString();
             lblFoodAmount.Text = data.Rows[0]["FoodCharge"].ToString();
             lblServiceAmount.Text = data.Rows[0]["ServiceCharge"].ToString();
-            lblTotal.Text = data.Rows[0]["TotalCharge"].ToString();
-            
+            lblTotal.Text = data.Rows[0]["TotalCharge"].ToString();           
             lblDate.Text =Convert.ToDateTime( data.Rows[0]["BillDate"]).ToString("dd'th' MMM , yyy");
             lblRoomRate.Text = data.Rows[0]["Price"].ToString() + "/D";
-
-            lblHotelName.Text = data.Rows[0]["Bname"].ToString() +" Hotel";
-           
+            lblHotelName.Text = data.Rows[0]["Bname"].ToString() +" Hotel";       
             lblHotelStateCity.Text = data.Rows[0]["Bstate"].ToString()+", "+ data.Rows[0]["Bcity"].ToString();
             lblHotelTell.Text = data.Rows[0]["Btel"].ToString();
-
-
-            lblHotelAddress.Text = data.Rows[0]["Baddress"].ToString();
-           
-
-
+            lblHotelAddress.Text = data.Rows[0]["Baddress"].ToString();         
             lblBottom.Text = lblHotelName.Text + " | " + lblHotelStateCity.Text + " | " + lblHotelTell.Text + " | " + data.Rows[0]["Baddress"].ToString();
 
             BillID = Convert.ToInt32(data.Rows[0]["Bid"]);
             picLogo.Image = Image.FromStream(new MemoryStream(Current.User.Branch.Logo));
-
-
             lblDiscount.Text = data.Rows[0]["Discount"].ToString();
             lblTotal.Text =  ConvertDiscount(lblDiscount.Text, lblSubtotal.Text).ToString();
             lblAmount.Text = lblTotal.Text;
-
-
 
             string foodQuery = "Select Count(f.ID) From OrderFood f Where f.ResID = " + ResID;
             var foodData = HotelDatabase.Database.Query(foodQuery);
             if (foodData.Rows[0][0] != DBNull.Value) lblFoodCount.Text = foodData.Rows[0][0].ToString();
             else lblFoodCount.Text = "0";
 
-
             //string serviceQuery
             string serviceQuery = "Select Count(s.ID) From OrderService s Where s.ResID = " + ResID;
             var serviceData = HotelDatabase.Database.Query(serviceQuery);
             if (serviceData.Rows[0][0] != DBNull.Value) lblServiceCount.Text = serviceData.Rows[0][0].ToString();
             else lblServiceCount.Text = "0";
-
-
-
-
         }
 
         private double ConvertDiscount(string txtDis , string txtSubTotal)
@@ -187,8 +155,8 @@ namespace HotelManagement
                 subTotal = subTotal - (dis * subTotal);
                 return subTotal;
             }
-
         }
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
             var bmp = Theme.DarkBack(this.ParentForm);
@@ -200,7 +168,6 @@ namespace HotelManagement
                 p.BackgroundImage = bmp;
                 this.ParentForm.Controls.Add(p);
                 p.BringToFront();
-
                 // display your dialog somehow:
                 //PayDialog payDialog = new PayDialog();
                 //payDialog.ShowDialog();
@@ -212,33 +179,23 @@ namespace HotelManagement
                     edit.ShowDialog();
                     newDiscount = edit.discount;
                     newDescription = edit.description;
-                    Current.User.Activities.Add(new Activity("Modify Invoice", "invoice No." + lblBillNo.Text + "-" + lblCustName.Text + " has been modified by " + Current.User.Firstname + " " + Current.User.Lastname));
-
+                    Current.User.Activities.Add(
+                        new Activity("Modify Invoice",
+                        "invoice No." + lblBillNo.Text + "-" + lblCustName.Text + " has been modified by " + Current.User.Firstname + " " + Current.User.Lastname)
+                        );
                 }
-
             } // pane
 
             if (HotelDatabase.Bill.Update(BillID , newDiscount , newDescription))
             {
                 lblDiscount.Text = newDiscount.ToString();
-                //double _discount = newDiscount / 100;
-                //double _amount = Convert.ToDouble(lblSubtotal.Text);
-                //_amount = _amount - (_amount * _discount);
-                //lblAmount.Text = _amount.ToString();
-                //lblTotal.Text = _amount.ToString();
-
                lblTotal.Text =  ConvertDiscount(lblDiscount.Text, lblSubtotal.Text).ToString();
                lblAmount.Text = lblTotal.Text;
-
                 if (newDescription != null)
                 {
                     lblNote.Text = newDescription;
-
                 }
             }
-
-
-
         }
 
         //private string deskTopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -307,11 +264,9 @@ namespace HotelManagement
                 //payDialog.ShowDialog(this);
                 if (payFlag)
                 {
-
                     PayInfo.custName = lblCustName.Text;
                     PayInfo pi = new PayInfo();
                     pi.ShowDialog();
-
                 }
                 else
                 {
@@ -329,17 +284,8 @@ namespace HotelManagement
                         Current.User.Activities.Add(new Activity("Pay Invoice", "Payment information of invoice No."+lblBillNo.Text+"-"+lblCustName.Text+" has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
 
                     }
-
-
-
-
                 }
             } // panel will be disposed and the form will "lighten" again...
-
-
-
-
-
 
 
             //Enabled = false;
@@ -347,7 +293,6 @@ namespace HotelManagement
             //shadow.MinimizeBox = false;
             //shadow.MaximizeBox = false;
             //shadow.ControlBox = false;
-
             //shadow.Text = "";
             //shadow.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             //shadow.Size = this.Parent.Parent.Size;
@@ -356,31 +301,17 @@ namespace HotelManagement
             //shadow.Show();
             //shadow.Location = this.Parent.Parent.Location;
             //shadow.Enabled = false;
-
             //// here you should use your own messageBox class!
             //Form msg = new Form();
             //Button btn = new Button() { Text = "OK" };
             //btn.Click += (ss, ee) => { msg.Close(); };
             //msg.Controls.Add(btn);
             //msg.FormClosed += (ss, ee) => { shadow.Close(); Enabled = true; };
-
             //msg.Size = new System.Drawing.Size(200, 100);
             //msg.StartPosition = FormStartPosition.Manual;
             //msg.Location = new Point(shadow.Left + (shadow.Width - msg.Width) / 2,
             //                         shadow.Top + (shadow.Height - msg.Height) / 2);
             //msg.ShowDialog();
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 }

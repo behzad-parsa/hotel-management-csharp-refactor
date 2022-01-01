@@ -15,29 +15,21 @@ namespace HotelManagement
 {
     public partial class NewRole : UserControl
     {
+        Dictionary<int, string> dicAllModules = new Dictionary<int, string>();
+        //Dictionary<int, string> dicRoles = new Dictionary<int, string>();
+        List<int> lstChoosedModuleID = new List<int>();
+        //List<int> lstModules = new List<int>();
+        Dictionary<CheckBox, KeyValuePair<int, string>> dicChb = new Dictionary<CheckBox, KeyValuePair<int, string>>();
+        //private int RoleID;
+
         public NewRole()
         {
             InitializeComponent();
         }
 
-        Dictionary<int, string> dicAllModules = new Dictionary<int, string>();
-        //Dictionary<int, string> dicRoles = new Dictionary<int, string>();
-        List<int> lstChoosedModuleID = new List<int>();
-        List<int> lstModules = new List<int>();
-        Dictionary<CheckBox, KeyValuePair<int, string>> dicChb = new Dictionary<CheckBox, KeyValuePair<int, string>>();
-        private int RoleID;
-
-
-
-
-
-
         private void NewRole_Load(object sender, EventArgs e)
         {
             dicAllModules = HotelDatabase.Module.GetAllModules();
-
-
-
 
             //----Access Panel-----------
 
@@ -52,22 +44,8 @@ namespace HotelManagement
                 if (i != 1) chbModule.Location = new Point(chbModule.Location.X, dicChb.ElementAt(dicChb.Count - 1).Key.Location.Y + 40);
                 dicChb.Add(chbModule, dicAllModules.ElementAt(i - 1));
                 panelAccess.Controls.Add(chbModule);
-                //lstCheckBox.Add(chbModule);
-                //if (i < 12) panelLeftFacility.Controls.Add(chbModule);
-                //else
-                //{
-                //    if (i == 12) chbModule.Location = new Point(chbModule.Location.X, lstCheckBox[0].Location.Y);
-                //    panelRightFacility.Controls.Add(chbModule);
-                //}
             }
-
-
-
         }
-
-
-
-
 
         private void Reset()
         {
@@ -77,11 +55,11 @@ namespace HotelManagement
                 {
                     var chb = item as CheckBox;
                     chb.Checked = false;
-
                 }
 
             }
         }
+
         private void CheckBoxSelected(object sender, EventArgs e)
         {
             var checkBox = sender as CheckBox;
@@ -90,32 +68,13 @@ namespace HotelManagement
             var id = temp.Key;
             if (checkBox.Checked)
             {
-
-
                 lstChoosedModuleID.Add(id);
-
-
             }
             else
             {
-
                 lstChoosedModuleID.Remove(id);
-
-
-
             }
-
-
-
         }
-
-
-
-
-
-
-
-
 
         private enum Status
         {
@@ -134,14 +93,11 @@ namespace HotelManagement
                 if (item is BunifuCustomLabel)
                 {
                     lbl = item as BunifuCustomLabel;
-
                 }
                 else
                 {
                     prgb = item as BunifuCircleProgressbar;
-
                 }
-
             }
 
             lbl.Text = text;
@@ -149,31 +105,17 @@ namespace HotelManagement
             {
                 prgb.ProgressColor = Color.Red;
                 lbl.ForeColor = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
-
                 prgb.ProgressColor = Color.Green;
                 lbl.ForeColor = Color.Green;
-
-
             }
             else
             {
                 prgb.ProgressColor = Color.Blue;
                 lbl.ForeColor = Color.Blue;
-
             }
-
-
-
-
-
-
-
-
         }
 
         private void TextBoxColor(BunifuMetroTextbox txtBox, Status status)
@@ -181,20 +123,17 @@ namespace HotelManagement
             if (status == Status.Red)
             {
                 txtBox.BorderColorIdle = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
-
                 txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
             }
             else
             {
                 txtBox.BorderColorIdle = Color.FromArgb(128, 128, 128);
             }
-
         }
+
         private int txtCount = 0;
         private bool validationFlag = false;
 
@@ -205,18 +144,11 @@ namespace HotelManagement
                 TextBoxColor(txtBox, Status.Red);
                 return false;
             }
-            //else if (txt == "National Code")
-            //{
-            //    TextBoxColor(txtBox, Status.blue);
-            //    txtCount++;
-            //    return true;
-            //}
             else
             {
                 TextBoxColor(txtBox, Status.Green);
                 txtCount++;
                 return true;
-
             }
         }
 
@@ -226,10 +158,7 @@ namespace HotelManagement
 
             if (txtCount ==1)
             {
-
                 validationFlag = true;
-
-
             }
             else
             {
@@ -246,38 +175,25 @@ namespace HotelManagement
                 {
                     for (int i = 0; i <  lstChoosedModuleID.Count; i++)
                     {
-
                         if (HotelDatabase.AccessLevel.Insert(res , lstChoosedModuleID[i]) >0)
                         {
-
-
                             counter++;
                         }
                         if (counter == lstChoosedModuleID.Count)
                         {
                             PanelStatus(panelStatus, "Completed ", Status.Green);
-
                         }
                         else
                         {
                             PanelStatus(panelStatus, "Failed", Status.Red);
                         }
-
-                    }
-                    
-
-
+                    }                   
                 }
                 else
                 {
                     PanelStatus(panelStatus, "Failed -- Insert", Status.Red);
                 }
-
             }
-
-
-
-
         }
     }
 }

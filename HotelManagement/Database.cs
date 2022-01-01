@@ -2614,8 +2614,7 @@ namespace HotelManagement
                     }
                     else
                     {      
-                        cmd.CommandText = "Update \"Reservation\"  Set EndDate = @Checkin , TotalPayDueDate=@TotalPay Where ID = @ParameterID";
-                        
+                        cmd.CommandText = "Update \"Reservation\"  Set EndDate = @Checkin , TotalPayDueDate=@TotalPay Where ID = @ParameterID";                       
                     }
                     SearchReserveWithID(id2);
                     cmd.Parameters.Clear();
@@ -2634,49 +2633,27 @@ namespace HotelManagement
                     //cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
                     //cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
                     // DateTime.Now.ToString("h:mm:ss tt")
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
-
-                    return true;
-                   
+                    return true;                
                 }
                 catch
                 {
-
                     return false ;
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
             public static bool Update(int id, int totalPayDueDat, DateTime cancelDate)
             {
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Update \"Reservation\"  Set CancelDate = @Checkin , TotalPayDueDate = @TotalPay  Where ID = @ParameterID";
-
                     //SearchReserveWithID(id);
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@TotalPay", totalPayDueDat * 0.5);
                     cmd.Parameters.AddWithValue("@Checkin", cancelDate);
                     cmd.Parameters.AddWithValue("@ParameterID", id);
-
                     //cmd.Parameters.AddWithValue("@RoomID", roomID);
                     //cmd.Parameters.AddWithValue("@StartDate", startDate);
                     //cmd.Parameters.AddWithValue("@EndDate", endDate);
@@ -2688,8 +2665,6 @@ namespace HotelManagement
                     //cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
                     //cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
                     // DateTime.Now.ToString("h:mm:ss tt")
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
@@ -2702,33 +2677,14 @@ namespace HotelManagement
 
                     return false;
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
             public static bool Delete(int id)
             {
                 try
                 {
-
-
-
-                    //dataTable = new DataTable();
-
                     cmd.CommandText = "Delete FROM \"Reservation\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
 
                     MakeConnection();
                     Connect();
@@ -2739,7 +2695,6 @@ namespace HotelManagement
                 }
                 catch
                 {
-
                     return false;
                 }
 
@@ -2748,9 +2703,7 @@ namespace HotelManagement
             //{
             //    try
             //    {
-
             //        MakeConnection();
-
             //        cmd.CommandText = "Update \"Reservation\"  Set StartDate = @Checkin Where ID = @ID";
             //        cmd.Parameters.Clear();
             //        cmd.Parameters.AddWithValue("@ID", id);
@@ -2766,94 +2719,46 @@ namespace HotelManagement
             //        //cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
             //        //cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
             //        // DateTime.Now.ToString("h:mm:ss tt")
-
-
             //        Connect();
             //        cmd.ExecuteNonQuery();
             //        Disconnect();
-
             //        return true;
-
             //    }
             //    catch
             //    {
-
             //        return false;
             //    }
-
-
-
-
-
-
-
-
-
-
-
-
-
             //}
 
             //public static int SearchActorID(string nationalCode)
             //{
             //    try
             //    {
-
-
             //        MakeConnection();
             //        dataTable = new DataTable();
-
             //        cmd.CommandText = "SELECT * FROM \"Actor\" Where NationalCode = @NationalCode ";
             //        cmd.Parameters.Clear();
             //        cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
-
-
             //        adp.SelectCommand = cmd;
-
             //        Connect();
             //        adp.Fill(dataTable);
             //        Disconnect();
-
             //        if (dataTable.Rows.Count != 0)
             //        {
-
-
             //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-
             //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
             //            //Image = (byte[])dataTable.Rows[0]["Image"];
-
-
             //            return ID;
-
-
             //        }
             //        else
             //        {
             //            return -1;
             //        }
-
-
-
-
             //    }
             //    catch
             //    {
-
             //        return -2;
             //    }
-
-
-
-
-
-
-
-
-
-
-
             //}
         }
 
@@ -2882,15 +2787,11 @@ namespace HotelManagement
                 {
                     con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
                     cmd.Connection = con;
-
                 }
                 catch
                 {
-
                     ;
                 }
-
-
             }
             private static void Connect()
             {
@@ -2898,16 +2799,11 @@ namespace HotelManagement
                 {
                     if (con.State == ConnectionState.Closed)
                     {
-
                         con.Open();
-
                     }
-
-
                 }
                 catch
                 {
-
                     ;
                 }
 
@@ -2919,25 +2815,20 @@ namespace HotelManagement
                     if (con.State == ConnectionState.Open)
                     {
                         con.Close();
-
                     }
 
                 }
                 catch
                 {
-
                     ;
                 }
             }
 
             //public static int Insert(int resID , int transID , string billNo , int roomCharge , int foodCharge , int serviceCharge  , int totalCharge , double discount , string description)
             //{
-
             //    try
             //    {
-
             //        MakeConnection();
-
             //        cmd.CommandText = "Insert Into \"Bill\" (ResID , TransactionID , BillNo , RoomCharge , FoodCharge , ServiceCharge  , TotalCharge , Discount , DateModified , Description) Values (@ResID , @TransactionID , @BillNo , @RoomCharge , @FoodCharge , @ServiceCharge , @TotalCharge , @Discount , @DateModified , @Description)";
             //        cmd.Parameters.Clear();
             //        cmd.Parameters.AddWithValue("@ResID", resID);
@@ -2949,38 +2840,24 @@ namespace HotelManagement
             //        cmd.Parameters.AddWithValue("@TotalCharge", totalCharge);
             //        cmd.Parameters.AddWithValue("@Discount", discount);
             //        cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-            //        cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-                    
-
-
-
-
-
+            //        cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));                
             //        Connect();
             //        cmd.ExecuteNonQuery();
             //        cmd.CommandText = Database.QueryLastID;
             //        int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
             //        Disconnect();
-
             //        return insertedID;
-
             //    }
             //    catch
             //    {
-
             //        return -1;
             //    }
-
-
             //}
             public static int Insert(int resID)
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Insert Into \"Bill\" (ResID ,DateModified ) Values (@ResID , @DateModified)";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ResID", resID);
@@ -2993,38 +2870,22 @@ namespace HotelManagement
                     //cmd.Parameters.AddWithValue("@Discount", discount);
                     cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                     //cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     cmd.CommandText = Database.QueryLastID;
                     int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return insertedID;
-
                 }
                 catch
                 {
-
                     return -1;
                 }
-
-
             }
             public static bool Update(int id  ,int? transactionID  )
             {
                 try
-                {
-
-
-
-                    
-
+                {                 
                     cmd.CommandText = "Update \"Bill\"  SET TransactionID =  @TransactionID  Where ID = @ID";
                     cmd.Parameters.Clear();
                     //cmd.Parameters.AddWithValue("@AccountID", accountID);
@@ -3047,37 +2908,23 @@ namespace HotelManagement
                     ////cmd.Parameters.AddWithValue("@Discount", discount);
                     ////cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                     //if(description!=null || description!="") cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
                     MakeConnection();
                     Connect();
                     cmd.ExecuteNonQuery();
                     //cmd.CommandText = Database.QueryLastID;
                     //int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
             public static bool Update(int id, double discount, string description)
             {
                 try
                 {
-
-
-
-
-
                     cmd.CommandText = "Update \"Bill\"  SET  Discount = @Discount , Description = @Description  Where ID = @ID";
                     cmd.Parameters.Clear();
                     //cmd.Parameters.AddWithValue("@AccountID", accountID);
@@ -3091,7 +2938,6 @@ namespace HotelManagement
                     //{
                     //    cmd.Parameters.AddWithValue("@TransactionID", transactionID);
                     //}
-
                     //cmd.Parameters.AddWithValue("@TransactionNumber", Database.CheckNullInsert(transNum));
                     //cmd.Parameters.AddWithValue("@Amount", amount);
                     ////cmd.Parameters.AddWithValue("@DateModified", serviceCharge);
@@ -3100,24 +2946,16 @@ namespace HotelManagement
                     //cmd.Parameters.AddWithValue("@Discount", discount);
                     //cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                    /* i/*f (description != null || description != "")*/ cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
                     MakeConnection();
                     Connect();
                     cmd.ExecuteNonQuery();
                     //cmd.CommandText = Database.QueryLastID;
                     //int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
 
@@ -3126,25 +2964,18 @@ namespace HotelManagement
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"Bill\" Where ResID = @ResID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ResID", resID);
-
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
 
                     if (dataTable.Rows.Count != 0)
                     {
-
                         ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
                         if (dataTable.Rows[0]["TransactionID"] != DBNull.Value)
                         {
@@ -3163,87 +2994,46 @@ namespace HotelManagement
                         Discount = Convert.ToDouble(dataTable.Rows[0]["Discount"]);
                         DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
                         Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-
-
-
-
-
-
-
                         return true;
-
-
                     }
                     else
                     {
                         return false;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
             //public static int SearchBranchID(string code)
             //{
             //    try
             //    {
-
-
             //        MakeConnection();
             //        dataTable = new DataTable();
-
             //        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
             //        cmd.Parameters.Clear();
             //        cmd.Parameters.AddWithValue("@Code", code);
-
-
             //        adp.SelectCommand = cmd;
-
             //        Connect();
             //        adp.Fill(dataTable);
             //        Disconnect();
-
             //        if (dataTable.Rows.Count != 0)
             //        {
-
             //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-
-
-
-
-
-
-
-
-
             //            return ID;
-
-
             //        }
             //        else
             //        {
             //            return -1;
             //        }
-
-
-
-
             //    }
             //    catch
             //    {
-
             //        return -2;
             //    }
-
             //}
-
         }
 
         public class Transact
@@ -3258,7 +3048,6 @@ namespace HotelManagement
             //public static int ServiceCharge { get; set; }
             //public static int TotalCharge { get; set; }
             //public static double Discount { get; set; }
-
             public static DateTime DateModified { get; set; }
             public static string Description { get; set; }
 
@@ -3272,15 +3061,11 @@ namespace HotelManagement
                 {
                     con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
                     cmd.Connection = con;
-
                 }
                 catch
                 {
-
                     ;
                 }
-
-
             }
             private static void Connect()
             {
@@ -3288,16 +3073,11 @@ namespace HotelManagement
                 {
                     if (con.State == ConnectionState.Closed)
                     {
-
                         con.Open();
-
                     }
-
-
                 }
                 catch
                 {
-
                     ;
                 }
 
@@ -3309,25 +3089,20 @@ namespace HotelManagement
                     if (con.State == ConnectionState.Open)
                     {
                         con.Close();
-
                     }
 
                 }
                 catch
                 {
-
                     ;
                 }
             }
 
             public static int Insert(int accountID, int paymentMethodID, int transTypeID, string transNum, double amount , string description)
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Insert Into \"Transact\" (AccountID , PaymentMethodID , TransactionTypeID , TransactionNumber , Amount, DateModified , Description) Values (@AccountID , @PaymentMethodID , @TransactionTypeID , @TransactionNumber , @Amount, @DateModified , @Description)";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@AccountID", accountID);
@@ -3340,35 +3115,23 @@ namespace HotelManagement
                     //cmd.Parameters.AddWithValue("@Discount", discount);
                     cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     cmd.CommandText = Database.QueryLastID;
                     int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return insertedID;
-
                 }
                 catch
                 {
-
                     return -1;
                 }
-
-
             }
+
             public static bool Update(int id , int accountID, int paymentMethodID, int transTypeID, string transNum, double amount, string description)
             {
-
                 try
                 {
-
                     MakeConnection();
 
                     cmd.CommandText = "Update \"Transact\" Set AccountID = @AccountID , PaymentMethodID = @PaymentMethodID , TransactionTypeID = @TransactionTypeID , TransactionNumber =  @TransactionNumber , Amount = @Amount , DateModified = @DateModified , Description = @Description Where ID = @ID";
@@ -3382,59 +3145,32 @@ namespace HotelManagement
                     cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
 
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
-
                     return true ;
-
                 }
                 catch
                 {
-
                     return false ;
                 }
-
-
             }
+
             public static bool SearchTransact(int id)
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"Transact\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID",id);
-
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
-
                     if (dataTable.Rows.Count != 0)
                     {
-
-                        //ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-                        //if (dataTable.Rows[0]["TransactionID"] != DBNull.Value)
-                        //{
-                        //    TransactionID = Convert.ToInt32(dataTable.Rows[0]["TransactionID"]);
-                        //}
-                        //else
-                        //{
-                        //    TransactionID = 0;
-                        //}
-
                         AccountID = Convert.ToInt32(dataTable.Rows[0]["AccountID"]) ;
                         PaymentMethodID = Convert.ToInt32(dataTable.Rows[0]["PaymentMethodID"]);
                         TransactionTypeID = Convert.ToInt32(dataTable.Rows[0]["TransactionTypeID"]);
@@ -3443,49 +3179,29 @@ namespace HotelManagement
                         //Discount = Convert.ToDouble(dataTable.Rows[0][" Discount"]);
                         DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
                         Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-
-
-
-
-
-
-
                         return true;
-
-
                     }
                     else
                     {
                         return false;
                     }
-
-
-
-
                 }
                 catch
                 {
 
                     return false;
                 }
-
             }
             public static Dictionary<int , string> GetPaymentMethod()
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"PaymentMethod\"";
                     cmd.Parameters.Clear();
                     //cmd.Parameters.AddWithValue("@ID", ID);
-
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
@@ -3502,7 +3218,6 @@ namespace HotelManagement
                         //{
                         //    TransactionID = 0;
                         //}
-
                         //AccountID = Convert.ToInt32(dataTable.Rows[0]["AccountID"]);
                         //PaymentMethodID = Convert.ToInt32(dataTable.Rows[0]["PaymentMethodID"]);
                         //TransactionTypeID = Convert.ToInt32(dataTable.Rows[0]["TransactionTypeID"]);
@@ -3519,55 +3234,34 @@ namespace HotelManagement
                             lstPay.Add(id, Title);
 
                         }
-
-
-
-
-
                         return lstPay ;
-
-
                     }
                     else
                     {
                         return null;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return null;
                 }
-
             }
             public static Dictionary<int, string> GetTransactionType()
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"TransactionType\"";
                     cmd.Parameters.Clear();
                     //cmd.Parameters.AddWithValue("@ID", ID);
-
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
-
                     if (dataTable.Rows.Count != 0)
                     {
                         Dictionary<int, string> lstTransType = new Dictionary<int, string>();
-
                         //if (dataTable.Rows[0]["TransactionID"] != DBNull.Value)
                         //{
                         //    TransactionID = Convert.ToInt32(dataTable.Rows[0]["TransactionID"]);
@@ -3576,7 +3270,6 @@ namespace HotelManagement
                         //{
                         //    TransactionID = 0;
                         //}
-
                         //AccountID = Convert.ToInt32(dataTable.Rows[0]["AccountID"]);
                         //PaymentMethodID = Convert.ToInt32(dataTable.Rows[0]["PaymentMethodID"]);
                         //TransactionTypeID = Convert.ToInt32(dataTable.Rows[0]["TransactionTypeID"]);
@@ -3585,63 +3278,41 @@ namespace HotelManagement
                         ////Discount = Convert.ToDouble(dataTable.Rows[0][" Discount"]);
                         //DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
                         //Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-
                         for (int i = 0; i < dataTable.Rows.Count; i++)
                         {
                             int id = Convert.ToInt32(dataTable.Rows[i]["ID"]);
                             string Title = dataTable.Rows[i]["Title"].ToString();
                             lstTransType.Add(id, Title);
-
                         }
-
-
-
-
-
                         return lstTransType;
-
-
                     }
                     else
                     {
                         return null;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return null;
                 }
-
             }
             public static bool Delete(int id)
             {
                 try
                 {
-
-
-
                     dataTable = new DataTable();
 
                     cmd.CommandText = "Delete FROM \"Transact\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
-
                     MakeConnection();
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
 
@@ -3651,54 +3322,29 @@ namespace HotelManagement
             //{
             //    try
             //    {
-
-
             //        MakeConnection();
             //        dataTable = new DataTable();
-
             //        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
             //        cmd.Parameters.Clear();
             //        cmd.Parameters.AddWithValue("@Code", code);
-
-
             //        adp.SelectCommand = cmd;
-
             //        Connect();
             //        adp.Fill(dataTable);
             //        Disconnect();
-
             //        if (dataTable.Rows.Count != 0)
             //        {
-
             //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-
-
-
-
-
-
-
-
-
             //            return ID;
-
-
             //        }
             //        else
             //        {
             //            return -1;
             //        }
-
-
-
-
             //    }
             //    catch
             //    {
-
             //        return -2;
             //    }
-
             //}
         }
         public class Account
@@ -3727,15 +3373,11 @@ namespace HotelManagement
                 {
                     con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
                     cmd.Connection = con;
-
                 }
                 catch
                 {
-
                     ;
                 }
-
-
             }
             private static void Connect()
             {
@@ -3743,19 +3385,13 @@ namespace HotelManagement
                 {
                     if (con.State == ConnectionState.Closed)
                     {
-
                         con.Open();
-
                     }
-
-
                 }
                 catch
                 {
-
-                    ;
+                   ;
                 }
-
             }
             private static void Disconnect()
             {
@@ -3764,25 +3400,19 @@ namespace HotelManagement
                     if (con.State == ConnectionState.Open)
                     {
                         con.Close();
-
                     }
-
                 }
                 catch
                 {
-
                     ;
                 }
             }
 
             public static int Insert(int branchID , string accountName , string accountNumber , string bank , double balance , string description )
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Insert Into \"Accounts\" (BranchID , AccountName , AccountNumber , Bank , Balance ,   Description) Values (@BranchID , @AccountName , @AccountNumber , @Bank , @Balance , @Description)";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@BranchID", branchID);
@@ -3795,37 +3425,23 @@ namespace HotelManagement
                     //cmd.Parameters.AddWithValue("@Discount", discount);
                     //cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     cmd.CommandText = Database.QueryLastID;
                     int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return insertedID;
-
                 }
                 catch
                 {
-
                     return -1;
                 }
-
-
             }
             public static bool Update(int id , string accountName, string accountNumber, string bank, double balance, string description)
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Update \"Accounts\" SET    AccountName = @AccountName , AccountNumber = @AccountNumber , Bank  = @Bank  , Balance = @Balance  ,   Description = @Description  Where ID=@ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("ID", id);
@@ -3839,234 +3455,135 @@ namespace HotelManagement
                     //cmd.Parameters.AddWithValue("@Discount", discount);
                     //cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false ;
                 }
-
-
             }
             public static bool SearchAccount(int ID)
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"Accounts\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", ID);
-
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
-
                     if (dataTable.Rows.Count != 0)
                     {
-
                         ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);        
                         BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
                         AccountName = dataTable.Rows[0]["AccountName"].ToString();
                         AccountNumber = dataTable.Rows[0]["AccountNumber"].ToString();
-                        Bank = dataTable.Rows[0]["Bank"].ToString();
-                   
+                        Bank = dataTable.Rows[0]["Bank"].ToString();                  
                         Balance = Convert.ToDouble(dataTable.Rows[0]["Balance"]);
                         Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-
-
-
-
-
-
-
                         return true;
-
-
                     }
                     else
                     {
                         return false;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
             public static bool Delete (int id)
             {
                 try
-                {
-
-
-                   
+                {       
                     dataTable = new DataTable();
-
                     cmd.CommandText = "Delete FROM \"Accounts\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
-
                     MakeConnection();
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
             //public static int SearchBranchID(string code)
             //{
             //    try
             //    {
-
-
             //        MakeConnection();
             //        dataTable = new DataTable();
-
             //        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
             //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@Code", code);
-
-
+            //        cmd.Parameters.AddWithValue("@Code", code)
             //        adp.SelectCommand = cmd;
-
             //        Connect();
             //        adp.Fill(dataTable);
             //        Disconnect();
-
             //        if (dataTable.Rows.Count != 0)
             //        {
-
             //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-
-
-
-
-
-
-
-
-
             //            return ID;
-
-
             //        }
             //        else
             //        {
             //            return -1;
             //        }
-
-
-
-
             //    }
             //    catch
             //    {
-
             //        return -2;
             //    }
-
             //}
             public static Dictionary<int, string> GetAccountList(int branchID)
             {
-
-
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"Accounts\" Where BranchID = @BranchID ";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@BranchID", branchID);
-
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
-
                     if (dataTable.Rows.Count != 0)
                     {
                         Dictionary<int, string> lstAccount = new Dictionary<int,string>();
                         //List<string> lstSecond = new List<string>();
-
-
                         for (int i = 0; i < dataTable.Rows.Count; i++)
                         {
-
                             ID = Convert.ToInt32(dataTable.Rows[i]["ID"]);
                             AccountName = dataTable.Rows[i]["AccountName"].ToString();
                             AccountNumber = dataTable.Rows[i]["AccountNumber"].ToString();
                             Bank = dataTable.Rows[i]["Bank"].ToString();
                             //Balance = Convert.ToDouble(dataTable.Rows[i]["Balance"])
                             string str = Bank + " - " + AccountName + " - " + AccountNumber;
-
                             lstAccount.Add(ID, str);
                         }
-
-
-
-
-
-
                         return lstAccount;
-
-
                     }
                     else
                     {
                         return null;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return null;
                 }
-
-
-
-
             }
         }
 
@@ -4094,15 +3611,11 @@ namespace HotelManagement
                 {
                     con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
                     cmd.Connection = con;
-
                 }
                 catch
                 {
-
                     ;
                 }
-
-
             }
             private static void Connect()
             {
@@ -4110,19 +3623,13 @@ namespace HotelManagement
                 {
                     if (con.State == ConnectionState.Closed)
                     {
-
                         con.Open();
-
                     }
-
-
                 }
                 catch
                 {
-
                     ;
                 }
-
             }
             private static void Disconnect()
             {
@@ -4131,106 +3638,67 @@ namespace HotelManagement
                     if (con.State == ConnectionState.Open)
                     {
                         con.Close();
-
                     }
-
                 }
                 catch
                 {
-
                     ;
                 }
             }
-
             public static int Insert(string title , int price , string description)
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Insert Into \"Food\" (Title , Price , Description ) Values (@Title ,@Price , @Description)";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@Title", title);
-                    cmd.Parameters.AddWithValue("@Price", price);
- 
-                    
+                    cmd.Parameters.AddWithValue("@Price", price);                 
                     cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
 
                     Connect();
                     cmd.ExecuteNonQuery();
                     cmd.CommandText = Database.QueryLastID;
                     int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return insertedID;
-
                 }
                 catch
                 {
-
                     return -1;
                 }
-
-
             }
             public static bool Update(int id , string title, int price, string description)
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Update \"Food\" Set Title = @Title , Price = @Price , Description = @Description Where ID=@ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@Title", title);
                     cmd.Parameters.AddWithValue("@Price", price);
-
-
                     cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
 
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
             }        
             public static bool SearchFood(int id)
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"Food\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
-
                     adp.SelectCommand = cmd;
 
                     Connect();
@@ -4239,7 +3707,6 @@ namespace HotelManagement
 
                     if (dataTable.Rows.Count != 0)
                     {
-
                         //ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
                         //if (dataTable.Rows[0]["TransactionID"] != DBNull.Value)
                         //{
@@ -4249,7 +3716,6 @@ namespace HotelManagement
                         //{
                         //    TransactionID = 0;
                         //}
-
                         Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
                         //PaymentMethodID = Convert.ToInt32(dataTable.Rows[0]["PaymentMethodID"]);
                         //TransactionTypeID = Convert.ToInt32(dataTable.Rows[0]["TransactionTypeID"]);
@@ -4258,114 +3724,69 @@ namespace HotelManagement
                         ////Discount = Convert.ToDouble(dataTable.Rows[0][" Discount"]);
                         //DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
                         Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-
-
-
-
-
-
-
                         return true;
-
-
                     }
                     else
                     {
                         return false;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
             public static bool Delete(int id)
             {
                 try
                 {
-
-
-
                     dataTable = new DataTable();
-
                     cmd.CommandText = "Delete FROM \"Food\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
-
                     MakeConnection();
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
             public static int InsertOrderFood(int foodID , int resID , int count , int Total )
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Insert Into \"OrderFood\" (FoodID , ResID , Count , Total , DateModified ) Values (@FoodID , @ResID , @Count , @Total , @DateModified )";
                     cmd.Parameters.Clear();
-
                     cmd.Parameters.AddWithValue("@FoodID", foodID);
                     cmd.Parameters.AddWithValue("@ResID", resID);
                     cmd.Parameters.AddWithValue("@Count", count);
                     cmd.Parameters.AddWithValue("@Total", Total);
                     cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     cmd.CommandText = Database.QueryLastID;
                     int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return insertedID;
-
                 }
                 catch
                 {
-
                     return -1;
                 }
-
-
             }
             public static bool DeleteOrderFood(int id)
             {
                 try
                 {
-
-
-
                     dataTable = new DataTable();
-
                     cmd.CommandText = "Delete FROM \"OrderFood\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
-
                     MakeConnection();
                     Connect();
                     cmd.ExecuteNonQuery();
@@ -4375,12 +3796,10 @@ namespace HotelManagement
                 }
                 catch
                 {
-
                     return false;
                 }
 
             }
-
         }
 
         public class Service
@@ -4400,15 +3819,11 @@ namespace HotelManagement
                 {
                     con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
                     cmd.Connection = con;
-
                 }
                 catch
                 {
-
                     ;
                 }
-
-
             }
             private static void Connect()
             {
@@ -4416,19 +3831,13 @@ namespace HotelManagement
                 {
                     if (con.State == ConnectionState.Closed)
                     {
-
                         con.Open();
-
                     }
-
-
                 }
                 catch
                 {
-
                     ;
                 }
-
             }
             private static void Disconnect()
             {
@@ -4437,116 +3846,73 @@ namespace HotelManagement
                     if (con.State == ConnectionState.Open)
                     {
                         con.Close();
-
                     }
 
                 }
                 catch
                 {
-
                     ;
                 }
             }
 
             public static int Insert(string title, int price, string description)
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Insert Into \"Service\" (Title , Price , Description ) Values (@Title ,@Price , @Description)";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@Title", title);
                     cmd.Parameters.AddWithValue("@Price", price);
-
-
                     cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     cmd.CommandText = Database.QueryLastID;
                     int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return insertedID;
-
                 }
                 catch
                 {
-
                     return -1;
                 }
-
-
             }
             public static bool Update(int id, string title, int price, string description)
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Update \"Service\" Set Title = @Title , Price = @Price , Description = @Description Where ID=@ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
                     cmd.Parameters.AddWithValue("@Title", title);
                     cmd.Parameters.AddWithValue("@Price", price);
-
-
                     cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
-
                     Disconnect();
-
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
-
             }
             public static bool SearchService(int id)
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = "SELECT * FROM \"Service\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
-
                     if (dataTable.Rows.Count != 0)
                     {
-
                         //ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
                         //if (dataTable.Rows[0]["TransactionID"] != DBNull.Value)
                         //{
@@ -4556,7 +3922,6 @@ namespace HotelManagement
                         //{
                         //    TransactionID = 0;
                         //}
-
                         Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
                         //PaymentMethodID = Convert.ToInt32(dataTable.Rows[0]["PaymentMethodID"]);
                         //TransactionTypeID = Convert.ToInt32(dataTable.Rows[0]["TransactionTypeID"]);
@@ -4565,138 +3930,88 @@ namespace HotelManagement
                         ////Discount = Convert.ToDouble(dataTable.Rows[0][" Discount"]);
                         //DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
                         Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-
-
-
-
-
-
-
                         return true;
-
-
                     }
                     else
                     {
                         return false;
                     }
-
-
-
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
             public static bool Delete(int id)
             {
                 try
                 {
-
-
-
                     dataTable = new DataTable();
-
                     cmd.CommandText = "Delete FROM \"Service\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
-
                     MakeConnection();
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
             public static int InsertOrderService(int serviceID, int resID, int count, int total)
             {
-
                 try
                 {
-
                     MakeConnection();
-
                     cmd.CommandText = "Insert Into \"OrderService\" (ServiceID , ResID , Count , Total , DateModified ) Values (@ServiceID  , @ResID , @Count , @Total , @DateModified )";
                     cmd.Parameters.Clear();
-
                     cmd.Parameters.AddWithValue("@ServiceID ", serviceID);
                     cmd.Parameters.AddWithValue("@ResID", resID);
                     cmd.Parameters.AddWithValue("@Count", count);
                     cmd.Parameters.AddWithValue("@Total", total);
                     cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
 
-
-
-
-
-
                     Connect();
                     cmd.ExecuteNonQuery();
                     cmd.CommandText = Database.QueryLastID;
                     int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
                     Disconnect();
-
                     return insertedID;
-
                 }
                 catch
                 {
-
                     return -1;
                 }
-
-
             }
             public static bool DeleteOrderService(int id)
             {
                 try
                 {
-
-
-
                     dataTable = new DataTable();
-
                     cmd.CommandText = "Delete FROM \"OrderService\" Where ID = @ID";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@ID", id);
-
-
                     MakeConnection();
                     Connect();
                     cmd.ExecuteNonQuery();
                     Disconnect();
                     return true;
-
                 }
                 catch
                 {
-
                     return false;
                 }
-
             }
         }
 
 
         public class Database
         {
-
             //--Query To Get LastID After Insert
             public static string QueryLastID = "Select @@Identity";
-
-
 
             //---Mehtods----
             public static object CheckNullInsert(object obj)
@@ -4704,19 +4019,15 @@ namespace HotelManagement
 
                 if (obj == null || obj == "")
                 {
-
                     return DBNull.Value;
                 }
                 else
                 {
                     return obj;
-
                 }
-
             }
             public static object CheckNullInsertDateTime(DateTime obj)
             {
-
                 if (obj == DateTime.MinValue)
                 {
 
@@ -4725,9 +4036,7 @@ namespace HotelManagement
                 else
                 {
                     return obj;
-
                 }
-
             }
 
             public static object CheckNullSelect(object obj)
@@ -4735,30 +4044,24 @@ namespace HotelManagement
 
                 if (obj == DBNull.Value)
                 {
-
                     return null;
                 }
                 else
                 {
                     return obj;
-
                 }
-
             }
             public static DateTime CheckNullSelectDateTime(object obj)
             {
 
                 if (obj == DBNull.Value)
                 {
-
                     return DateTime.MinValue;
                 }
                 else
                 {
                     return Convert.ToDateTime(obj);
-
                 }
-
             }
 
             //--Queries---
@@ -4773,15 +4076,11 @@ namespace HotelManagement
                 {
                     con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
                     cmd.Connection = con;
-
                 }
                 catch
                 {
-
                     ;
                 }
-
-
             }
             private static void Connect()
             {
@@ -4789,19 +4088,13 @@ namespace HotelManagement
                 {
                     if (con.State == ConnectionState.Closed)
                     {
-
                         con.Open();
-
                     }
-
-
                 }
                 catch
                 {
-
                     ;
                 }
-
             }
             private static void Disconnect()
             {
@@ -4810,13 +4103,10 @@ namespace HotelManagement
                     if (con.State == ConnectionState.Open)
                     {
                         con.Close();
-
                     }
-
                 }
                 catch
                 {
-
                     ;
                 }
             }
@@ -4825,20 +4115,13 @@ namespace HotelManagement
             {
                 try
                 {
-
-
                     MakeConnection();
                     dataTable = new DataTable();
-
                     cmd.CommandText = query;
-
-
                     adp.SelectCommand = cmd;
-
                     Connect();
                     adp.Fill(dataTable);
                     Disconnect();
-
                     if (dataTable.Rows.Count != 0)
                     {
                         return dataTable;
@@ -4847,18 +4130,12 @@ namespace HotelManagement
                     {
                         return null;
                     }
-
                 }
                 catch
                 {
-
                     return null;
                 }
-
-            }
-
-         
+            }       
         }
-
     }
 }

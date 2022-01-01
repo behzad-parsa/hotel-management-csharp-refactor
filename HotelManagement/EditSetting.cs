@@ -25,7 +25,6 @@ namespace HotelManagement
         {
             txtUsername.Text = Current.User.Username;
             btnSave.Enabled = false;
-
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -39,33 +38,21 @@ namespace HotelManagement
             {
                 if (!HotelDatabase.User.SearchUser(txtUsername.Text))
                 {
-
                     if (Current.User.UpdateUsername(txtUsername.Text))
                     {
                         PanelStatus("Information Change Successfully", Status.Green);
                         username = txtUsername.Text;
                         compeletFlag = true;
-
                     }
                     else
                     {
                         PanelStatus("Unabel To Complete Action", Status.Red);
-                    }
-                    
-
+                    }                
                 }
                 else
                 {
                     PanelStatus("Username Is Taken , Try Another", Status.Red);
-
-                }
-         
-
-
-
-
-
-
+                }       
             }
             else
             {
@@ -73,18 +60,10 @@ namespace HotelManagement
                 PanelStatus("Please Fill The Blank", Status.Red);
             }
 
-
-
-
-
-
-
             if (txtPass.Text != null  && txtPass.Text != "")
             {
-
                 if (txtConfirmPass.Text != null && txtConfirmPass.Text != "")
                 {
-
                     if (txtConfirmPass.Text ==  txtPass.Text)
                     {
                         HashPassword hp = new HashPassword();
@@ -97,7 +76,6 @@ namespace HotelManagement
                         {
                             PanelStatus("Unabel To Complete Action", Status.Red);
                         }
-
                     }
                     else
                     {
@@ -105,34 +83,13 @@ namespace HotelManagement
                         TextBoxCheck(txtPass, "");
                         PanelStatus("The passwords Not Match", Status.Red);
                     }
-
-
-
                 }
                 else
                 {
                     TextBoxCheck(txtConfirmPass, "");
                     PanelStatus("Please Fill The Blank", Status.Red);
                 }
-
-
             }
-
-
-
-
-            //if (validationFlag)
-            //{
-            //    validationFlag = false;
-
-            //}
-
-            
-
-
-
-
-
         }
 
         private enum Status
@@ -149,50 +106,35 @@ namespace HotelManagement
             {
                 prgbCustError.ProgressColor = Color.Red;
                 lblCustError.ForeColor = Color.Red;
-                //lblCustError.Text = text;
-
             }
             else if (status == Status.Green)
             {
-
                 prgbCustError.ProgressColor = Color.Green;
                 lblCustError.ForeColor = Color.Green;
-                //lblCustError.Text = text;
-
             }
             else
             {
                 prgbCustError.ProgressColor = Color.Blue;
                 lblCustError.ForeColor = Color.Blue;
-
             }
-
-
-
-
         }
         private void TextBoxColor(BunifuMetroTextbox txtBox, Status status)
         {
             if (status == Status.Red)
             {
                 txtBox.BorderColorIdle = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
-
                 txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
             }
             else
             {
                 txtBox.BorderColorIdle = Color.FromArgb(128, 128, 128);
             }
-
         }
-        private int txtCount;
-        //private bool validationFlag = false;
 
+        private int txtCount;
         private bool TextBoxCheck(BunifuMetroTextbox txtBox, string txt)
         {
             if (txtBox.Text == txt || txtBox.Text == "")
@@ -200,18 +142,11 @@ namespace HotelManagement
                 TextBoxColor(txtBox, Status.Red);
                 return false;
             }
-            //else if (txt == "National Code")
-            //{
-            //    TextBoxColor(txtBox, Status.blue);
-            //    txtCount++;
-            //    return true;
-            //}
             else
             {
                 TextBoxColor(txtBox, Status.Green);
                 txtCount++;
                 return true;
-
             }
         }
 
@@ -241,8 +176,6 @@ namespace HotelManagement
             {
                 txtBox.Text = null;
             }
-
-
         }
         private void TextBoxLeave(object sender, EventArgs e)
         {
@@ -254,8 +187,6 @@ namespace HotelManagement
                 txtBox.Text = defualtText;
                 txtBox.ForeColor = Color.DarkGray;
             }
-
-
         }
     }
 }

@@ -16,20 +16,17 @@ namespace HotelManagement
         {
             InitializeComponent();
         }
-        //public double discount { get { return Convert.ToDouble(txtDis.Text.Trim()); } }
         public double discount { get; private set; }
         public string description { get; private set; }
         private void frmInvoiceEdit_Load(object sender, EventArgs e)
         {
-
             HotelDatabase.Bill.SearchBill(InvoiceDetail.ResID);
-
             txtDis.Text = HotelDatabase.Bill.Discount.ToString();
+
             if (HotelDatabase.Bill.Description != null)
             {
                 txtDes.Text = HotelDatabase.Bill.Description.ToString();
             }
-
         }
 
         private void txtDis_OnValueChanged(object sender, EventArgs e)
@@ -41,9 +38,7 @@ namespace HotelManagement
             else if (Convert.ToDouble(txtDis.Text) < 0)
             {
                 txtDis.Text = "0";
-
             }
-
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -53,7 +48,6 @@ namespace HotelManagement
             {
                 description = txtDes.Text;
             }
-
             this.Dispose(); 
         }
 
