@@ -5,17 +5,23 @@
 All the systems and organizations need to be handled. At this point, **the management systems** can be brought up to solve the problem. 
 
 **The Hotel Project** is based on This purpose was designed and developed to arrange the related data, store and retrieve the data, then filter it, and, in the final stage, demonstrate the clear and correct information to the end users (or organizations).
-### Table of Content
+### Table of Contents
 - [Buile-With](#built-with)
 - [Description](#Description)
-- [Features](#setup)
+- [Architecture](#Architecture)
+- [Features](#Features)
+- [TODO](#TODO)
 
 ## Built With
-- C# Pogramming Language
-- Ado .net 
-- Sql Server 
-- Windows Form 
-- Bunifu Framework
+- Back-end
+  - C# Programing Language
+- Front-End
+  - Windows Form
+  - Bunifu UI Framework
+- Database
+  - SQL SERVER
+  - ASO .NET 
+
 
 ## Description
 The first version of the hotel system was written in my college days in 2018. Recently,I decided to refactor my code in a different style and architecture, with efficient and clean code in a new repository with separate commits. The older version is available on my repo [here](https://github.com/behzad-parsa/hotel-management-csharp).
@@ -42,7 +48,11 @@ The structure of this refactored version is built on a three-layer architecture,
 - Recent Activiy
 - Theme
 
-## Databse
+## Database
+## TODO List
+- [ ] Mdofiy The Logic Based On The Three-Layer Architecture
+- [ ] Improvments on The Ui Side
+- [ ] Final Review 
 ## Usage
 ## Version History
 ## Licence
