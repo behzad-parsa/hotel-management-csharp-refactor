@@ -1,11 +1,14 @@
 
 
-# Hotel Manamgemnt System - Windows Application
-## Overview
+# Hotel Manamgment System - Windows Application
+### Overview
 All the systems and organizations need to be handled. At this point, **the management systems** can be brought up to solve the problem. 
 
 **The Hotel Project** is based on This purpose was designed and developed to arrange the related data, store and retrieve the data, then filter it, and, in the final stage, demonstrate the clear and correct information to the end users (or organizations).
-## Table of Content
+### Table of Content
+- [Buile-With](#built-with)
+- [Description](#Description)
+- [Features](#setup)
 
 ## Built With
 - C# Pogramming Language
