@@ -10,7 +10,8 @@ All the systems and organizations need to be handled. At this point, **the manag
 - [Description](#Description)
 - [Architecture](#Architecture)
 - [Features](#Features)
-- [TODO](#TODO-List)
+- [Software Enviroment](#Software-Enviroment)
+- [ToDo](#TODO-List)
 
 ## Built With
 - Back-end
@@ -21,7 +22,8 @@ All the systems and organizations need to be handled. At this point, **the manag
 - Database
   - SQL SERVER
   - ADO .NET 
-
+- Tools 
+  - Stimulsoft Reports
 
 ## Description
 The first version of the hotel system was written in my college days in 2018. Recently,I decided to refactor my code in a different style and architecture, with efficient and clean code in a new repository with separate commits. The older version is available on my repo [here](https://github.com/behzad-parsa/hotel-management-csharp).
@@ -57,7 +59,7 @@ The structure of this refactored version is built on a three-layer architecture,
 
 3. Themes And Modern UI
    - Users have a beautiful environment and their options to customize the skin include: changing the theme, choosing a city (to get its weather based on api),..
-#### Software Enviroment
+## Software Enviroment
 1. Dashboard 
 
 ![oie_213658guLzEQW7](https://user-images.githubusercontent.com/91433474/147875297-5cc379ba-f3b2-468b-9973-453e1b818b23.png)
@@ -72,10 +74,16 @@ The structure of this refactored version is built on a three-layer architecture,
 ![oie_213250a968USWF](https://user-images.githubusercontent.com/91433474/147875615-ef40267d-3103-471e-a221-dcd1089bf7c5.png)
 
 4. Food Reservation Page Based On Customer Name and Room Number
+
 ![oie_21327300C2eUhOH](https://user-images.githubusercontent.com/91433474/147875685-d0dcb11d-e2f1-4844-af77-ca8de69fb636.png)
 
 5. The Booking Room Procedure for the Customer and The his Guests
+
 ![oie_213306YqWSOJ5E](https://user-images.githubusercontent.com/91433474/147875751-c19a788e-c0c5-494f-9dbc-535e107288ee.png)
+
+6. StimulSoft Reports
+
+![oie_21337558rU1Y9eJ](https://user-images.githubusercontent.com/91433474/147875958-1b0a14fb-2b74-4a54-948a-5691a702261e.jpg)
 
 ## Database
 ## TODO List
