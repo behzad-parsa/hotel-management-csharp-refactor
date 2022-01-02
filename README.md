@@ -30,18 +30,19 @@ The program is supposed to be used within the company. For example, the receptio
 
 Technically, based on the role that was defined and the authority that was granted, end users may engage in activity.
 
+## Architecture
+The structure of this refactored version is built on a three-layer architecture, with each layer being responsible for its own set of tasks.
 
-
-  
 ## Features
-- based on 3 Layer Architecture
+- Login System
  sth here
 - Password Hashing
-- Role - access
-- ...
-- ...
+- Role - access Level
+- Weather api 
+- Recent Activiy
+- Theme
 
-## Use
-## Installtion
+## Databse
+## Usage
 ## Version History
 ## Licence
