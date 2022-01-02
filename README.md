@@ -6,7 +6,7 @@ All the systems and organizations need to be handled. At this point, **the manag
 
 **The Hotel Project** is based on This purpose was designed and developed to arrange the related data, store and retrieve the data, then filter it, and, in the final stage, demonstrate the clear and correct information to the end users (or organizations).
 ### Table of Contents
-- [Buile-With](#built-with)
+- [Built-With](#built-with)
 - [Description](#Description)
 - [Architecture](#Architecture)
 - [Features](#Features)
@@ -14,7 +14,7 @@ All the systems and organizations need to be handled. At this point, **the manag
 
 ## Built With
 - Back-end
-  - C# Programing Language
+  - C# Programming Language
 - Front-End
   - Windows Form
   - Bunifu UI Framework
@@ -40,13 +40,21 @@ Technically, based on the role that was defined and the authority that was grant
 The structure of this refactored version is built on a three-layer architecture, with each layer being responsible for its own set of tasks.
 
 ## Features
-- Login System
- sth here
+1. Login System
+  - The Login System can identify the users and their roles on the system. Also, if the password is forgotten, they can retrieve it with the confirmation code that will be sent to their email.
+
+
+  ![oie_png](https://user-images.githubusercontent.com/91433474/147874524-2a77b8c1-0b2c-46f5-a685-5f8cacf7c1e4.png) 
+  ![oie_2122410YuMrauyP](https://user-images.githubusercontent.com/91433474/147874575-caae39c1-d263-4aca-af96-657e81e92998.png)
+
+
+
 - Password Hashing
 - Role - access Level
 - Weather api 
 - Recent Activiy
 - Theme
+
 
 ## Database
 ## TODO List
