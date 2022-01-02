@@ -215,29 +215,22 @@ namespace HotelManagement
         }
 
 
-
-        private void btnGuestSearch_Click(object sender, EventArgs e)
-        {
-        }
-
-
-        private void btnGuestSubmit_Click(object sender, EventArgs e)
-        {
-        }
-
+        private Actor searchedActor;
 
         private bool searchFlag = false;
         private int  ActID = -10;
         private bool isFindGuest = false;
+
         //private bool isFindActor = false;
         private void btnNCSearch_Click(object sender, EventArgs e)
         {
             Reset();
-
+            
             if (txtNCSearch.Text != "National Code" && txtNCSearch.Text != "")
             {
                 searchFlag = true;
                 var actor = _actorService.GetActor(txtNCSearch.Text);
+                //searchedActor = actor;
                 if (actor != null)//HotelDatabase.Actor.SearchActor(txtNCSearch.Text))
                 {
                     if (txtNCSearch.Text != NewBook.customerInfo.NationalCode)
@@ -250,11 +243,15 @@ namespace HotelManagement
                             isFindGuest = true;
 
                             ActID = actor.ID;
+                            searchedActor = actor;
+
                             txtFname.Text = actor.Firstname;
                             txtLname.Text = actor.Lastname;
                             txtMobile.Text = actor.Mobile;
-                            if (actor.Gender == "Male") rdbMale.Checked = true;
-                            else rdbFemale.Checked = true;
+                            if (actor.Gender == "Male") 
+                                rdbMale.Checked = true;
+                            else 
+                                rdbFemale.Checked = true;
                             dateBirth.Value = actor.Birthday;
 
                             PanelStatus(panelStatusGuest, "Guest Was successfully Found", Status.Green);                            
@@ -310,6 +307,7 @@ namespace HotelManagement
             isFindGuest = false;
 
             ActID = -1;
+            searchedActor = null;
 
             updateFlag = false;
 
@@ -355,24 +353,37 @@ namespace HotelManagement
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            Actor actor = new Actor()
-            {
-                ID = ActID,
-                Firstname = txtFname.Text,
-                Lastname = txtLname.Text,
-                NationalCode = txtNCSearch.Text,
-                Gender = RadioButtonResult(rdbMale, rdbFemale),
-                Birthday = dateBirth.Value.Date,
-                Mobile = txtMobile.Text,
+            //Actor actor = new Actor()
+            //{
+            //    ID = ActID,
+            //    Firstname = txtFname.Text,
+            //    Lastname = txtLname.Text,
+            //    NationalCode = txtNCSearch.Text,
+            //    Gender = RadioButtonResult(rdbMale, rdbFemale),
+            //    Birthday = dateBirth.Value.Date,
+            //    Mobile = txtMobile.Text,
+
+
+            //};
+            
+            //Actor actor = new Actor()
+            //{
+            //    ID = ActID,
+            //    Firstname = txtFname.Text,
+            //    Lastname = txtLname.Text,
+            //    NationalCode = txtNCSearch.Text,
+            //    Gender = RadioButtonResult(rdbMale, rdbFemale),
+            //    Birthday = dateBirth.Value.Date,
+            //    Mobile = txtMobile.Text,
                 
                 
-            };
+            //};
             if (isFindGuest)
             {
                 //GuestSecond guest = new GuestSecond(ActID, DateTime.Now.Date, txtFname.Text, txtLname.Text, txtNCSearch.Text, RadioButtonResult(rdbMale, rdbFemale), dateBirth.Value.Date, txtMobile.Text);
                
         
-                Guest guest = new Guest(NewBook.customerInfo.ID, DateTime.Now.Date, actor);
+                Guest guest = new Guest(NewBook.customerInfo.ID, DateTime.Now.Date, searchedActor);
 
                 if (!updateFlag)
                 {
@@ -393,16 +404,20 @@ namespace HotelManagement
                         PanelStatus(panelStatusGuest, "Unable to Complete Action ", Status.Red);
 
                     }
-
-
                 }
-                //On UpdateMode
+                //----------------On UpdateMode
                 else
                 {
 
+                    searchedActor.Firstname = txtFname.Text;
+                    searchedActor.Lastname = txtLname.Text;
+                    searchedActor.NationalCode = txtNCSearch.Text;
+                    searchedActor.Gender = RadioButtonResult(rdbMale, rdbFemale);
+                    searchedActor.Birthday = dateBirth.Value.Date;
+                    searchedActor.Mobile = txtMobile.Text;
 
                     //var res = HotelDatabase.Actor.UpdateGuest(ActID , txtFname.Text , txtLname.Text , dateBirth.Value.Date , txtNCSearch.Text , txtMobile.Text , RadioButtonResult(rdbMale , rdbFemale) );
-                    var res = _guestService.UpdateGuest(actor);
+                    var res = _guestService.UpdateGuest(searchedActor);
 
                     //Guest guest = new Guest(ActID, DateTime.Now.Date, txtFname.Text, txtLname.Text, txtNCSearch.Text, RadioButtonResult(rdbMale, rdbFemale), dateBirth.Value.Date, txtMobile.Text);
 
@@ -416,6 +431,7 @@ namespace HotelManagement
                         PanelStatus(panelStatusGuest, "Information Changed Successfully", Status.Green);
 
                         var search = guestsAssignToCustomer.Find(x => x.ID == ActID);
+                        //var search = guestsAssignToCustomer.Find(x => x == searchedActor);
                         if (search != null)
                         {
                             guestsAssignToCustomer.Remove(search);
@@ -458,7 +474,7 @@ namespace HotelManagement
                     ValidationFlag = false;
 
                     //var result = HotelDatabase.Actor.InsertAll(txtFname.Text, txtLname.Text, dateBirth.Value.Date, txtNCSearch.Text, "Not Available", "Not Available", "Not Available", txtMobile.Text, RadioButtonResult(rdbMale, rdbFemale), "Not Available", "Not Available", "Not Available");
-                    actor = new Actor()
+                    var actor = new Actor()
                     {
                         Firstname = txtFname.Text,
                         Lastname = txtLname.Text,
@@ -471,7 +487,7 @@ namespace HotelManagement
                         Email = "Not Available",
                         Nationality = "Not Available",
                         State = "Not Available",
-                        Tel = "Not Available"
+                        Tel = "Not Available" 
                     };
                     var resultInsertActor = _actorService.InsertActor(actor);
                     actor.ID = _actorService.LastInsertedId;
@@ -509,9 +525,10 @@ namespace HotelManagement
         {
             if (dgvGuestList.CurrentRow != null)
             {
-                string nc = dgvGuestList["NC", dgvGuestList.CurrentRow.Index].Value.ToString();
-                selectedGuest = guestsAssignToCustomer.Find(x => x.NationalCode == nc);
+                string nationalCode = dgvGuestList["NC", dgvGuestList.CurrentRow.Index].Value.ToString();
+                selectedGuest = guestsAssignToCustomer.Find(x => x.NationalCode == nationalCode);
                 ActID = selectedGuest.ID;
+                //searchedActor = selectedGuest;
             }
         }
         private void btnDeleteGuest_Click(object sender, EventArgs e)

@@ -112,7 +112,7 @@
             this.btnGuestSubmit.Text = "Submit";
             this.btnGuestSubmit.UseVisualStyleBackColor = false;
             this.btnGuestSubmit.Visible = false;
-            this.btnGuestSubmit.Click += new System.EventHandler(this.btnGuestSubmit_Click);
+            
             // 
             // btnGuestSearch
             // 
@@ -152,7 +152,7 @@
             this.btnGuestSearch.Textcolor = System.Drawing.Color.White;
             this.btnGuestSearch.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuestSearch.Visible = false;
-            this.btnGuestSearch.Click += new System.EventHandler(this.btnGuestSearch_Click);
+            
             // 
             // bunifuCards2
             // 
