@@ -86,12 +86,11 @@ The structure of this refactored version is built on a three-layer architecture,
 ![oie_21337558rU1Y9eJ](https://user-images.githubusercontent.com/91433474/147875958-1b0a14fb-2b74-4a54-948a-5691a702261e.jpg)
 
 ## Database
-## TODO List
+Database Erd Document with Entities and the Relations :  [Hotel ERD V11.pdf](https://github.com/behzad-parsa/hotel-management-csharp-refactor/files/7799070/Hotel.ERD.V11.pdf)
+
+## ToDo List
 - [ ] Mdofiy The Logic Based On The Three-Layer Architecture
 - [ ] Improvments on The Ui Side
 - [ ] Final Review 
-## Usage
-## Version History
-## Licence
 
 
