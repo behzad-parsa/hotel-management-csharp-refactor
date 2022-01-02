@@ -8,18 +8,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using HotelManagement.Services;
+using HotelManagement.Models;
 
 namespace HotelManagement
 {
     public partial class NewEmployee : UserControl
     {
+
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
         Dictionary<int, string> dicBranch = new Dictionary<int, string>();
         private int ActIDofEmployee;
 
+        private readonly ActorService _actorService;
+
+
         public NewEmployee()
         {
             InitializeComponent();
+
+            _actorService = new ActorService();
+
         }
      
         private void NewEmployee_Load(object sender, EventArgs e)
@@ -239,25 +248,27 @@ namespace HotelManagement
             if (txtNCSearch.Text != "National Code" && txtNCSearch.Text != "")
             {
                 searchFlag = true;
-
-                if (HotelDatabase.Actor.SearchActor(txtNCSearch.Text))
+                var actor = _actorService.GetActor(txtNCSearch.Text);
+                if (actor != null)//hotelmanametn.dfdf.SearchActor(txtNCSearch.Text))
                 {
                     isFindActor = true;
-                    ActID = HotelDatabase.Actor.ID;
-                    txtEmpFname.Text = HotelDatabase.Actor.Firstname;
-                    txtEmpLname.Text = HotelDatabase.Actor.Lastname;
-                    txtEmpTel.Text = HotelDatabase.Actor.Tel;
-                    txtEmpMobile.Text = HotelDatabase.Actor.Mobile;
-                    txtEmpCity.Text = HotelDatabase.Actor.City;
-                    txtEmpAddress.Text = HotelDatabase.Actor.Address;
-                    txtEmpEmail.Text = HotelDatabase.Actor.Email;
-                    cmbEmpNational.SelectedItem = HotelDatabase.Actor.Nationality;
-                    cmbEmpState.SelectedItem = HotelDatabase.Actor.State;
+                    ActID = actor.ID;
+                    txtEmpFname.Text = actor.Firstname;
+                    txtEmpLname.Text = actor.Lastname;
+                    txtEmpTel.Text = actor.Tel;
+                    txtEmpMobile.Text = actor.Mobile;
+                    txtEmpCity.Text = actor.City;
+                    txtEmpAddress.Text = actor.Address;
+                    txtEmpEmail.Text = actor.Email;
+                    cmbEmpNational.SelectedItem = actor.Nationality;
+                    cmbEmpState.SelectedItem = actor.State;
 
-                    if (HotelDatabase.Actor.Gender == "Male") rdbEmpMale.Checked = true;
-                    else rdbEmpFemale.Checked = true;
+                    if (actor.Gender == "Male") 
+                        rdbEmpMale.Checked = true;
+                    else 
+                        rdbEmpFemale.Checked = true;
 
-                    dateEmpBirth.Value = HotelDatabase.Actor.Birthday;
+                    dateEmpBirth.Value = actor.Birthday;
 
                     if (HotelDatabase.Employee.SearchEmployee(ActID))
                     {
@@ -354,12 +365,30 @@ namespace HotelManagement
                 if (ValidationFlag)
                 {
                     ValidationFlag = false;
-                    var result = HotelDatabase.Actor.InsertAll(txtEmpFname.Text, txtEmpLname.Text, dateEmpBirth.Value.Date,
-                     txtNCSearch.Text, cmbEmpNational.SelectedItem.ToString(), txtEmpEmail.Text, txtEmpTel.Text,
-                     txtEmpMobile.Text, RadioButtonResult(rdbEmpMale, rdbEmpFemale), cmbEmpState.SelectedItem.ToString(), txtEmpCity.Text, txtEmpAddress.Text);
-                    if (result > 0)
+                    Actor actor = new Actor()
                     {
-                        ActID = result;
+                        Firstname = txtEmpFname.Text,
+                        Lastname = txtEmpLname.Text,
+                        Birthday = dateEmpBirth.Value.Date,
+                        NationalCode = txtNCSearch.Text,
+                        Nationality = cmbEmpNational.SelectedItem.ToString(),
+                        Email = txtEmpEmail.Text,
+                        Tel = txtEmpTel.Text,
+                        Mobile = txtEmpMobile.Text,
+                        Gender = RadioButtonResult(rdbEmpMale, rdbEmpFemale),
+                        State = cmbEmpState.SelectedItem.ToString(),
+                        City = txtEmpCity.Text,
+                        Address = txtEmpAddress.Text
+                    };
+                    var resultActor = _actorService.InsertActor(actor);
+
+                    //var result = actor.InsertAll(txtEmpFname.Text, txtEmpLname.Text, dateEmpBirth.Value.Date,
+                    // txtNCSearch.Text, cmbEmpNational.SelectedItem.ToString(), txtEmpEmail.Text, txtEmpTel.Text,
+                    // txtEmpMobile.Text, RadioButtonResult(rdbEmpMale, rdbEmpFemale), cmbEmpState.SelectedItem.ToString(), txtEmpCity.Text, txtEmpAddress.Text);
+                    if (resultActor) //result > 0)
+                    {
+                        //ActID = result;
+                        ActID = _actorService.LastInsertedId;
                         var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
                         int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.Key, txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
                         if (employeeResult > 0)
@@ -453,11 +482,28 @@ namespace HotelManagement
 
                     ValidationFlag = false;
 
-                    var result = HotelDatabase.Actor.UpdateAll(ActID , txtEmpFname.Text, txtEmpLname.Text, dateEmpBirth.Value.Date,
-                    txtNCSearch.Text, cmbEmpNational.SelectedItem.ToString(), txtEmpEmail.Text, txtEmpTel.Text,
-                    txtEmpMobile.Text, RadioButtonResult(rdbEmpMale, rdbEmpFemale), cmbEmpState.SelectedItem.ToString(), txtEmpCity.Text, txtEmpAddress.Text);
+                    Actor actor = new Actor()
+                    {
+                        ID = ActID,
+                        Firstname = txtEmpFname.Text,
+                        Lastname = txtEmpLname.Text,
+                        Birthday = dateEmpBirth.Value.Date,
+                        NationalCode = txtNCSearch.Text,
+                        Nationality = cmbEmpNational.SelectedItem.ToString(),
+                        Email = txtEmpEmail.Text,
+                        Tel = txtEmpTel.Text,
+                        Mobile = txtEmpMobile.Text,
+                        Gender = RadioButtonResult(rdbEmpMale, rdbEmpFemale),
+                        State = cmbEmpState.SelectedItem.ToString(),
+                        City = txtEmpCity.Text,
+                        Address = txtEmpAddress.Text
+                    };
+                    var resultUpdateActor = _actorService.UpdateActor(actor); 
+                    //var result = HotelDatabase.Actor.UpdateAll(ActID , txtEmpFname.Text, txtEmpLname.Text, dateEmpBirth.Value.Date,
+                    //txtNCSearch.Text, cmbEmpNational.SelectedItem.ToString(), txtEmpEmail.Text, txtEmpTel.Text,
+                    //txtEmpMobile.Text, RadioButtonResult(rdbEmpMale, rdbEmpFemale), cmbEmpState.SelectedItem.ToString(), txtEmpCity.Text, txtEmpAddress.Text);
 
-                    if (result)
+                    if (resultUpdateActor)
                     {
                         var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
                         var resultSecond = HotelDatabase.Employee.Update(EmployeeID, ActID, branch.Key, txtEducation.Text, dateHireEmp.Value, Convert.ToInt32(txtSalary.Text));

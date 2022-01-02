@@ -70,12 +70,6 @@ namespace HotelManagement
         {
 
             guestsAssignToCustomer = new List<Guest>();
-            //var query = "Select ActID ,  NationalCode AS NC ,  Firstname +' '+Lastname As Name  , DateModified AS Date , Gender , Birthday , Mobile  " +
-            //    "From Actor a , Guest g  " +
-            //    "Where " +
-            //    "a.id = g.ActID And g.CustomerID = " + NewBook.customerInfo.ID + " And g.DateModified = '" +DateTime.Now.Date + "'";
-
-            //var data = HotelDatabase.Database.Query(query);
 
             var data = _guestService.GetAllGuestsAssignToSingleCustomer(NewBook.customerInfo.ID);
 
@@ -218,7 +212,7 @@ namespace HotelManagement
         private Actor searchedActor;
 
         private bool searchFlag = false;
-        private int  ActID = -10;
+       // private int  ActID = -10;
         private bool isFindGuest = false;
 
         //private bool isFindActor = false;
@@ -242,7 +236,7 @@ namespace HotelManagement
                         {
                             isFindGuest = true;
 
-                            ActID = actor.ID;
+                            //ActID = actor.ID;
                             searchedActor = actor;
 
                             txtFname.Text = actor.Firstname;
@@ -306,7 +300,7 @@ namespace HotelManagement
 
             isFindGuest = false;
 
-            ActID = -1;
+            //ActID = -1;
             searchedActor = null;
 
             updateFlag = false;
@@ -362,22 +356,8 @@ namespace HotelManagement
             //    Gender = RadioButtonResult(rdbMale, rdbFemale),
             //    Birthday = dateBirth.Value.Date,
             //    Mobile = txtMobile.Text,
-
-
             //};
             
-            //Actor actor = new Actor()
-            //{
-            //    ID = ActID,
-            //    Firstname = txtFname.Text,
-            //    Lastname = txtLname.Text,
-            //    NationalCode = txtNCSearch.Text,
-            //    Gender = RadioButtonResult(rdbMale, rdbFemale),
-            //    Birthday = dateBirth.Value.Date,
-            //    Mobile = txtMobile.Text,
-                
-                
-            //};
             if (isFindGuest)
             {
                 //GuestSecond guest = new GuestSecond(ActID, DateTime.Now.Date, txtFname.Text, txtLname.Text, txtNCSearch.Text, RadioButtonResult(rdbMale, rdbFemale), dateBirth.Value.Date, txtMobile.Text);
@@ -430,7 +410,7 @@ namespace HotelManagement
 
                         PanelStatus(panelStatusGuest, "Information Changed Successfully", Status.Green);
 
-                        var search = guestsAssignToCustomer.Find(x => x.ID == ActID);
+                        var search = guestsAssignToCustomer.Find(x => x.ID == searchedActor.ID);
                         //var search = guestsAssignToCustomer.Find(x => x == searchedActor);
                         if (search != null)
                         {
@@ -527,8 +507,8 @@ namespace HotelManagement
             {
                 string nationalCode = dgvGuestList["NC", dgvGuestList.CurrentRow.Index].Value.ToString();
                 selectedGuest = guestsAssignToCustomer.Find(x => x.NationalCode == nationalCode);
-                ActID = selectedGuest.ID;
-                //searchedActor = selectedGuest;
+                //ActID = selectedGuest.ID;
+                searchedActor.ID = selectedGuest.ID;
             }
         }
         private void btnDeleteGuest_Click(object sender, EventArgs e)
@@ -602,8 +582,11 @@ namespace HotelManagement
                 txtFname.Text = selectedGuest.Firstname;
                 txtLname.Text = selectedGuest.Lastname;
                 dateBirth.Value = selectedGuest.Birthday;
-                if (selectedGuest.Gender == "Male") rdbMale.Checked = true;
-                else rdbFemale.Checked = true;
+
+                if (selectedGuest.Gender == "Male") 
+                    rdbMale.Checked = true;
+                else 
+                    rdbFemale.Checked = true;
                 txtMobile.Text = selectedGuest.Mobile;
 
                 txtBoxList.Clear();

@@ -81,43 +81,43 @@ namespace HotelManagement
 
 
             //Impelement
-            public static int InsertAll(string firstname, string lastname, DateTime birthday, string nationalCode, string nationality, string email, string tel, string mobile, string gender, string state, string city, string address)
-            {
-                try
-                {
-                    MakeConnection();
+            //public static int InsertAll(string firstname, string lastname, DateTime birthday, string nationalCode, string nationality, string email, string tel, string mobile, string gender, string state, string city, string address)
+            //{
+            //    try
+            //    {
+            //        MakeConnection();
                
-                    cmd.CommandText = "Insert Into \"Actor\" (Firstname , Lastname , Birthday , NationalCode , Nationality , Email , Tel , Mobile , Gender , State , City , Address) Values(@Firstname , @Lastname , @Birthday , @NationalCode , @Nationality , @Email , @Tel , @Mobile , @Gender , @State , @City , @Address)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@Firstname", firstname);
-                    cmd.Parameters.AddWithValue("@Lastname ", lastname);
-                    cmd.Parameters.AddWithValue("@Birthday", birthday);
-                    cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
-                    cmd.Parameters.AddWithValue("@Nationality", Database.CheckNullInsert(nationality));
-                    cmd.Parameters.AddWithValue("@Email", email);
-                    cmd.Parameters.AddWithValue("@Tel", Database.CheckNullInsert(tel));
-                    cmd.Parameters.AddWithValue("@Mobile", Database.CheckNullInsert(mobile));
-                    cmd.Parameters.AddWithValue("@Gender", gender);
-                    cmd.Parameters.AddWithValue("@State", Database.CheckNullInsert(state));
-                    cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
-                    cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
+            //        cmd.CommandText = "Insert Into \"Actor\" (Firstname , Lastname , Birthday , NationalCode , Nationality , Email , Tel , Mobile , Gender , State , City , Address) Values(@Firstname , @Lastname , @Birthday , @NationalCode , @Nationality , @Email , @Tel , @Mobile , @Gender , @State , @City , @Address)";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@Firstname", firstname);
+            //        cmd.Parameters.AddWithValue("@Lastname ", lastname);
+            //        cmd.Parameters.AddWithValue("@Birthday", birthday);
+            //        cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
+            //        cmd.Parameters.AddWithValue("@Nationality", Database.CheckNullInsert(nationality));
+            //        cmd.Parameters.AddWithValue("@Email", email);
+            //        cmd.Parameters.AddWithValue("@Tel", Database.CheckNullInsert(tel));
+            //        cmd.Parameters.AddWithValue("@Mobile", Database.CheckNullInsert(mobile));
+            //        cmd.Parameters.AddWithValue("@Gender", gender);
+            //        cmd.Parameters.AddWithValue("@State", Database.CheckNullInsert(state));
+            //        cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
+            //        cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
                     
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
-                    return insertedID;
+            //        Connect();
+            //        cmd.ExecuteNonQuery();
+            //        cmd.CommandText = Database.QueryLastID;
+            //        int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+            //        Disconnect();
+            //        return insertedID;
 
-                }
-                catch
-                {
-                    Disconnect();
-                    return -1;
-                }
+            //    }
+            //    catch
+            //    {
+            //        Disconnect();
+            //        return -1;
+            //    }
 
-            }
-            //public static int InsertGuest(string firstname, string lastname, DateTime birthday, string nationalCode, string mobile, string gender)
+            //}
+            ////public static int InsertGuest(string firstname, string lastname, DateTime birthday, string nationalCode, string mobile, string gender)
             //{
             //    try
             //    {
@@ -148,51 +148,51 @@ namespace HotelManagement
             //}
 
             //imp
-            public static bool SearchActor(string nationalCode)
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
+            //public static bool SearchActor(string nationalCode)
+            //{
+            //    try
+            //    {
+            //        MakeConnection();
+            //        dataTable = new DataTable();
 
-                    cmd.CommandText = "SELECT * FROM \"Actor\" Where NationalCode = @NationalCode ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
-                    adp.SelectCommand = cmd;
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
+            //        cmd.CommandText = "SELECT * FROM \"Actor\" Where NationalCode = @NationalCode ";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
+            //        adp.SelectCommand = cmd;
+            //        Connect();
+            //        adp.Fill(dataTable);
+            //        Disconnect();
 
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-                        Firstname = Database.CheckNullSelect(dataTable.Rows[0]["Firstname"]) as string ;
-                        Lastname = Database.CheckNullSelect(dataTable.Rows[0]["Lastname"]) as string;
-                        NationalCode = dataTable.Rows[0]["NationalCode"].ToString();
-                        Email = Database.CheckNullSelect(dataTable.Rows[0]["Email"]) as string;
-                        Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
-                        State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
-                        City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
-                        Birthday = Database.CheckNullSelectDateTime(dataTable.Rows[0]["Birthday"]); //Min Value FOr Date Time Consider As Null
-                        Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;
-                        Gender = Database.CheckNullSelect(dataTable.Rows[0]["Gender"]) as string;
-                        Nationality = Database.CheckNullSelect(dataTable.Rows[0]["Nationality"]) as string;
-                        Mobile = Database.CheckNullSelect(dataTable.Rows[0]["Mobile"]) as string;
-                        //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-                        //Image = (byte[])dataTable.Rows[0]["Image"];
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch
-                {
-                    Disconnect();
-                    return false;
-                }
-            }
+            //        if (dataTable.Rows.Count != 0)
+            //        {
+            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+            //            Firstname = Database.CheckNullSelect(dataTable.Rows[0]["Firstname"]) as string ;
+            //            Lastname = Database.CheckNullSelect(dataTable.Rows[0]["Lastname"]) as string;
+            //            NationalCode = dataTable.Rows[0]["NationalCode"].ToString();
+            //            Email = Database.CheckNullSelect(dataTable.Rows[0]["Email"]) as string;
+            //            Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
+            //            State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
+            //            City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
+            //            Birthday = Database.CheckNullSelectDateTime(dataTable.Rows[0]["Birthday"]); //Min Value FOr Date Time Consider As Null
+            //            Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;
+            //            Gender = Database.CheckNullSelect(dataTable.Rows[0]["Gender"]) as string;
+            //            Nationality = Database.CheckNullSelect(dataTable.Rows[0]["Nationality"]) as string;
+            //            Mobile = Database.CheckNullSelect(dataTable.Rows[0]["Mobile"]) as string;
+            //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
+            //            //Image = (byte[])dataTable.Rows[0]["Image"];
+            //            return true;
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        Disconnect();
+            //        return false;
+            //    }
+            //}
             public static int SearchActorWithID(int id)
             {
                 try
@@ -240,40 +240,40 @@ namespace HotelManagement
             }
 
             //imp
-            public static bool UpdateAll( int id , string firstname, string lastname, DateTime birthday, string nationalCode, string nationality, string email, string tel, string mobile, string gender, string state, string city, string address)
-            {
-                try
-                {
-                    MakeConnection();
-                    //dataTable = new DataTable();
-                    cmd.CommandText = "Update \"Actor\" Set Firstname = @Firstname , Lastname = @Lastname  , Birthday =  @Birthday , NationalCode = @NationalCode , Nationality = @Nationality , Email = @Email  , Tel = @Tel , Mobile =  @Mobile , Gender = @Gender , State = @State, City = @City , Address = @Address   Where ID = @ID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    cmd.Parameters.AddWithValue("@Firstname", firstname);
-                    cmd.Parameters.AddWithValue("@Lastname ", lastname);
-                    cmd.Parameters.AddWithValue("@Birthday", birthday);
-                    cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
-                    cmd.Parameters.AddWithValue("@Nationality", Database.CheckNullInsert(nationality));
-                    cmd.Parameters.AddWithValue("@Email", Database.CheckNullInsert(email));
-                    cmd.Parameters.AddWithValue("@Tel", Database.CheckNullInsert(tel));
-                    cmd.Parameters.AddWithValue("@Mobile", Database.CheckNullInsert(mobile));
-                    cmd.Parameters.AddWithValue("@Gender", gender);
-                    cmd.Parameters.AddWithValue("@State", Database.CheckNullInsert(state));
-                    cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
-                    cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
-                    // DateTime.Now.ToString("h:mm:ss tt")
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
+            //public static bool UpdateAll( int id , string firstname, string lastname, DateTime birthday, string nationalCode, string nationality, string email, string tel, string mobile, string gender, string state, string city, string address)
+            //{
+            //    try
+            //    {
+            //        MakeConnection();
+            //        //dataTable = new DataTable();
+            //        cmd.CommandText = "Update \"Actor\" Set Firstname = @Firstname , Lastname = @Lastname  , Birthday =  @Birthday , NationalCode = @NationalCode , Nationality = @Nationality , Email = @Email  , Tel = @Tel , Mobile =  @Mobile , Gender = @Gender , State = @State, City = @City , Address = @Address   Where ID = @ID ";
+            //        cmd.Parameters.Clear();
+            //        cmd.Parameters.AddWithValue("@ID", id);
+            //        cmd.Parameters.AddWithValue("@Firstname", firstname);
+            //        cmd.Parameters.AddWithValue("@Lastname ", lastname);
+            //        cmd.Parameters.AddWithValue("@Birthday", birthday);
+            //        cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
+            //        cmd.Parameters.AddWithValue("@Nationality", Database.CheckNullInsert(nationality));
+            //        cmd.Parameters.AddWithValue("@Email", Database.CheckNullInsert(email));
+            //        cmd.Parameters.AddWithValue("@Tel", Database.CheckNullInsert(tel));
+            //        cmd.Parameters.AddWithValue("@Mobile", Database.CheckNullInsert(mobile));
+            //        cmd.Parameters.AddWithValue("@Gender", gender);
+            //        cmd.Parameters.AddWithValue("@State", Database.CheckNullInsert(state));
+            //        cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
+            //        cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
+            //        // DateTime.Now.ToString("h:mm:ss tt")
+            //        Connect();
+            //        cmd.ExecuteNonQuery();
+            //        Disconnect();
+            //        return true;
 
-                }
-                catch
-                {
-                    Disconnect();
-                    return false;
-                }
-            }
+            //    }
+            //    catch
+            //    {
+            //        Disconnect();
+            //        return false;
+            //    }
+            //}
 
            ////Not Implemented
            // public static bool UpdateGuest(int id, string firstname, string lastname, DateTime birthday, string nationalCode ,string mobile, string gender)

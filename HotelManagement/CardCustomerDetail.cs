@@ -503,7 +503,7 @@ namespace HotelManagement
 
             isFindActor = false;
             isFindCustomer = false;
-            //ChbUpdate(false);
+
 
             btnNext.Visible = false;
 
@@ -516,8 +516,6 @@ namespace HotelManagement
 
             panelUpdate.Visible = false;
             updateFlag = false;
-           // ActID = -10;
-            //EmployeeID = -10;
 
         }
       
@@ -527,7 +525,6 @@ namespace HotelManagement
             TextBoxColor(txtFname, Status.Green);
             TextBoxColor(txtLname, Status.Green);
             TextBoxColor(txtMobile, Status.Green);
-            //TextBoxColor(txtNationalCode, Status.blue);
             TextBoxColor(txtCity, Status.Green);
             TextBoxColor(txtEmail, Status.Green);
             TextBoxColor(txtAddress, Status.Green);
@@ -537,11 +534,6 @@ namespace HotelManagement
 
       
 
-        //private void txtCustNationalCode_OnValueChanged(object sender, EventArgs e)
-        //{
-        //    //panelCustStatus.Visible = false;    
-        //}
-
         private bool searchFlag = false;
         private bool isFindActor = false;
         private bool isFindCustomer = true;
@@ -550,9 +542,7 @@ namespace HotelManagement
         private int ActID = -1;
         private void btnNCSearch_Click(object sender, EventArgs e)
         {
-            //panelStatusEmployee.Visible = false;
             Reset();
-
             if (txtNCSearch.Text != "National Code" && txtNCSearch.Text != "")
             {
                 searchFlag = true;
@@ -573,8 +563,10 @@ namespace HotelManagement
                     cmbNational.SelectedItem = actor.Nationality;
                     cmbState.SelectedItem = actor.State;
 
-                    if (actor.Gender == "Male") rdbMale.Checked = true;
-                    else rdbFemale.Checked = true;
+                    if (actor.Gender == "Male") 
+                        rdbMale.Checked = true;
+                    else 
+                        rdbFemale.Checked = true;
 
                     dateBirth.Value = actor.Birthday;
 
@@ -587,12 +579,6 @@ namespace HotelManagement
                         isFindCustomer = false;
                         
                         PanelStatus(panelStatusCustomer, "Person Was successfully Found", Status.Green);
-                        //ChbUpdate(true);
-                        //panelBasic.Enabled = true;
-                        //panelContact.Enabled = true;
-                        //btnSubmit.Enabled = true;
-                        // btnEdit.Enabled = true;
-                        //btnNext.Enabled = false;
                         btnSubmit.Enabled = true;
                     }
 
@@ -606,17 +592,10 @@ namespace HotelManagement
                         //this.customer = customer;
 
                         // ChbUpdate(false);
-                        //panelBasic.Enabled = false;
-                        //panelContact.Enabled = false;
-                        // btnSubmit.Enabled = false;
-                        //btnNext.Enabled = true;
-                        // btnEdit.Enabled = true;
+
                         btnSubmit.Enabled = false;
                         btnNext.Visible = true;
 
-                        //CustomerSecond customer = new CustomerSecond(CustomerID, ActID, HotelDatabase.Actor.Firstname, HotelDatabase.Actor.Lastname, HotelDatabase.Actor.NationalCode,
-                        //    HotelDatabase.Actor.Mobile, HotelDatabase.Actor.Birthday, HotelDatabase.Actor.Gender, HotelDatabase.Actor.Nationality,
-                        //    HotelDatabase.Actor.Email, HotelDatabase.Actor.Tel, HotelDatabase.Actor.State, HotelDatabase.Actor.City, HotelDatabase.Actor.Address);
 
                         NewBook.customerInfo = customer;
                         NewBook.statusFlag = 1;
@@ -631,13 +610,12 @@ namespace HotelManagement
 
                 else
                 {
-                    //panelInfo.Enabled = false;
+
                     isFindActor = false;
                    // isFindEmployee = false;
                     Reset();
                     panelBasic.Enabled = true;
                     panelContact.Enabled = true;
-                    //panelEmployment.Enabled = true;
                     PanelStatus(panelStatusCustomer, "No Person Found", Status.Red);
                 }
             }
@@ -649,12 +627,9 @@ namespace HotelManagement
 
             if (searchFlag && !isFindActor)
             {
-
-
                 TextBoxCheck(txtFname, "Firstname");
                 TextBoxCheck(txtLname, "Lastname");
                 TextBoxCheck(txtMobile, "Mobile Phone");
-                //TextBoxCheck(txtCustNationalCode, "National Code");
                 TextBoxCheck(txtCity, "City");
                 TextBoxCheck(txtEmail, "Email");
                 TextBoxCheck(txtAddress, "Address");
@@ -664,30 +639,18 @@ namespace HotelManagement
                 {
                     if (dateBirth.Value.Date != DateTime.Now.Date)
                     {
-
-                        //panelCustStatus.Visible = false;
                         ValidationFlag = true;
-
-
                     }
                     else
                     {
                         PanelStatus(panelStatusCustomer  , "Please Choose Birthday", Status.Red);
-
                     }
-
-
-
-
-
                 }
                 else
                 {
-
                     PanelStatus(panelStatusCustomer ,  "Please Fill The Blank", Status.Red);
                 }
                 txtCount = 0;
-
 
 
                 if (ValidationFlag)
