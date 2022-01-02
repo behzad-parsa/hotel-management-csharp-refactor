@@ -9,16 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
 using System.IO;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class NewUser : UserControl
     {
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
+        private readonly ActorService _actorService;
+
 
         public NewUser()
         {
             InitializeComponent();
+            _actorService = new ActorService();
+
         }
         private void LoadRoleData()
         {
@@ -236,16 +242,11 @@ namespace HotelManagement
         }
 
 
-
-        private void panel8_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
         private int EmployeeID= -1;
         private int ActID = -1;
         private int UserID;
         private bool isFindEmployee = false;
-        private bool isFindUser = false;
+        //private bool isFindUser = false;
         private void FindEmployee()
         {
             var result = HotelDatabase.Database.Query("Select DISTINCT a.id AS ActID , e.id AS EmployeeID  From  Actor a , Employee e  , BranchInfo b Where a.NationalCode = '" + txtNCSearch.Text + "' AND a.id = e.actid And e.BranchID = " + Current.User.BranchID);
@@ -271,9 +272,11 @@ namespace HotelManagement
             if (txtNCSearch.Text != "National Code" && txtNCSearch.Text != "")
             {
                 FindEmployee();
-                if (isFindEmployee && HotelDatabase.Actor.SearchActorWithID(ActID) > 0 && HotelDatabase.Employee.SearchEmployee(ActID , Current.User.BranchID))
+                var actor = _actorService.GetActor(ActID);
+                //if (isFindEmployee && HotelDatabase.Actor.SearchActorWithID(ActID) > 0 && HotelDatabase.Employee.SearchEmployee(ActID , Current.User.BranchID))
+                if (isFindEmployee && actor != null && HotelDatabase.Employee.SearchEmployee(ActID , Current.User.BranchID))
                 {
-                    lblName.Text = HotelDatabase.Actor.Firstname + " " + HotelDatabase.Actor.Lastname;
+                    lblName.Text = actor.Firstname + " " + actor.Lastname;
                     lblEduc.Text = HotelDatabase.Employee.Education;
 
                     if (HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
@@ -281,13 +284,13 @@ namespace HotelManagement
                         lblBranch.Text = HotelDatabase.Branch.BranchName;
                     }
 
-                    lblMobile.Text = HotelDatabase.Actor.Mobile;
+                    lblMobile.Text = actor.Mobile;
                     lblSalary.Text = HotelDatabase.Employee.Salary.ToString();
-                    lblGender.Text = HotelDatabase.Actor.Gender;
+                    lblGender.Text = actor.Gender;
 
                     if (HotelDatabase.User.SearchUser(EmployeeID))
                     {
-                        isFindUser = true;
+                        //isFindUser = true;
                         txtUsername.Text = HotelDatabase.User.Username;
                         chbActive.Checked = HotelDatabase.User.Activate;
                         picUser.Image = Image.FromStream(new MemoryStream(HotelDatabase.User.Image));

@@ -261,7 +261,7 @@
             this.panelInfo.Name = "panelInfo";
             this.panelInfo.Size = new System.Drawing.Size(381, 416);
             this.panelInfo.TabIndex = 5;
-            this.panelInfo.Paint += new System.Windows.Forms.PaintEventHandler(this.panel8_Paint);
+
             // 
             // panel2
             // 

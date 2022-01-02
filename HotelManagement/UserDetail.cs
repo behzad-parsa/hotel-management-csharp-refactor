@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
@@ -18,34 +19,37 @@ namespace HotelManagement
         public int EmployeeID;
         public int UserID;
         public bool deleteEmployee = false;
-       
+        private readonly ActorService _actorService;
         public UserDetail()
         {
             InitializeComponent();
+            _actorService = new ActorService(); 
         }
 
         private void UserDetail_Load(object sender, EventArgs e)
         {
-            var resAct = HotelDatabase.Actor.SearchActorWithID(ActorID);
+            //var resAct = actor.SearchActorWithID(ActorID);
+            var actor = _actorService.GetActor(ActorID);
             var resEmployee = HotelDatabase.Employee.SearchEmployee(ActorID, Current.User.BranchID);
             var resBranch = HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
 
-            if (resAct > 0 && resEmployee)
+            //if (resAct > 0 && resEmployee)
+            if (actor != null && resEmployee)
             {
-                lblName.Text = HotelDatabase.Actor.Firstname + " " + HotelDatabase.Actor.Lastname;
-                lblNC.Text = HotelDatabase.Actor.NationalCode;
-                lblGender.Text = HotelDatabase.Actor.Gender;
-                lblBirth.Text = HotelDatabase.Actor.Birthday.Date.ToString("MM / dd / yyyy");
-                lblNan.Text = HotelDatabase.Actor.Nationality;
-                lblEmail.Text = HotelDatabase.Actor.Email;
-                lblHome.Text = HotelDatabase.Actor.Tel;
-                lblMobile.Text = HotelDatabase.Actor.Mobile;
-                lblStateCity.Text = HotelDatabase.Actor.State + " , " + HotelDatabase.Actor.City;
+                lblName.Text = actor.Firstname + " " + actor.Lastname;
+                lblNC.Text = actor.NationalCode;
+                lblGender.Text = actor.Gender;
+                lblBirth.Text = actor.Birthday.Date.ToString("MM / dd / yyyy");
+                lblNan.Text = actor.Nationality;
+                lblEmail.Text = actor.Email;
+                lblHome.Text = actor.Tel;
+                lblMobile.Text = actor.Mobile;
+                lblStateCity.Text = actor.State + " , " + actor.City;
                 lblEducation.Text = HotelDatabase.Employee.Education;
                 lblSalary.Text = HotelDatabase.Employee.Salary.ToString();
                 lblHire.Text = HotelDatabase.Employee.HireDate.Date.ToString("MM / dd / yyyy") ;
                 lblBranch.Text = HotelDatabase.Branch.BranchName;
-                lblAddress.Text = HotelDatabase.Actor.Address;
+                lblAddress.Text = actor.Address;
 
 
                 //if (modulList != null)
@@ -126,7 +130,7 @@ namespace HotelManagement
                     lblNothing.Visible = true;
                     panelParentUser.Controls.Add(lblNothing);
                     lblNothing.Location = new Point(182, 120);
-                    SetProfilePicture(HotelDatabase.Actor.Gender);
+                    SetProfilePicture(actor.Gender);
                     lblRole.Text = "Not Available";
                 }                   
             }
