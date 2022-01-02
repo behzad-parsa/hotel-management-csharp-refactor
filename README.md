@@ -41,21 +41,22 @@ The structure of this refactored version is built on a three-layer architecture,
 
 ## Features
 1. Login System
-  - The Login System can identify the users and their roles on the system. Also, if the password is forgotten, they can retrieve it with the confirmation code that will be sent to their email.
+   - The Login System can identify the users and their roles on the system. Also, if the password is forgotten, they can retrieve it with the confirmation code that will be sent to their email.
 
 
-  ![oie_png](https://user-images.githubusercontent.com/91433474/147874524-2a77b8c1-0b2c-46f5-a685-5f8cacf7c1e4.png) 
-  ![oie_2122410YuMrauyP](https://user-images.githubusercontent.com/91433474/147874575-caae39c1-d263-4aca-af96-657e81e92998.png)
+     ![oie_png](https://user-images.githubusercontent.com/91433474/147874524-2a77b8c1-0b2c-46f5-a685-5f8cacf7c1e4.png) 
+     ![oie_2122410YuMrauyP](https://user-images.githubusercontent.com/91433474/147874575-caae39c1-d263-4aca-af96-657e81e92998.png)
 
 
 
-- Password Hashing
-- Role - access Level
-- Weather api 
-- Recent Activiy
-- Theme
+2. Password Hashing
+   - The Password is encoded on the Database using ``` System.Security.Cryptography ``` library to improve the security .
 
+3. Authority
+   - Users have access on their section based the roles admin defined
 
+3. Themes And Modern UI
+   - Users have a beautiful environment and their options to customize the skin include: changing the theme, choosing a city (to get its weather based on api),..
 ## Database
 ## TODO List
 - [ ] Mdofiy The Logic Based On The Three-Layer Architecture
