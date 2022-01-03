@@ -21,22 +21,25 @@ namespace HotelManagement
         public bool deleteEmployee = false;
         private readonly ActorService _actorService;
         private readonly BranchService _branchService;
+        private readonly EmployeeService _employeeService;
         public UserDetail()
         {
             InitializeComponent();
             _actorService = new ActorService();
             _branchService = new BranchService();
+            _employeeService = new EmployeeService();
         }
 
         private void UserDetail_Load(object sender, EventArgs e)
         {
             //var resAct = actor.SearchActorWithID(ActorID);
             var actor = _actorService.GetActor(ActorID);
-            var resEmployee = HotelDatabase.Employee.SearchEmployee(ActorID, Current.User.BranchID);
+            //var resEmployee = HotelDatabase.Employee.SearchEmployee(ActorID, Current.User.BranchID);
+            var employee = _employeeService.GetEmployee(ActorID, Current.User.BranchID);
             //var resBranch = HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
             var branch = _branchService.GetBranch(Current.User.BranchID);
             //if (resAct > 0 && resEmployee)
-            if (actor != null && resEmployee)
+            if (actor != null && employee != null)
             {
                 lblName.Text = actor.Firstname + " " + actor.Lastname;
                 lblNC.Text = actor.NationalCode;
@@ -47,10 +50,9 @@ namespace HotelManagement
                 lblHome.Text = actor.Tel;
                 lblMobile.Text = actor.Mobile;
                 lblStateCity.Text = actor.State + " , " + actor.City;
-                lblEducation.Text = HotelDatabase.Employee.Education;
-                lblSalary.Text = HotelDatabase.Employee.Salary.ToString();
-                lblHire.Text = HotelDatabase.Employee.HireDate.Date.ToString("MM / dd / yyyy") ;
-                //lblBranch.Text = HotelDatabase.Branch.BranchName;
+                lblEducation.Text = employee.Education;
+                lblSalary.Text = employee.Salary.ToString();
+                lblHire.Text = employee.HireDate.Date.ToString("MM / dd / yyyy") ;
                 lblBranch.Text = branch.BranchName;
                 lblAddress.Text = actor.Address;
 
@@ -171,13 +173,20 @@ namespace HotelManagement
         private void btnDeleteEmployee_Click(object sender, EventArgs e)
         {
 
-            var res = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res == DialogResult.Yes)
+            var dialogResult = MessageBox.Show(
+                "Are You Sure You Want To Delete This Record ?", 
+                "Delete", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                );
+
+            if (dialogResult == DialogResult.Yes)
             {
-                if (HotelDatabase.Employee.Delete(EmployeeID))
+                var resultDeleteEmployee = _employeeService.DeleteEmployee(EmployeeID);
+                if (resultDeleteEmployee)
                 {
                     Current.User.Activities.Add(
-                        new Activity("Delete a Employee", "the Employee '" + lblName.Text + "' has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname)
+                        new Activity("Delete a Employee", "the Employee '" + lblName.Text + "' has been deleted by " +
+                        Current.User.Firstname + " " + Current.User.Lastname)
                         );
                     deleteEmployee = true;
                     this.Dispose();

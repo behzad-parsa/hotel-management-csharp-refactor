@@ -66,7 +66,7 @@
             this.panel10 = new System.Windows.Forms.Panel();
             this.bunifuCustomLabel17 = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.lblName = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.lblEduc = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.lblEducation = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.lblSalary = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.lblMobile = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.lblGender = new Bunifu.Framework.UI.BunifuCustomLabel();
@@ -491,7 +491,7 @@
             this.panelEmployee.Controls.Add(this.lblNothing);
             this.panelEmployee.Controls.Add(this.panel10);
             this.panelEmployee.Controls.Add(this.lblName);
-            this.panelEmployee.Controls.Add(this.lblEduc);
+            this.panelEmployee.Controls.Add(this.lblEducation);
             this.panelEmployee.Controls.Add(this.lblSalary);
             this.panelEmployee.Controls.Add(this.lblMobile);
             this.panelEmployee.Controls.Add(this.lblGender);
@@ -546,13 +546,13 @@
             // 
             // lblEduc
             // 
-            this.lblEduc.Font = new System.Drawing.Font("Serlio LT Std", 14F);
-            this.lblEduc.Location = new System.Drawing.Point(2, 263);
-            this.lblEduc.Name = "lblEduc";
-            this.lblEduc.Size = new System.Drawing.Size(263, 25);
-            this.lblEduc.TabIndex = 3;
-            this.lblEduc.Text = "MSC";
-            this.lblEduc.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblEducation.Font = new System.Drawing.Font("Serlio LT Std", 14F);
+            this.lblEducation.Location = new System.Drawing.Point(2, 263);
+            this.lblEducation.Name = "lblEduc";
+            this.lblEducation.Size = new System.Drawing.Size(263, 25);
+            this.lblEducation.TabIndex = 3;
+            this.lblEducation.Text = "MSC";
+            this.lblEducation.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lblSalary
             // 
@@ -910,7 +910,7 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panelEmployee;
-        private Bunifu.Framework.UI.BunifuCustomLabel lblEduc;
+        private Bunifu.Framework.UI.BunifuCustomLabel lblEducation;
         private Bunifu.Framework.UI.BunifuCustomLabel lblBranch;
         private System.Windows.Forms.Panel panel1;
         private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel4;

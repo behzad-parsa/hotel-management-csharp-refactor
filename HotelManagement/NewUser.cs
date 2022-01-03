@@ -19,13 +19,14 @@ namespace HotelManagement
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
         private readonly ActorService _actorService;
         private readonly BranchService _branchService;
-
+        private readonly EmployeeService _employeeService;
         public NewUser()
         {
             InitializeComponent();
 
             _actorService = new ActorService();
             _branchService = new BranchService();
+            _employeeService = new EmployeeService();
         }
         private void LoadRoleData()
         {
@@ -100,7 +101,7 @@ namespace HotelManagement
             {
                 if (!updateFlag)
                 {
-                    //Insert
+                    //--------- Insert ---------------------------------------------
                     TextBoxCheck(txtUsername, "Username");
                     TextBoxCheck(txtPassword, "Password");
                     TextBoxCheck(txtConPass, "Confirm Password");
@@ -139,8 +140,8 @@ namespace HotelManagement
 
                         if (!HotelDatabase.User.SearchUser(txtUsername.Text.Trim().ToLower()))
                         {
-                            HashPassword hp = new HashPassword();
-                            var res = HotelDatabase.User.Insert(EmployeeID ,SelectedRoleID, txtUsername.Text.Trim().ToLower(), hp.ConvertPass(txtPassword.Text), ConvertPicToByte(picUser.Image), chbActive.Checked);
+                            HashPassword hashPassword = new HashPassword();
+                            var res = HotelDatabase.User.Insert(EmployeeID ,SelectedRoleID, txtUsername.Text.Trim().ToLower(), hashPassword.ConvertPass(txtPassword.Text), ConvertPicToByte(picUser.Image), chbActive.Checked);
                             if (res > 0)
                             {
                                 PanelStatus(panelStatusUser, "Action Completed Successfully ", Status.Green);
@@ -244,24 +245,27 @@ namespace HotelManagement
 
 
         private int EmployeeID= -1;
-        private int ActID = -1;
+        //private int ActID = -1;
         private int UserID;
         private bool isFindEmployee = false;
         //private bool isFindUser = false;
-        private void FindEmployee()
-        {
-            var result = HotelDatabase.Database.Query("Select DISTINCT a.id AS ActID , e.id AS EmployeeID  From  Actor a , Employee e  , BranchInfo b Where a.NationalCode = '" + txtNCSearch.Text + "' AND a.id = e.actid And e.BranchID = " + Current.User.BranchID);
-            if (result != null)
-            {
-                ActID = Convert.ToInt32(result.Rows[0]["ActID"]);
-                EmployeeID = Convert.ToInt32(result.Rows[0]["EmployeeID"]);
-                isFindEmployee = true;
-            }
-            else
-            {
-                isFindEmployee = false;
-            }
-        }
+        //private void FindEmployee()
+        //{
+        //    var result = HotelDatabase.Database.Query(
+        //        "Select DISTINCT a.id AS ActID , e.id AS EmployeeID  From  Actor a , Employee e  , BranchInfo b " +
+        //        "Where a.NationalCode = '" + txtNCSearch.Text + "' AND a.id = e.actid And e.BranchID = " + Current.User.BranchID);
+
+        //    if (result != null)
+        //    {
+        //        ActID = Convert.ToInt32(result.Rows[0]["ActID"]);
+        //        EmployeeID = Convert.ToInt32(result.Rows[0]["EmployeeID"]);
+        //        isFindEmployee = true;
+        //    }
+        //    else
+        //    {
+        //        isFindEmployee = false;
+        //    }
+        //}
 
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -269,26 +273,31 @@ namespace HotelManagement
             panelStatusUser.Visible = false;
             Reset();
 
-            //TextBoxClearBorderColor();
             if (txtNCSearch.Text != "National Code" && txtNCSearch.Text != "")
             {
-                FindEmployee();
-                var actor = _actorService.GetActor(ActID);
-                //if (isFindEmployee && HotelDatabase.Actor.SearchActorWithID(ActID) > 0 && HotelDatabase.Employee.SearchEmployee(ActID , Current.User.BranchID))
-                if (isFindEmployee && actor != null && HotelDatabase.Employee.SearchEmployee(ActID , Current.User.BranchID))
+                //FindEmployee(); //issue
+                var actor = _actorService.GetActor(txtNCSearch.Text);
+                //var actor = _actorService.GetActor(ActID);
+                var employee = _employeeService.GetEmployee(actor.ID, Current.User.BranchID);
+                //if (isFindEmployee && actor != null && employee != null)
+                if (actor != null && employee != null)
                 {
+                    EmployeeID = employee.ID;
+                    isFindEmployee = true;
+
                     lblName.Text = actor.Firstname + " " + actor.Lastname;
-                    lblEduc.Text = HotelDatabase.Employee.Education;
+                    lblEducation.Text = employee.Education;
+                    lblMobile.Text = actor.Mobile;
+                    lblSalary.Text = employee.Salary.ToString();
+                    lblGender.Text = actor.Gender;
 
                     var branch = _branchService.GetBranch(Current.User.BranchID);
-                    if (branch != null) //HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
+                    if (branch != null) 
                     {
                         lblBranch.Text = branch.BranchName;
                     }
 
-                    lblMobile.Text = actor.Mobile;
-                    lblSalary.Text = HotelDatabase.Employee.Salary.ToString();
-                    lblGender.Text = actor.Gender;
+
 
                     if (HotelDatabase.User.SearchUser(EmployeeID))
                     {
@@ -314,6 +323,8 @@ namespace HotelManagement
                 }
                 else
                 {
+                    isFindEmployee = false;
+                    EmployeeID = 0;
                     panelInfo.Enabled = false;
                     Reset();
                     PanelStatus(panelStatusUser, "No Person Found", Status.Red);                  

@@ -17,12 +17,11 @@ namespace HotelManagement
     {
 
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
-      // Dictionary<int, string> dicBranch = new Dictionary<int, string>();
-        //private int ActIDofEmployee;
 
         private readonly ActorService _actorService;
         private readonly BranchService _branchService;
         private List<Branch> branches;
+        private readonly EmployeeService _employeeService;
         public NewEmployee()
         {
             InitializeComponent();
@@ -41,19 +40,12 @@ namespace HotelManagement
             panelBasic.Enabled = false;
             panelEmployment.Enabled = false;
             panelContact.Enabled = false;
-            //dicBranch = HotelDatabase.Branch.GetAllBranch();
+
             branches = _branchService.GetAllBranches();
 
-            //foreach (var item in branches)
-            //{
-            //    cmbBranch.Items.Add(item.BranchName);            
-            //}
             cmbBranch.DataSource = branches;
             cmbBranch.DisplayMember = "BranchName";
             
-            //dicBranch.TryGetValue(Current.User.BranchID, out string branchName);
-            //cmbBranch.SelectedItem = branchName ;
-
             var branch = branches.Find(x => x.ID == Current.User.BranchID);
             cmbBranch.SelectedItem = branch.BranchName ;
         }
@@ -193,7 +185,6 @@ namespace HotelManagement
             TextBoxColor(txtSalary, Status.Green);
         }
 
-
         private void Reset()
         {
             txtEmpFname.Text = "Firstname";
@@ -266,20 +257,20 @@ namespace HotelManagement
 
                     dateEmpBirth.Value = actor.Birthday;
 
-                    if (HotelDatabase.Employee.SearchEmployee(ActID))
+                    var employee = _employeeService.GetEmployee(ActID);
+                    if (employee != null)
                     {
                         isFindEmployee = true;
 
-                        EmployeeID = HotelDatabase.Employee.ID;
-                       
-                        txtEducation.Text = HotelDatabase.Employee.Education;
-                        txtSalary.Text = HotelDatabase.Employee.Salary.ToString();
-                        dateHireEmp.Value = HotelDatabase.Employee.HireDate;
+                        EmployeeID = employee.ID;
+                        txtEducation.Text = employee.Education;
+                        txtSalary.Text = employee.Salary.ToString();
+                        dateHireEmp.Value = employee.HireDate;
 
                         //dicBranch.TryGetValue(HotelDatabase.Employee.BranchID, out string branchName);
                         //cmbBranch.SelectedItem = branchName ;                       
 
-                        var branch = branches.Find(x => x.ID == HotelDatabase.Employee.BranchID);
+                        var branch = branches.Find(x => x.ID == employee.BranchID);
                         cmbBranch.SelectedItem = branch.BranchName;
 
                         PanelStatus(panelStatusEmployee, "Employee Was Successfully Found", Status.Green);
@@ -364,6 +355,7 @@ namespace HotelManagement
                 if (ValidationFlag)
                 {
                     ValidationFlag = false;
+
                     Actor actor = new Actor()
                     {
                         Firstname = txtEmpFname.Text,
@@ -381,26 +373,38 @@ namespace HotelManagement
                     };
                     var resultActor = _actorService.InsertActor(actor);
 
-                    //var result = actor.InsertAll(txtEmpFname.Text, txtEmpLname.Text, dateEmpBirth.Value.Date,
-                    // txtNCSearch.Text, cmbEmpNational.SelectedItem.ToString(), txtEmpEmail.Text, txtEmpTel.Text,
-                    // txtEmpMobile.Text, RadioButtonResult(rdbEmpMale, rdbEmpFemale), cmbEmpState.SelectedItem.ToString(), txtEmpCity.Text, txtEmpAddress.Text);
-                    if (resultActor) //result > 0)
+                    if (resultActor) 
                     {
-                        //ActID = result;
                         ActID = _actorService.LastInsertedId;
-                        //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
+
                         var branch = branches.SingleOrDefault(x => x == cmbBranch.SelectedItem);
-                        int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.ID, txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
-                        if (employeeResult > 0)
+                        //int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.ID, txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
+                        Employee employee = new Employee()
+                        {
+                            ActID = ActID,
+                            BranchID = branch.ID,
+                            Education = txtEducation.Text,
+                            HireDate = dateHireEmp.Value.Date,
+                            Salary = Convert.ToInt32(txtSalary.Text)
+
+                        };
+
+                        var employeeResult = _employeeService.InsertEmployee(employee);
+
+                        if (employeeResult)
                         {
                             PanelStatus(panelStatusEmployee, "Action Completed Seccessfully", Status.Green);
                             panelBasic.Enabled = false;
                             panelContact.Enabled = false;
                             panelEmployment.Enabled = false;
-                            EmployeeID = employeeResult;
+                            //EmployeeID = employeeResult;
+                            EmployeeID =_employeeService.LastInsertedId ;
                             searchFlag = false;
 
-                            Current.User.Activities.Add(new Activity("submit New Employee", "the Employee '"+txtEmpFname.Text+" " + txtEmpLname.Text+"' has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
+                            Current.User.Activities.Add(
+                                new Activity("submit New Employee", "the Employee '"+txtEmpFname.Text +" " +
+                                txtEmpLname.Text+"' has been submited by " + Current.User.Firstname + " " + Current.User.Lastname)
+                                );
                         }
                         else
                         {
@@ -430,15 +434,29 @@ namespace HotelManagement
                 txtCount = 0;
                 if (ValidationFlag)
                 {
-
                     ValidationFlag = false;
-                    //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
+
                     var branch = branches.SingleOrDefault(x => x == cmbBranch.SelectedItem);
-                    int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.ID , txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
-                    if (employeeResult > 0)
+                   // int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.ID, txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
+                    Employee employee = new Employee()
+                    {
+                        ActID = ActID,
+                        BranchID = branch.ID,
+                        Education = txtEducation.Text,
+                        HireDate = dateHireEmp.Value.Date,
+                        Salary = Convert.ToInt32(txtSalary.Text)
+                    };
+                    
+                    var employeeResult = _employeeService.InsertEmployee(employee);
+                    if (employeeResult)
                     {                     
                         PanelStatus(panelStatusEmployee, "Action Completed Seccessfully", Status.Green);
-                        Current.User.Activities.Add(new Activity("submit New Employee", "the Employee '" + txtEmpFname.Text + " " + txtEmpLname.Text + "' has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
+                        Current.User.Activities.Add(
+                            new Activity(
+                                "submit New Employee", "the Employee '" + txtEmpFname.Text + " " + 
+                                txtEmpLname.Text + "' has been submited by " + 
+                                Current.User.Firstname + " " + Current.User.Lastname)
+                            );
                         panelEmployment.Enabled = false;
                         searchFlag = false;
                     }
@@ -450,7 +468,7 @@ namespace HotelManagement
             }
             else if (isFindActor && isFindEmployee)
             {
-                //Update Mode
+                //-------- Update Mode ------------------------------------------------
                 TextBoxCheck(txtEmpFname, "Firstname");
                 TextBoxCheck(txtEmpLname, "Lastname");
                 TextBoxCheck(txtEmpMobile, "Mobile Phone");
@@ -500,16 +518,22 @@ namespace HotelManagement
                         Address = txtEmpAddress.Text
                     };
                     var resultUpdateActor = _actorService.UpdateActor(actor); 
-                    //var result = HotelDatabase.Actor.UpdateAll(ActID , txtEmpFname.Text, txtEmpLname.Text, dateEmpBirth.Value.Date,
-                    //txtNCSearch.Text, cmbEmpNational.SelectedItem.ToString(), txtEmpEmail.Text, txtEmpTel.Text,
-                    //txtEmpMobile.Text, RadioButtonResult(rdbEmpMale, rdbEmpFemale), cmbEmpState.SelectedItem.ToString(), txtEmpCity.Text, txtEmpAddress.Text);
 
                     if (resultUpdateActor)
                     {
-                        //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
                         var branch = branches.SingleOrDefault(x => x == cmbBranch.SelectedItem);
-                        var resultSecond = HotelDatabase.Employee.Update(EmployeeID, ActID, branch.ID, txtEducation.Text, dateHireEmp.Value, Convert.ToInt32(txtSalary.Text));
-                        if (resultSecond)
+                        //var resultSecond = HotelDatabase.Employee.Update(EmployeeID, ActID, branch.ID, txtEducation.Text, dateHireEmp.Value, Convert.ToInt32(txtSalary.Text));
+                        var employee = new Employee()
+                        {
+                            ID = EmployeeID,
+                            ActID = ActID,
+                            BranchID = branch.ID,
+                            Education = txtEducation.Text,
+                            HireDate = dateHireEmp.Value , 
+                            Salary = Convert.ToInt32(txtSalary.Text)
+                        };
+                        var resultUpdate = _employeeService.UpdateEmployee(employee);
+                        if (resultUpdate)
                         {
                             PanelStatus(panelStatusEmployee, "Information Changed Successfully", Status.Green);
                             isFindActor = false;
