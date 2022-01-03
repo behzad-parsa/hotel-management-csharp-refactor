@@ -41,13 +41,11 @@ namespace HotelManagement.Services
             //parameter.Add("@NationalCode", actor.NationalCode);
             //parameter.Add("@Nationality", Database.CheckNullInsert(nationality));
             //parameter.Add("@Tel", Database.CheckNullInsert(tel));
-            //parameter.Add("@Mobile", Database.CheckNullInsert(mobile));
-            //parameter.Add("@State", Database.CheckNullInsert(state));
             //parameter.Add("@City", Database.CheckNullInsert(city));
             //parameter.Add("@Address", Database.CheckNullInsert(address));
 
 
-            //Second Approach - Iterate through The Prop erties of an Object
+            //Second Approach - Iterate through The Properties of an Object
             //issue : All The Property Object Name And The Column Name Must Be The Same
             foreach (var property in typeof(Actor).GetProperties())
             {

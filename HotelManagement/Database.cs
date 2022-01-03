@@ -12,8 +12,6 @@ namespace HotelManagement
     namespace HotelDatabase
     {
 
-
-
         public class Branch
         {
             public static int ID { get; set; }

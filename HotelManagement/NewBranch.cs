@@ -10,7 +10,8 @@ using System.Windows.Forms;
 using Bunifu.Framework.UI;
 using System.Drawing.Imaging;
 using System.IO;
-
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 
 namespace HotelManagement
@@ -18,9 +19,12 @@ namespace HotelManagement
     public partial class NewBranch : UserControl
     {
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
+        private readonly BranchService _branchService;
         public NewBranch()
         {
             InitializeComponent();
+
+            _branchService = new BranchService();
         }
 
         private void NewBranch_Load(object sender, EventArgs e)
@@ -214,8 +218,22 @@ namespace HotelManagement
             if (ValidationFlag)
             {
                 ValidationFlag = false;
-                var res = HotelDatabase.Branch.Insert(txtCode.Text, txtOwner.Text, txtBranchName.Text, txtRate.Text, ConvertPicToByte(picLogo.Image), txtTel.Text, cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
-                if (res>0)
+                var branch = new Branch()
+                {
+                    Code = txtCode.Text,
+                    Owner = txtOwner.Text,
+                    BranchName = txtBranchName.Text,
+                    Rate = txtRate.Text,
+                    Logo = ConvertPicToByte(picLogo.Image),
+                    Address = txtAddress.Text,
+                    City = txtCity.Text,
+                    State = cmbState.SelectedItem.ToString() ,
+                    Tel = txtTel.Text
+                };
+                var resultInsertBranch = _branchService.InsertBranch(branch);
+                //var res = HotelDatabase.Branch.Insert(txtCode.Text, txtOwner.Text, txtBranchName.Text, txtRate.Text, ConvertPicToByte(picLogo.Image), txtTel.Text, cmbState.SelectedItem.ToString(), txtCity.Text, txtAddress.Text);
+                //if (res>0)
+                if (resultInsertBranch)
                 {
                     PanelStatus(panelConfigError, "Action Completed Successfully", Status.Green);
                 }

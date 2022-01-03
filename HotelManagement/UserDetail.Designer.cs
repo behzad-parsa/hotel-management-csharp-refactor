@@ -420,7 +420,7 @@
             this.lblBranch.Size = new System.Drawing.Size(45, 23);
             this.lblBranch.TabIndex = 3;
             this.lblBranch.Text = "MSC";
-            this.lblBranch.Click += new System.EventHandler(this.bunifuCustomLabel24_Click);
+
             // 
             // lblEducation
             // 

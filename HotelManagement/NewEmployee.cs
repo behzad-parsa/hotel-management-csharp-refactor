@@ -17,18 +17,19 @@ namespace HotelManagement
     {
 
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
-        Dictionary<int, string> dicBranch = new Dictionary<int, string>();
-        private int ActIDofEmployee;
+      // Dictionary<int, string> dicBranch = new Dictionary<int, string>();
+        //private int ActIDofEmployee;
 
         private readonly ActorService _actorService;
-
-
+        private readonly BranchService _branchService;
+        private List<Branch> branches;
         public NewEmployee()
         {
             InitializeComponent();
 
             _actorService = new ActorService();
-
+            _branchService = new BranchService();
+            
         }
      
         private void NewEmployee_Load(object sender, EventArgs e)
@@ -40,15 +41,19 @@ namespace HotelManagement
             panelBasic.Enabled = false;
             panelEmployment.Enabled = false;
             panelContact.Enabled = false;
-            dicBranch = HotelDatabase.Branch.GetAllBranch();
+            //dicBranch = HotelDatabase.Branch.GetAllBranch();
+            branches = _branchService.GetAllBranches();
 
-            foreach (var item in dicBranch)
+            foreach (var item in branches)
             {
-                cmbBranch.Items.Add(item.Value);            
+                cmbBranch.Items.Add(item.BranchName);            
             }
+            //cmbBranch.DataSource = branches;
+            //dicBranch.TryGetValue(Current.User.BranchID, out string branchName);
+            //cmbBranch.SelectedItem = branchName ;
 
-            dicBranch.TryGetValue(Current.User.BranchID, out string branchName);
-            cmbBranch.SelectedItem = branchName;
+            var branch = branches.Find(x => x.ID == Current.User.BranchID);
+            cmbBranch.SelectedItem = branch.BranchName ;
         }
 
         private enum Status
@@ -228,18 +233,7 @@ namespace HotelManagement
         private int ActID = -10;
         private int EmployeeID = -10;
         private bool isFindEmployee = false;
-        private void btnEmpSearch_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnEmpSubmit_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnEmpInfoSubmit_Click(object sender, EventArgs e)
-        {         
-        }
-
+        
         private void btnSearch_Click(object sender, EventArgs e)
         {      
             panelStatusEmployee.Visible = false;
@@ -280,9 +274,12 @@ namespace HotelManagement
                         txtSalary.Text = HotelDatabase.Employee.Salary.ToString();
                         dateHireEmp.Value = HotelDatabase.Employee.HireDate;
 
-                        dicBranch.TryGetValue(HotelDatabase.Employee.BranchID, out string branchName);
-                        cmbBranch.SelectedItem = branchName ;
-                        
+                        //dicBranch.TryGetValue(HotelDatabase.Employee.BranchID, out string branchName);
+                        //cmbBranch.SelectedItem = branchName ;                       
+
+                        var branch = branches.Find(x => x.ID == HotelDatabase.Employee.BranchID);
+                        cmbBranch.SelectedItem = branch.BranchName;
+
                         PanelStatus(panelStatusEmployee, "Employee Was Successfully Found", Status.Green);
                         ChbUpdate(true);
                         panelBasic.Enabled = true;
@@ -389,8 +386,9 @@ namespace HotelManagement
                     {
                         //ActID = result;
                         ActID = _actorService.LastInsertedId;
-                        var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
-                        int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.Key, txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
+                        //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
+                        var branch = branches.SingleOrDefault(x => x.BranchName == cmbBranch.SelectedText);
+                        int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.ID, txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
                         if (employeeResult > 0)
                         {
                             PanelStatus(panelStatusEmployee, "Action Completed Seccessfully", Status.Green);
@@ -432,8 +430,9 @@ namespace HotelManagement
                 {
 
                     ValidationFlag = false;
-                    var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
-                    int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.Key , txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
+                    //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
+                    var branch = branches.SingleOrDefault(x => x.BranchName == cmbBranch.SelectedText);
+                    int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.ID , txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
                     if (employeeResult > 0)
                     {                     
                         PanelStatus(panelStatusEmployee, "Action Completed Seccessfully", Status.Green);
@@ -505,8 +504,9 @@ namespace HotelManagement
 
                     if (resultUpdateActor)
                     {
-                        var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
-                        var resultSecond = HotelDatabase.Employee.Update(EmployeeID, ActID, branch.Key, txtEducation.Text, dateHireEmp.Value, Convert.ToInt32(txtSalary.Text));
+                        //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
+                        var branch = branches.SingleOrDefault(x => x.BranchName == cmbBranch.SelectedText);
+                        var resultSecond = HotelDatabase.Employee.Update(EmployeeID, ActID, branch.ID, txtEducation.Text, dateHireEmp.Value, Convert.ToInt32(txtSalary.Text));
                         if (resultSecond)
                         {
                             PanelStatus(panelStatusEmployee, "Information Changed Successfully", Status.Green);

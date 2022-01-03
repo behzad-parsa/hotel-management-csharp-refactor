@@ -107,7 +107,6 @@
             this.btnEmpInfoSubmit.Text = "Submit";
             this.btnEmpInfoSubmit.UseVisualStyleBackColor = false;
             this.btnEmpInfoSubmit.Visible = false;
-            this.btnEmpInfoSubmit.Click += new System.EventHandler(this.btnEmpInfoSubmit_Click);
             // 
             // dateHireEmp
             // 
@@ -239,7 +238,6 @@
             this.btnEmpSearch.Textcolor = System.Drawing.Color.White;
             this.btnEmpSearch.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEmpSearch.Visible = false;
-            this.btnEmpSearch.Click += new System.EventHandler(this.btnEmpSearch_Click);
             // 
             // btnEmpSubmit
             // 
@@ -256,7 +254,6 @@
             this.btnEmpSubmit.Text = "Submit";
             this.btnEmpSubmit.UseVisualStyleBackColor = false;
             this.btnEmpSubmit.Visible = false;
-            this.btnEmpSubmit.Click += new System.EventHandler(this.btnEmpSubmit_Click);
             // 
             // cmbEmpState
             // 

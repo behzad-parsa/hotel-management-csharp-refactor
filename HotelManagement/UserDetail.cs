@@ -166,9 +166,6 @@ namespace HotelManagement
         }
 
  
-        private void bunifuCustomLabel24_Click(object sender, EventArgs e)
-        {
-        }
 
         private void bunifuCustomLabel22_Click(object sender, EventArgs e)
         {
