@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-using HotelManagement.HotelDatabase;
+using HotelManagement.Services;
+using HotelManagement.Models;
 
 namespace HotelManagement
 {
@@ -45,11 +46,11 @@ namespace HotelManagement
             public static DateTime Birth { get; set; }
             public static string Gender { get; set; }
             public static string NationalCode { get; set; }
-            public static BranchSecond Branch { get; set; }
+            public static Branch Branch { get; set; }
             public static List<string> AccessLevel { get; set; }
             public static List<Activity> Activities { get; set; }
 
-
+            private static readonly BranchService _branchService = new BranchService();
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
@@ -177,19 +178,21 @@ namespace HotelManagement
                         Email = dataTable.Rows[0]["Email"].ToString();
 
                         //Branch Part
-                        if (HotelDatabase.Branch.SearchBranchWithID(BranchID))
+                        var branch = _branchService.GetBranch(BranchID);
+                        if (branch != null)//HotelDatabase.Branch.SearchBranchWithID(BranchID))
                         {
-                            string code = HotelDatabase.Branch.Code;
-                            string branchName = HotelDatabase.Branch.BranchName;
-                            string owner = HotelDatabase.Branch.Owner;
-                            string rate = HotelDatabase.Branch.Rate;
-                            string tel = HotelDatabase.Branch.Tel;
-                            string state = HotelDatabase.Branch.State;
-                            string city = HotelDatabase.Branch.City;
-                            byte[] logo = HotelDatabase.Branch.Logo;
-                            string address = HotelDatabase.Branch.Address;
+                            //string code = HotelDatabase.Branch.Code;
+                            //string branchName = HotelDatabase.Branch.BranchName;
+                            //string owner = HotelDatabase.Branch.Owner;
+                            //string rate = HotelDatabase.Branch.Rate;
+                            //string tel = HotelDatabase.Branch.Tel;
+                            //string state = HotelDatabase.Branch.State;
+                            //string city = HotelDatabase.Branch.City;
+                            //byte[] logo = HotelDatabase.Branch.Logo;
+                            //string address = HotelDatabase.Branch.Address;
                             //BranchName = dataTable.Rows[0]["BranchName"].ToString();
-                            Branch = new BranchSecond(BranchID, code, owner, branchName, rate, logo, tel, state, city, address);
+                            //Branch = new BranchSecond(BranchID, code, owner, branchName, rate, logo, tel, state, city, address);
+                            Branch = branch;
                         }
 
                         //AccessLevel

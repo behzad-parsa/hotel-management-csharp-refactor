@@ -13,7 +13,8 @@ using System.Windows.Forms;
 
 using Newtonsoft.Json;
 using OpenWeatherApi;
-
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
@@ -21,19 +22,24 @@ namespace HotelManagement
     public partial class frmMain : Form
     {   
         bool isCollapsed;
+        private readonly BranchService _branchService;
+
+
         public frmMain()
         {
             InitializeComponent();
             isCollapsed = true;
+            _branchService = new BranchService();
         }
 
         Timer refreshOnlineList;
         private void frmMain_Load(object sender, EventArgs e)
         {          
             Current.User.SearchUser("behzad75");
-            HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
+            //HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
+            var branch = _branchService.GetBranch(Current.User.BranchID);
             lblTopName.Text ="Hello, "+ Current.User.Firstname ;
-            lblBranchName.Text = HotelDatabase.Branch.BranchName + "  Hotel";
+            lblBranchName.Text = branch.BranchName + "  Hotel";
             picProfileTop.Image = Image.FromStream(new MemoryStream(Current.User.Image));
     
             AddControlsToPanel(new Dashboard());
@@ -49,7 +55,7 @@ namespace HotelManagement
         {
             if (ChatForm.chat.IsConnect)
             {
-                ChatForm.chat.sndMcg(ChatInfo.SendType.OnlineListRequest, null, null, DateTime.MinValue);
+                ChatForm.chat.SendMessage(ChatInfo.SendType.OnlineListRequest, null, null, DateTime.MinValue);
             }
         }
 
@@ -82,16 +88,6 @@ namespace HotelManagement
 
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            timer1.Start();
-        }
-
-  
-        private void panelLeftSlide_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
         private void btnSlideMenu_Click(object sender, EventArgs e)
         {
             timer1.Start();          
@@ -109,15 +105,13 @@ namespace HotelManagement
             panelContainer.Controls.Add(contain);
         }
 
-      
-
         private void btnUser_Click(object sender, EventArgs e)
         {          
             if (Current.User.AccessLevel.Contains("Booking"))
             {
                 MoveSidePanel(btnBooking);
-                TabBooking tabBooing = new TabBooking();
-                AddControlsToPanel(tabBooing);
+                TabBooking tabBooking = new TabBooking();
+                AddControlsToPanel(tabBooking);
             }
             else
             {
@@ -218,13 +212,6 @@ namespace HotelManagement
             AddControlsToPanel(new Setting());
         }
 
-        private byte[] ConvertPicToByte(Image img)
-        {
-            MemoryStream Ms = new MemoryStream();
-            img.Save(Ms, img.RawFormat);
-            return Ms.GetBuffer();
-        }
-
         private void btnLogout_Click(object sender, EventArgs e)
         {
             frmLogin f = new frmLogin();
@@ -265,9 +252,5 @@ namespace HotelManagement
             Application.Exit();
         }
 
-        private void panelTop_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

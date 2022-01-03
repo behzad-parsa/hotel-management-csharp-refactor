@@ -128,7 +128,6 @@
     <Compile Include="BookList.Designer.cs">
       <DependentUpon>BookList.cs</DependentUpon>
     </Compile>
-    <Compile Include="BranchSecond.cs" />
     <Compile Include="Bubble.cs">
       <SubType>UserControl</SubType>
     </Compile>

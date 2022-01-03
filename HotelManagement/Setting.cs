@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Bunifu.Framework.UI;
-
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 
 namespace HotelManagement
 {
     public partial class Setting : UserControl
     {
+        private readonly BranchService _branchService;
 
         GradientPanel panelLeft;
         GradientPanel panelTop;
@@ -24,6 +26,8 @@ namespace HotelManagement
         public Setting()
         {
             InitializeComponent();
+
+            _branchService = new BranchService();
         }
 
         private void btnChange_Click(object sender, EventArgs e)
@@ -61,8 +65,9 @@ namespace HotelManagement
             picPhoto.Image = Image.FromStream(ms);
 
 
-            HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
-            lblBranch.Text = HotelDatabase.Branch.BranchName;
+            //HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
+            var branch = _branchService.GetBranch(Current.User.BranchID);
+            lblBranch.Text = branch.BranchName;
 
             //Get Access To Parants (Theme Part)      
             panelLeft = (this.Parent.Parent as frmMain).Controls["panelLeftSlide"] as GradientPanel;

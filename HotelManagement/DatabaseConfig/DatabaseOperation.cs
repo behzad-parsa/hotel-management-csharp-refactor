@@ -78,9 +78,11 @@ namespace HotelManagement.DatabaseConfig
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
             if (parameters != null)
+            {
                 sqlCommand.Parameters.Clear();
-                foreach (KeyValuePair<string,object> parameter in parameters)
+                foreach (KeyValuePair<string, object> parameter in parameters)
                     sqlCommand.Parameters.Add(new SqlParameter(parameter.Key, parameter.Value));
+            }
 
 
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);

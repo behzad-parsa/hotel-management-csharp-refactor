@@ -18,13 +18,14 @@ namespace HotelManagement
     {
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
         private readonly ActorService _actorService;
-
+        private readonly BranchService _branchService;
 
         public NewUser()
         {
             InitializeComponent();
-            _actorService = new ActorService();
 
+            _actorService = new ActorService();
+            _branchService = new BranchService();
         }
         private void LoadRoleData()
         {
@@ -279,9 +280,10 @@ namespace HotelManagement
                     lblName.Text = actor.Firstname + " " + actor.Lastname;
                     lblEduc.Text = HotelDatabase.Employee.Education;
 
-                    if (HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
+                    var branch = _branchService.GetBranch(Current.User.BranchID);
+                    if (branch != null) //HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
                     {
-                        lblBranch.Text = HotelDatabase.Branch.BranchName;
+                        lblBranch.Text = branch.BranchName;
                     }
 
                     lblMobile.Text = actor.Mobile;

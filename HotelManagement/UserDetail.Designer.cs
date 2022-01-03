@@ -140,7 +140,6 @@
             this.bunifuCustomLabel22.Size = new System.Drawing.Size(90, 32);
             this.bunifuCustomLabel22.TabIndex = 3;
             this.bunifuCustomLabel22.Text = "Access :";
-            this.bunifuCustomLabel22.Click += new System.EventHandler(this.bunifuCustomLabel22_Click);
             // 
             // btnDeleteUser
             // 

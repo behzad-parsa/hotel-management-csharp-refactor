@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using Stimulsoft.Base;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Components;
+using HotelManagement.Models;
 
 namespace HotelManagement
 {
     public class Report
     {
 
-        public static void SetHotelComponents(StiReport report ,BranchSecond branch)
+        public static void SetHotelComponents(StiReport report ,Branch branch)
         {
             StiText txtHotelName = new StiText();
             txtHotelName = (StiText)report.GetComponentByName("txtHotelName");

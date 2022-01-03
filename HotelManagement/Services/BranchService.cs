@@ -49,7 +49,7 @@ namespace HotelManagement.Services
             
             sqlQuery = "SELECT * FROM \"BranchInfo\" ";
 
-            var dataTable = _database.Select(sqlQuery, DatabaseOperation.OperationType.Select);
+            var dataTable = _database.Select(sqlQuery, DatabaseOperation.OperationType.Select );
 
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return null;

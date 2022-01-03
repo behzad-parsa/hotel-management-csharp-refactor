@@ -93,7 +93,7 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(1836, 70);
             this.panelTop.TabIndex = 5;
-            this.panelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTop_Paint);
+   
             // 
             // bunifuSeparator1
             // 
@@ -210,7 +210,6 @@
             this.panelLeftSlide.Name = "panelLeftSlide";
             this.panelLeftSlide.Size = new System.Drawing.Size(70, 1037);
             this.panelLeftSlide.TabIndex = 3;
-            this.panelLeftSlide.Paint += new System.Windows.Forms.PaintEventHandler(this.panelLeftSlide_Paint);
             // 
             // gradientPanel1
             // 

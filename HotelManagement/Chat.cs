@@ -156,7 +156,7 @@ namespace HotelManagement
                     ;
                 } //Catch
             }
-            public void sndMcg(SendType sndType, string text , string receiver , DateTime date)
+            public void SendMessage(SendType sndType, string text , string receiver , DateTime date)
             {
                 string msg = "";
                 if (sndType == SendType.OnlineListRequest)

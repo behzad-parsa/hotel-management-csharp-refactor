@@ -20,10 +20,12 @@ namespace HotelManagement
         public int UserID;
         public bool deleteEmployee = false;
         private readonly ActorService _actorService;
+        private readonly BranchService _branchService;
         public UserDetail()
         {
             InitializeComponent();
-            _actorService = new ActorService(); 
+            _actorService = new ActorService();
+            _branchService = new BranchService();
         }
 
         private void UserDetail_Load(object sender, EventArgs e)
@@ -31,8 +33,8 @@ namespace HotelManagement
             //var resAct = actor.SearchActorWithID(ActorID);
             var actor = _actorService.GetActor(ActorID);
             var resEmployee = HotelDatabase.Employee.SearchEmployee(ActorID, Current.User.BranchID);
-            var resBranch = HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
-
+            //var resBranch = HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
+            var branch = _branchService.GetBranch(Current.User.BranchID);
             //if (resAct > 0 && resEmployee)
             if (actor != null && resEmployee)
             {
@@ -48,7 +50,8 @@ namespace HotelManagement
                 lblEducation.Text = HotelDatabase.Employee.Education;
                 lblSalary.Text = HotelDatabase.Employee.Salary.ToString();
                 lblHire.Text = HotelDatabase.Employee.HireDate.Date.ToString("MM / dd / yyyy") ;
-                lblBranch.Text = HotelDatabase.Branch.BranchName;
+                //lblBranch.Text = HotelDatabase.Branch.BranchName;
+                lblBranch.Text = branch.BranchName;
                 lblAddress.Text = actor.Address;
 
 
@@ -165,12 +168,6 @@ namespace HotelManagement
             this.Dispose();
         }
 
- 
-
-        private void bunifuCustomLabel22_Click(object sender, EventArgs e)
-        {
-        }
-
         private void btnDeleteEmployee_Click(object sender, EventArgs e)
         {
 
@@ -201,7 +198,8 @@ namespace HotelManagement
                 {
                     deleteEmployee = true;
                     Current.User.Activities.Add(
-                        new Activity("Delete a User", "the User '" + lblName.Text + "-"+lblUsername.Text+"' has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname)
+                            new Activity("Delete a User", "the User '" + lblName.Text + "-"+ 
+                            lblUsername.Text+"' has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname)
                         );
                     this.Dispose();
                 }

@@ -44,11 +44,13 @@ namespace HotelManagement
             //dicBranch = HotelDatabase.Branch.GetAllBranch();
             branches = _branchService.GetAllBranches();
 
-            foreach (var item in branches)
-            {
-                cmbBranch.Items.Add(item.BranchName);            
-            }
-            //cmbBranch.DataSource = branches;
+            //foreach (var item in branches)
+            //{
+            //    cmbBranch.Items.Add(item.BranchName);            
+            //}
+            cmbBranch.DataSource = branches;
+            cmbBranch.DisplayMember = "BranchName";
+            
             //dicBranch.TryGetValue(Current.User.BranchID, out string branchName);
             //cmbBranch.SelectedItem = branchName ;
 
@@ -387,7 +389,7 @@ namespace HotelManagement
                         //ActID = result;
                         ActID = _actorService.LastInsertedId;
                         //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
-                        var branch = branches.SingleOrDefault(x => x.BranchName == cmbBranch.SelectedText);
+                        var branch = branches.SingleOrDefault(x => x == cmbBranch.SelectedItem);
                         int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.ID, txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
                         if (employeeResult > 0)
                         {
@@ -431,7 +433,7 @@ namespace HotelManagement
 
                     ValidationFlag = false;
                     //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
-                    var branch = branches.SingleOrDefault(x => x.BranchName == cmbBranch.SelectedText);
+                    var branch = branches.SingleOrDefault(x => x == cmbBranch.SelectedItem);
                     int employeeResult = HotelDatabase.Employee.Insert(ActID, branch.ID , txtEducation.Text, dateHireEmp.Value.Date, Convert.ToInt32(txtSalary.Text));
                     if (employeeResult > 0)
                     {                     
@@ -505,7 +507,7 @@ namespace HotelManagement
                     if (resultUpdateActor)
                     {
                         //var branch = dicBranch.ElementAt(cmbBranch.SelectedIndex);
-                        var branch = branches.SingleOrDefault(x => x.BranchName == cmbBranch.SelectedText);
+                        var branch = branches.SingleOrDefault(x => x == cmbBranch.SelectedItem);
                         var resultSecond = HotelDatabase.Employee.Update(EmployeeID, ActID, branch.ID, txtEducation.Text, dateHireEmp.Value, Convert.ToInt32(txtSalary.Text));
                         if (resultSecond)
                         {

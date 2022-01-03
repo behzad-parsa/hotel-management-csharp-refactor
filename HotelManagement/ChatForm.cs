@@ -266,7 +266,7 @@ namespace HotelManagement
         {
             if (clickedPV != null)
             {
-                chat.sndMcg(ChatInfo.SendType.MessageToUser, txtMsg.Text, clickedPV.user.Username, DateTime.Now);
+                chat.SendMessage(ChatInfo.SendType.MessageToUser, txtMsg.Text, clickedPV.user.Username, DateTime.Now);
                 AddMessage(txtMsg.Text, DateTime.Now.ToString("hh:mm tt"), MsgType.Out);
             }
             txtMsg.Text = "";

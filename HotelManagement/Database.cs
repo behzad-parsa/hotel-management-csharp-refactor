@@ -11,246 +11,7 @@ namespace HotelManagement
 
     namespace HotelDatabase
     {
-
-        public class Branch
-        {
-            public static int ID { get; set; }
-            public static string Code { get; set; }
-            public static string Owner { get; set; }
-            public static string BranchName { get; set; }
-            public static string Rate { get; set; }
-            public static byte[] Logo { get; set; }
-            public static string Tel { get; set; }
-            public static string State { get; set; }
-            public static string City { get; set; }
-            public static string Address { get; set; }
-
-            private static SqlConnection con = new SqlConnection();
-            private static SqlCommand cmd = new SqlCommand();
-            private static SqlDataAdapter adp = new SqlDataAdapter();
-            private static DataTable dataTable = new DataTable();
-
-            private static void MakeConnection()
-            {
-                try
-                {
-                    con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
-                    cmd.Connection = con;
-                }
-                catch
-                {
-                    ;
-                }
-            }
-            private static void Connect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Closed)
-                    {
-                        con.Open();
-                    }
-                }
-                catch
-                {
-                    ;
-                }
-            }
-
-            private static void Disconnect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
-                    }
-
-                }
-                catch
-                {
-                    ;
-                }
-            }
-
-            //implemented
-            public static int Insert(string code , string owner , string branchName , string rate , byte[] logo , string tel , string state , string city , string address )
-            {
-                try
-                {
-                    MakeConnection();
-       
-                    cmd.CommandText = "Insert Into \"BranchInfo\" (Code , Owner , BranchName , Rate , Logo , Tel , State , City , Address) Values (@Code , @Owner , @BranchName , @Rate , @Logo , @Tel , @State , @City , @Address)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@Code", code );
-                    cmd.Parameters.AddWithValue("@Owner",Database.CheckNullInsert(owner) );
-                    cmd.Parameters.AddWithValue("@BranchName",Database.CheckNullInsert(branchName) );
-                    cmd.Parameters.AddWithValue("@Rate",Database.CheckNullInsert(rate) );
-                    cmd.Parameters.AddWithValue("@Logo",logo );
-                    cmd.Parameters.AddWithValue("@Tel", Database.CheckNullInsert(tel) );
-                    cmd.Parameters.AddWithValue("@State",Database.CheckNullInsert(state) );
-                    cmd.Parameters.AddWithValue("@City",Database.CheckNullInsert(city) );
-                    cmd.Parameters.AddWithValue("@Address",Database.CheckNullInsert(address) );
-                   
-
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
-                    return insertedID;
-
-                }
-                catch
-                {
-
-                    return -1;
-                }
-            }
-
-            //public static bool SearchBranch(string code)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-            //        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@Code" , code);
-            //        adp.SelectCommand = cmd;
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-            //            Code = dataTable.Rows[0]["Code"].ToString();
-            //            BranchName = Database.CheckNullSelect(dataTable.Rows[0]["BranchName"]) as string;
-            //            Owner = Database.CheckNullSelect(dataTable.Rows[0]["Owner"]) as string;
-            //            Rate = Database.CheckNullSelect(dataTable.Rows[0]["Rate"]) as string;
-            //            Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
-            //            State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
-            //            City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
-            //            Logo = (byte[])dataTable.Rows[0]["Logo"];
-            //            Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;    
-            //            return true;
-
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return false;
-            //    }
-            //}
-
-            //implement
-            public static bool SearchBranchWithID(int id)
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-
-                    cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-
-                    adp.SelectCommand = cmd;
-
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-                        Code = dataTable.Rows[0]["Code"].ToString();
-                        BranchName = Database.CheckNullSelect(dataTable.Rows[0]["BranchName"]) as string;
-                        Owner = Database.CheckNullSelect(dataTable.Rows[0]["Owner"]) as string;
-                        Rate = Database.CheckNullSelect(dataTable.Rows[0]["Rate"]) as string;
-                        Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
-                        State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
-                        City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
-                        Logo = (byte[])dataTable.Rows[0]["Logo"];
-                        Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch
-                {
-                    return false ;
-                }
-            }
-
-            //Implement
-            public static Dictionary<int , string> GetAllBranch()
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-
-                    cmd.CommandText = "SELECT * FROM BranchInfo";
-
-                    adp.SelectCommand = cmd;
-
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        Dictionary<int, string> lstBranch = new Dictionary<int, string>();
-                        for (int i = 0; i < dataTable.Rows.Count ; i++)
-                        {
-
-                            ID = Convert.ToInt32(dataTable.Rows[i]["ID"]);
-                            BranchName = Database.CheckNullSelect(dataTable.Rows[i]["BranchName"]) as string;
-                            lstBranch.Add(ID, BranchName);
-                        }
-                        return lstBranch;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-
-            //public static int Update(byte[] logo)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        cmd.CommandText = "Update \"BranchInfo\" Set Logo = @Logo Where ID = "+1;
-            //        cmd.Parameters.Clear();
-            //        //cmd.Parameters.AddWithValue("@Code", code);
-            //        cmd.Parameters.AddWithValue("@Logo", logo);          
-            //        Connect();
-            //        cmd.ExecuteNonQuery();
-            //        Disconnect();
-            //        return 1;
-            //    }
-            //    catch
-            //    {
-            //        return -1;
-            //    }
-            //}
-        }
-
-      
+     
         public class Employee
         {
             public static int ID { get; set; }
@@ -3793,7 +3554,7 @@ namespace HotelManagement
         //    private static DataTable dataTable = new DataTable();
         //    private static void MakeConnection()
         //    {
-              //    //Implemented
+        //    //Implemented
         //    public static int Insert(int actID, int customerID)
         //    {
         //        try
@@ -3891,7 +3652,7 @@ namespace HotelManagement
         //    private static SqlCommand cmd = new SqlCommand();
         //    private static SqlDataAdapter adp = new SqlDataAdapter();
         //    private static DataTable dataTable = new DataTable();
-     
+
 
         //    //IMP
         //    public static int Insert(int actID)
@@ -4008,6 +3769,247 @@ namespace HotelManagement
         //            return -2;
         //        }
         //    }
+        //}
+
+
+
+
+        //public class Branch
+        //{
+        //    public static int ID { get; set; }
+        //    public static string Code { get; set; }
+        //    public static string Owner { get; set; }
+        //    public static string BranchName { get; set; }
+        //    public static string Rate { get; set; }
+        //    public static byte[] Logo { get; set; }
+        //    public static string Tel { get; set; }
+        //    public static string State { get; set; }
+        //    public static string City { get; set; }
+        //    public static string Address { get; set; }
+
+        //    private static SqlConnection con = new SqlConnection();
+        //    private static SqlCommand cmd = new SqlCommand();
+        //    private static SqlDataAdapter adp = new SqlDataAdapter();
+        //    private static DataTable dataTable = new DataTable();
+
+        //    private static void MakeConnection()
+        //    {
+        //        try
+        //        {
+        //            con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
+        //            cmd.Connection = con;
+        //        }
+        //        catch
+        //        {
+        //            ;
+        //        }
+        //    }
+        //    private static void Connect()
+        //    {
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Closed)
+        //            {
+        //                con.Open();
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            ;
+        //        }
+        //    }
+
+        //    private static void Disconnect()
+        //    {
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Open)
+        //            {
+        //                con.Close();
+        //            }
+
+        //        }
+        //        catch
+        //        {
+        //            ;
+        //        }
+        //    }
+
+        //    //implemented
+        //public static int Insert(string code , string owner , string branchName , string rate , byte[] logo , string tel , string state , string city , string address )
+        //{
+        //    try
+        //    {
+        //        MakeConnection();
+
+        //        cmd.CommandText = "Insert Into \"BranchInfo\" (Code , Owner , BranchName , Rate , Logo , Tel , State , City , Address) Values (@Code , @Owner , @BranchName , @Rate , @Logo , @Tel , @State , @City , @Address)";
+        //        cmd.Parameters.Clear();
+        //        cmd.Parameters.AddWithValue("@Code", code );
+        //        cmd.Parameters.AddWithValue("@Owner",Database.CheckNullInsert(owner) );
+        //        cmd.Parameters.AddWithValue("@BranchName",Database.CheckNullInsert(branchName) );
+        //        cmd.Parameters.AddWithValue("@Rate",Database.CheckNullInsert(rate) );
+        //        cmd.Parameters.AddWithValue("@Logo",logo );
+        //        cmd.Parameters.AddWithValue("@Tel", Database.CheckNullInsert(tel) );
+        //        cmd.Parameters.AddWithValue("@State",Database.CheckNullInsert(state) );
+        //        cmd.Parameters.AddWithValue("@City",Database.CheckNullInsert(city) );
+        //        cmd.Parameters.AddWithValue("@Address",Database.CheckNullInsert(address) );
+
+
+        //        Connect();
+        //        cmd.ExecuteNonQuery();
+        //        cmd.CommandText = Database.QueryLastID;
+        //        int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+        //        Disconnect();
+        //        return insertedID;
+
+        //    }
+        //    catch
+        //    {
+
+        //        return -1;
+        //    }
+        //}
+
+        ////public static bool SearchBranch(string code)
+        ////{
+        ////    try
+        ////    {
+        ////        MakeConnection();
+        ////        dataTable = new DataTable();
+        ////        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
+        ////        cmd.Parameters.Clear();
+        ////        cmd.Parameters.AddWithValue("@Code" , code);
+        ////        adp.SelectCommand = cmd;
+        ////        Connect();
+        ////        adp.Fill(dataTable);
+        ////        Disconnect();
+        ////        if (dataTable.Rows.Count != 0)
+        ////        {
+        ////            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+        ////            Code = dataTable.Rows[0]["Code"].ToString();
+        ////            BranchName = Database.CheckNullSelect(dataTable.Rows[0]["BranchName"]) as string;
+        ////            Owner = Database.CheckNullSelect(dataTable.Rows[0]["Owner"]) as string;
+        ////            Rate = Database.CheckNullSelect(dataTable.Rows[0]["Rate"]) as string;
+        ////            Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
+        ////            State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
+        ////            City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
+        ////            Logo = (byte[])dataTable.Rows[0]["Logo"];
+        ////            Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;    
+        ////            return true;
+
+        ////        }
+        ////        else
+        ////        {
+        ////            return false;
+        ////        }
+        ////    }
+        ////    catch
+        ////    {
+        ////        return false;
+        ////    }
+        ////}
+
+        ////implement
+        //public static bool SearchBranchWithID(int id)
+        //{
+        //    try
+        //    {
+        //        MakeConnection();
+        //        dataTable = new DataTable();
+
+        //        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where ID = @ID";
+        //        cmd.Parameters.Clear();
+        //        cmd.Parameters.AddWithValue("@ID", id);
+
+        //        adp.SelectCommand = cmd;
+
+        //        Connect();
+        //        adp.Fill(dataTable);
+        //        Disconnect();
+
+        //        if (dataTable.Rows.Count != 0)
+        //        {
+
+        //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+        //            Code = dataTable.Rows[0]["Code"].ToString();
+        //            BranchName = Database.CheckNullSelect(dataTable.Rows[0]["BranchName"]) as string;
+        //            Owner = Database.CheckNullSelect(dataTable.Rows[0]["Owner"]) as string;
+        //            Rate = Database.CheckNullSelect(dataTable.Rows[0]["Rate"]) as string;
+        //            Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
+        //            State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
+        //            City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
+        //            Logo = (byte[])dataTable.Rows[0]["Logo"];
+        //            Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        return false ;
+        //    }
+        //}
+
+        //Implement
+        //public static Dictionary<int , string> GetAllBranch()
+        //{
+        //    try
+        //    {
+        //        MakeConnection();
+        //        dataTable = new DataTable();
+
+        //        cmd.CommandText = "SELECT * FROM BranchInfo";
+
+        //        adp.SelectCommand = cmd;
+
+        //        Connect();
+        //        adp.Fill(dataTable);
+        //        Disconnect();
+        //        if (dataTable.Rows.Count != 0)
+        //        {
+        //            Dictionary<int, string> lstBranch = new Dictionary<int, string>();
+        //            for (int i = 0; i < dataTable.Rows.Count ; i++)
+        //            {
+
+        //                ID = Convert.ToInt32(dataTable.Rows[i]["ID"]);
+        //                BranchName = Database.CheckNullSelect(dataTable.Rows[i]["BranchName"]) as string;
+        //                lstBranch.Add(ID, BranchName);
+        //            }
+        //            return lstBranch;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        return null;
+        //    }
+        //}
+
+        //public static int Update(byte[] logo)
+        //{
+        //    try
+        //    {
+        //        MakeConnection();
+        //        cmd.CommandText = "Update \"BranchInfo\" Set Logo = @Logo Where ID = "+1;
+        //        cmd.Parameters.Clear();
+        //        //cmd.Parameters.AddWithValue("@Code", code);
+        //        cmd.Parameters.AddWithValue("@Logo", logo);          
+        //        Connect();
+        //        cmd.ExecuteNonQuery();
+        //        Disconnect();
+        //        return 1;
+        //    }
+        //    catch
+        //    {
+        //        return -1;
+        //    }
+        //}
         //}
 
     }

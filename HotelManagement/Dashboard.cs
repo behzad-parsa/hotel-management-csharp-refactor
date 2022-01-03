@@ -13,18 +13,21 @@ using System.IO;
 using System.Net;
 using System.IO.Compression;
 using Newtonsoft.Json;
-
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class Dashboard : UserControl
     {
+        private readonly BranchService _branchService;
         List<ActivityItem> lstActivityItem;
 
         public Dashboard()
         {
             InitializeComponent();
             lblTime.Text = DateTime.Now.ToString("hh:mm tt");
+            _branchService = new BranchService();
         }
 
         private void LoadRecentActivity()
@@ -184,10 +187,10 @@ namespace HotelManagement
                 else
                 {
                     string content;
-                    
-                    if (HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
+                    var branch = _branchService.GetBranch(Current.User.BranchID);
+                    if (branch != null)//HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
                     {
-                        var searchCity = OpenWeatherAPI.lstCity.Find(x => x.Name.ToLower() == HotelDatabase.Branch.City.ToLower());
+                        var searchCity = OpenWeatherAPI.lstCity.Find(x => x.Name.ToLower() == branch.City.ToLower());
                         if (searchCity == null)
                         {
                             //City Not Found ;

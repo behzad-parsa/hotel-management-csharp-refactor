@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Bunifu.Framework.UI;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class CardBookDetail : UserControl
     {
+        private readonly BranchService _branchService;
+
         BunifuImageButton btnDone;
         BunifuImageButton btnNext;
         private static Communication communication;
@@ -29,6 +33,9 @@ namespace HotelManagement
         public CardBookDetail()
         {
             InitializeComponent();
+
+            _branchService = new BranchService();
+
         }
 
      
@@ -258,7 +265,12 @@ namespace HotelManagement
                     dgvRoom.ClearSelection();
                     ID = -1;
                     PanelStatus(panelStatusBook , "Action Completed Successfuly", Status.Green);
-                    Current.User.Activities.Add(new Activity("Submit New Book", NewBook.customerInfo.Firstname+ " " + NewBook.customerInfo.Lastname + "'s booking has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
+                    Current.User.Activities.Add(
+                        new Activity(
+                            "Submit New Book", NewBook.customerInfo.Firstname+ " " + 
+                            NewBook.customerInfo.Lastname + "'s booking has been submited by " + 
+                            Current.User.Firstname + " " + Current.User.Lastname)
+                        );
 
 
 
@@ -277,9 +289,11 @@ namespace HotelManagement
                     emailMsg += "\n Check-in/Out : " + dateStart.Value.ToString() + " - " + dateEnd.Value.ToString();
                     emailMsg += "\n Booking Date : " + DateTime.Now.ToString() +"\n\n";
 
-                    if (HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
+                    var branch = _branchService.GetBranch(Current.User.BranchID);
+                    if (branch != null)//HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
                     {
-                        emailMsg += HotelDatabase.Branch.BranchName + " - " + HotelDatabase.Branch.Tel + " - " + HotelDatabase.Branch.State + " , " + HotelDatabase.Branch.City + " , " + HotelDatabase.Branch.Address;
+                        emailMsg += branch.BranchName + " - " + branch.Tel + " - " + 
+                            branch.State + " , " + branch.City + " , " + branch.Address;
 
                     }
                     //emailMsg += HotelDatabase.Branch.BranchName + " - " + HotelDatabase.Branch.Tel + " - " + HotelDatabase.Branch.State + " , " + HotelDatabase.Branch.City + " , " + HotelDatabase.Branch.Address;
