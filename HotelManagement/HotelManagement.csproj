@@ -383,6 +383,7 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\GuestService.cs" />
     <Compile Include="Services\Mapper.cs" />
+    <Compile Include="Services\ModuleService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Setting.cs">
       <SubType>UserControl</SubType>
