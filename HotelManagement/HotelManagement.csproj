@@ -121,6 +121,7 @@
     <Compile Include="ActionSerivce.Designer.cs">
       <DependentUpon>ActionSerivce.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccessLevel.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="BookList.cs">
       <SubType>UserControl</SubType>
@@ -377,6 +378,7 @@
       <DependentUpon>ActionRoleFirt.cs</DependentUpon>
     </Compile>
     <Compile Include="Report.cs" />
+    <Compile Include="Services\AccessLevelService.cs" />
     <Compile Include="Services\ActorService.cs" />
     <Compile Include="Services\BranchService.cs" />
     <Compile Include="Services\CustomerService.cs" />

@@ -18,16 +18,15 @@ namespace HotelManagement
         {
             InitializeComponent();
 
-            ModuleService moduleService = new ModuleService();
-            moduleService.InsertModule(new Module()
+            AccessLevelService accessLevelService = new AccessLevelService();
+            accessLevelService.InsertAccessLevel(new AccessLevel()
             {
-                Title = "Chat"
+                ModuleID = 4 , 
+                RoleID = 1
             });
-            var module = moduleService.GetModule(moduleService.LastInsertedId);
-            var modules = moduleService.GetAllModules();
-            var res = moduleService.DeleteModule(moduleService.LastInsertedId);
 
-            var roleModules = moduleService.GetModules(1);
+            var roles = accessLevelService.GetRoleAuthorities(1);
+            var modules = accessLevelService.GetModuleAuthorities(4);
 
         }
         

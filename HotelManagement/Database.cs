@@ -1087,6 +1087,7 @@ namespace HotelManagement
             //public static int ID { get; set; }
             public static int RoleID { get; set; }
             public static int ModuleID { get; set; }
+
             public static List<string> ModuleList;    
             //public static bool AllowSelect { get; set; }
             //public static bool AllowInsert { get; set; }
