@@ -8,41 +8,67 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
-
+using HotelManagement.Services;
+using HotelManagement.Models;
 
 
 namespace HotelManagement
 {
     public partial class NewRole : UserControl
     {
-        Dictionary<int, string> dicAllModules = new Dictionary<int, string>();
+        //Dictionary<int, string> dicAllModules = new Dictionary<int, string>();
+        List<Module> modulesList;
+
         //Dictionary<int, string> dicRoles = new Dictionary<int, string>();
-        List<int> lstChoosedModuleID = new List<int>();
+
+        //List<int> lstChoosedModuleID = new List<int>();
+        private List<Module> checkedModulesList;
+
         //List<int> lstModules = new List<int>();
-        Dictionary<CheckBox, KeyValuePair<int, string>> dicChb = new Dictionary<CheckBox, KeyValuePair<int, string>>();
+        //Dictionary<CheckBox, KeyValuePair<int, string>> dicChb = new Dictionary<CheckBox, KeyValuePair<int, string>>();
+        private Dictionary<CheckBox,Module> checkboxesDictionary;
+        
+        
         //private int RoleID;
+        private readonly ModuleService _moduleService;
+        private readonly RoleService _roleService;
+        private readonly AccessLevelService _accessLevelService;
+
 
         public NewRole()
         {
             InitializeComponent();
+
+            _accessLevelService = new AccessLevelService();
+            _moduleService = new ModuleService();
+            _roleService = new RoleService();
+
         }
 
         private void NewRole_Load(object sender, EventArgs e)
         {
-            dicAllModules = HotelDatabase.Module.GetAllModules();
-
+            //dicAllModules = HotelDatabase.Module.GetAllModules();
+            modulesList =  _moduleService.GetAllModules();
+            checkboxesDictionary = new Dictionary<CheckBox, Module>();
+            checkedModulesList = new List<Module>();
             //----Access Panel-----------
 
-            for (int i = 1; i < dicAllModules.Count + 1; i++)
+            for (int i = 1; i < modulesList.Count + 1; i++)
             {
                 CheckBox chbModule = new CheckBox();
                 chbModule.CheckedChanged += new EventHandler(CheckBoxSelected);
                 chbModule.AutoSize = false;
                 chbModule.Width = 268;
-                chbModule.Text = dicAllModules[i];
+                chbModule.Text = modulesList[i].Title;
 
-                if (i != 1) chbModule.Location = new Point(chbModule.Location.X, dicChb.ElementAt(dicChb.Count - 1).Key.Location.Y + 40);
-                dicChb.Add(chbModule, dicAllModules.ElementAt(i - 1));
+                if (i != 1) 
+                    chbModule.Location = new Point(
+                        chbModule.Location.X, 
+                        checkboxesDictionary.ElementAt(checkboxesDictionary.Count - 1).Key.Location.Y + 40);
+                    //chbModule.Location = new Point(chbModule.Location.X, dicChb.ElementAt(dicChb.Count - 1).Key.Location.Y + 40);
+
+               // dicChb.Add(chbModule, dicAllModules.ElementAt(i - 1));
+                checkboxesDictionary.Add(chbModule, modulesList[i - 1]);
                 panelAccess.Controls.Add(chbModule);
             }
         }
@@ -64,15 +90,15 @@ namespace HotelManagement
         {
             var checkBox = sender as CheckBox;
             //  var id = dicModules.FirstOrDefault(x => x.Value == checkBox.Text).Key;
-            dicChb.TryGetValue(checkBox, out KeyValuePair<int, string> temp);
-            var id = temp.Key;
+            checkboxesDictionary.TryGetValue(checkBox, out Module module);
+            
             if (checkBox.Checked)
             {
-                lstChoosedModuleID.Add(id);
+                checkedModulesList.Add(module);
             }
             else
             {
-                lstChoosedModuleID.Remove(id);
+                checkedModulesList.Remove(module);
             }
         }
 
@@ -170,16 +196,27 @@ namespace HotelManagement
             {
                 int counter = 0;
                 validationFlag = false;
-                var res = HotelDatabase.Role.Insert(txtRole.Text);
-                if (res>0)
+
+                //var res = HotelDatabase.Role.Insert(txtRole.Text);
+                var resultInsertRole = _roleService.InsertRole(new Role()
                 {
-                    for (int i = 0; i <  lstChoosedModuleID.Count; i++)
+                    Title = txtRole.Text
+                });
+                if(resultInsertRole)
+                {
+                    for (int i = 0 ; i < checkedModulesList.Count ; i++)
                     {
-                        if (HotelDatabase.AccessLevel.Insert(res , lstChoosedModuleID[i]) >0)
+                        var accessLevel = new AccessLevel()
+                        {
+                            RoleID = _roleService.LastInsertedId,
+                            ModuleID = checkedModulesList[i].ID
+                        };
+                        //if (HotelDatabase.AccessLevel.Insert(res , lstChoosedModuleID[i]) >0)
+                        if (_accessLevelService.InsertAccessLevel(accessLevel))
                         {
                             counter++;
                         }
-                        if (counter == lstChoosedModuleID.Count)
+                        if (counter == checkedModulesList.Count)
                         {
                             PanelStatus(panelStatus, "Completed ", Status.Green);
                         }

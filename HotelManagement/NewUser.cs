@@ -20,6 +20,7 @@ namespace HotelManagement
         private readonly ActorService _actorService;
         private readonly BranchService _branchService;
         private readonly EmployeeService _employeeService;
+        private readonly RoleService _roleService;
         public NewUser()
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace HotelManagement
             _actorService = new ActorService();
             _branchService = new BranchService();
             _employeeService = new EmployeeService();
+            _roleService = new RoleService();
         }
         private void LoadRoleData()
         {
@@ -306,7 +308,10 @@ namespace HotelManagement
                         chbActive.Checked = HotelDatabase.User.Activate;
                         picUser.Image = Image.FromStream(new MemoryStream(HotelDatabase.User.Image));
                         panelNeedUpdate.Visible = true;
-                        lblRole.Text = HotelDatabase.Role.SearchRoleID(HotelDatabase.User.RoleID);
+
+                        var role = _roleService.GetRole(HotelDatabase.User.RoleID);
+                        lblRole.Text = role.Title;
+
                         UserID = HotelDatabase.User.ID;
                         PanelStatus(panelStatusUser, "User Was Successfully Found", Status.Green);
                         chbUpdate(true);
@@ -576,7 +581,8 @@ namespace HotelManagement
                 var res = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.Yes)
                 {
-                    if (HotelDatabase.Role.Delete(RoleID))
+                    //if (HotelDatabase.Role.Delete(RoleID))
+                    if (_roleService.DeleteRole(RoleID))
                     {
                         LoadRoleData();
                         dgvRole.ClearSelection();

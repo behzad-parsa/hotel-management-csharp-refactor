@@ -47,10 +47,11 @@ namespace HotelManagement
             public static string Gender { get; set; }
             public static string NationalCode { get; set; }
             public static Branch Branch { get; set; }
-            public static List<string> AccessLevel { get; set; }
+            public static List<Module> AccessLevel { get; set; }
             public static List<Activity> Activities { get; set; }
 
             private static readonly BranchService _branchService = new BranchService();
+            private static readonly AccessLevelService _accessLevelService = new AccessLevelService();
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
             private static SqlDataAdapter adp = new SqlDataAdapter();
@@ -195,8 +196,9 @@ namespace HotelManagement
                             Branch = branch;
                         }
 
-                        //AccessLevel
-                        AccessLevel =  HotelDatabase.Module.SearchModule(RoleID);
+                        //AccessLevel -- Getting All Modules which This Role can have access to them
+
+                        AccessLevel =  _accessLevelService.GetRoleAuthorities(RoleID);
                         Activities = new List<Activity>();
                         //Random rnd = new Random();
                         //AccessLevel.RemoveAt(rnd.Next(0, 7));               

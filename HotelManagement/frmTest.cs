@@ -18,15 +18,7 @@ namespace HotelManagement
         {
             InitializeComponent();
 
-            AccessLevelService accessLevelService = new AccessLevelService();
-            accessLevelService.InsertAccessLevel(new AccessLevel()
-            {
-                ModuleID = 4 , 
-                RoleID = 1
-            });
 
-            var roles = accessLevelService.GetRoleAuthorities(1);
-            var modules = accessLevelService.GetModuleAuthorities(4);
 
         }
         

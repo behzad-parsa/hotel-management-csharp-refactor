@@ -107,7 +107,8 @@ namespace HotelManagement
 
         private void btnUser_Click(object sender, EventArgs e)
         {          
-            if (Current.User.AccessLevel.Contains("Booking"))
+            //if (Current.User.AccessLevel.Contains("Booking"))
+            if (Current.User.AccessLevel.Select(m => m.Title).Contains("Booking"))
             {
                 MoveSidePanel(btnBooking);
                 TabBooking tabBooking = new TabBooking();
@@ -127,7 +128,8 @@ namespace HotelManagement
 
         private void btnRoom_Click(object sender, EventArgs e)
         {
-            if (Current.User.AccessLevel.Contains("Room"))
+            //if (Current.User.AccessLevel.Contains("Room"))
+            if (Current.User.AccessLevel.Select(m=>m.Title).Contains("Room"))
             {
                 MoveSidePanel(btnRoom);
                 AddControlsToPanel(new NewRoom());
@@ -140,7 +142,8 @@ namespace HotelManagement
 
         private void btnAccounting_Click(object sender, EventArgs e)
         {
-            if (Current.User.AccessLevel.Contains("Billing"))
+            //if (Current.User.AccessLevel.Contains("Billing"))
+            if (Current.User.AccessLevel.Select(m => m.Title).Contains("Billing"))
             {
                 MoveSidePanel(btnAccounting);
                 AddControlsToPanel(new TabBill());
@@ -153,7 +156,8 @@ namespace HotelManagement
 
         private void btnEmployee_Click(object sender, EventArgs e)
         {
-            if (Current.User.AccessLevel.Contains("Services"))
+            //if (Current.User.AccessLevel.Contains("Services"))
+            if (Current.User.AccessLevel.Select(m => m.Title).Contains("Services"))
             {
                 MoveSidePanel(btnService);
                 AddControlsToPanel(new TabServices());
@@ -166,7 +170,8 @@ namespace HotelManagement
 
         private void btnUser_Click_1(object sender, EventArgs e)
         {
-            if (Current.User.AccessLevel.Contains("User"))
+            //if (Current.User.AccessLevel.Contains("User"))
+            if (Current.User.AccessLevel.Select(m => m.Title).Contains("User"))
             {
                 MoveSidePanel(btnUser);
                 AddControlsToPanel(new TabUser());
@@ -179,7 +184,8 @@ namespace HotelManagement
 
         private void btnMessage_Click(object sender, EventArgs e)
         {
-            if (Current.User.AccessLevel.Contains("Message"))
+            //if (Current.User.AccessLevel.Contains("Message"))
+            if (Current.User.AccessLevel.Select(m => m.Title).Contains("Message"))
             {
                 MoveSidePanel(btnMessage);
                 AddControlsToPanel(new ChatForm());
@@ -195,7 +201,8 @@ namespace HotelManagement
         private void btnBranch_Click(object sender, EventArgs e)
         {
 
-            if (Current.User.AccessLevel.Contains("Message"))
+            //if (Current.User.AccessLevel.Contains("Message"))
+            if (Current.User.AccessLevel.Select(m => m.Title).Contains("Message"))
             {
                 MoveSidePanel(btnBranch);
                 AddControlsToPanel(new NewBranch());

@@ -22,12 +22,18 @@ namespace HotelManagement
         private readonly ActorService _actorService;
         private readonly BranchService _branchService;
         private readonly EmployeeService _employeeService;
+        private readonly RoleService _roleService;
+        private readonly AccessLevelService _accessLevelService;
+        private readonly ModuleService _moduleService;
         public UserDetail()
         {
             InitializeComponent();
             _actorService = new ActorService();
             _branchService = new BranchService();
             _employeeService = new EmployeeService();
+            _roleService = new RoleService();
+            _accessLevelService = new AccessLevelService();
+            _moduleService = new ModuleService();
         }
 
         private void UserDetail_Load(object sender, EventArgs e)
@@ -100,17 +106,23 @@ namespace HotelManagement
 
                      if (RoleID > 0 )
                      {
-                        var Role = HotelDatabase.Role.SearchRoleID(RoleID);
-                        var access = HotelDatabase.AccessLevel.SearchAccessLevel(RoleID);
-                        if (Role != null) lblRole.Text = Role;
-                        var modulList = HotelDatabase.Module.SearchModule(RoleID);
-                         if (modulList != null)
+                        //var Role = HotelDatabase.Role.SearchRoleID(RoleID);
+                        var role = _roleService.GetRole(RoleID);
+                        //var access = HotelDatabase.AccessLevel.SearchAccessLevel(RoleID);
+                        //var accessLevle = HotelDatabase.AccessLevel.SearchAccessLevel(RoleID);
+                        if (role != null) 
+                            lblRole.Text = role.Title;
+
+                        //var modulList = HotelDatabase.Module.SearchModule(RoleID);
+                        var moduleList = _accessLevelService.GetRoleAuthorities(RoleID);
+                         //if (modulList != null)
+                         if (moduleList != null)
                          {
-                             for (int i = 0; i < modulList.Count; i++)
+                             for (int i = 0; i < moduleList.Count; i++)
                              {
                                  if (i < 3)
                                  {
-                                    lblAccessLeft.Text += modulList[i] + " | ";
+                                    lblAccessLeft.Text += moduleList[i] + " | ";
                                     if (i == 2)
                                     {
                                         lblAccessLeft.Text = lblAccessLeft.Text.Remove(lblAccessLeft.Text.Length - 3);
@@ -118,8 +130,8 @@ namespace HotelManagement
                                  }
                                 else
                                 {
-                                    lblAccessRight.Text += modulList[i] + " | ";
-                                    if (i == modulList.Count - 1)
+                                    lblAccessRight.Text += moduleList[i] + " | ";
+                                    if (i == moduleList.Count - 1)
                                     {
                                         lblAccessRight.Text = lblAccessRight.Text.Remove(lblAccessRight.Text.Length - 3);
                                     }
