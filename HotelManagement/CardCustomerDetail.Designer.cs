@@ -98,7 +98,6 @@
             this.btnCustSubmit.Text = "Submit";
             this.btnCustSubmit.UseVisualStyleBackColor = false;
             this.btnCustSubmit.Visible = false;
-            this.btnCustSubmit.Click += new System.EventHandler(this.btnCustSubmit_Click_1);
             // 
             // bunifuCards2
             // 
@@ -699,7 +698,6 @@
             this.btnCustSearch.Textcolor = System.Drawing.Color.White;
             this.btnCustSearch.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCustSearch.Visible = false;
-            this.btnCustSearch.Click += new System.EventHandler(this.btnCustSearch_Click);
             // 
             // CardCustomerDetail
             // 

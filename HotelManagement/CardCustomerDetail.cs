@@ -49,12 +49,13 @@ namespace HotelManagement
             cmbNational.SelectedItem = customer.Nationality;
             cmbState.SelectedItem = customer.State;
             
-            if (customer.Gender == "Male") rdbMale.Checked = true;
-            else rdbFemale.Checked = true;         
+            
+            if (customer.Gender == "Male") 
+                rdbMale.Checked = true;
+            else 
+                rdbFemale.Checked = true;         
 
             dateBirth.Value = customer.Birthday;
-
-
         }
         private void CardCustomerDetail_Load(object sender, EventArgs e)
         {
@@ -112,19 +113,15 @@ namespace HotelManagement
             if (status == Status.Red)
             {
                 txtBox.BorderColorIdle = Color.Red;
-
-
             }
             else if (status == Status.Green)
             {
-
                 txtBox.BorderColorIdle = Color.FromArgb(231, 228, 228);
             }
             else
             {
                 txtBox.BorderColorIdle = Color.FromArgb(128, 128, 128);
             }
-
         }
         private bool TextBoxCheck(BunifuMetroTextbox txtBox , string txt)
         {
@@ -133,12 +130,6 @@ namespace HotelManagement
                 TextBoxColor(txtBox, Status.Red);
                 return false;
             }
-            //else if(txt == "National Code")
-            //{
-            //    TextBoxColor(txtBox, Status.blue);
-            //    txtCount++;
-            //    return true;
-            //}
             else
             {
                 TextBoxColor(txtBox, Status.Green);
@@ -150,232 +141,6 @@ namespace HotelManagement
         private static int txtCount = 0;
         private bool ValidationFlag = false;
         private bool isFindCutomerFlag = false;
-        private void btnCustSubmit_Click_1(object sender, EventArgs e)
-        {
-            
-            /////---------Validation-------------
-            //TextBoxCheck(txtCustFname , "Firstname");
-            //TextBoxCheck(txtCustLname, "Lastname");
-            //TextBoxCheck(txtCustMobile, "Mobile Phone");
-            //TextBoxCheck(txtCustNationalCode, "National Code");
-            //TextBoxCheck(txtCustCity, "City");
-            //TextBoxCheck(txtCustEmail, "Email");
-            //TextBoxCheck(txtCustAddress, "Address");
-            //TextBoxCheck(txtCustTel, "Home Phone");
-
-            //if (txtCount == 8)
-            //{
-            //    if (dateCustBirth.Value.Date != DateTime.Now.Date)
-            //    {
-
-            //        panelCustStatus.Visible = false;
-            //        ValidationFlag = true;
-
-
-            //    }
-            //    else
-            //    {
-            //        PanelStatus("Choose Birthday", Status.Red);
-
-            //    }
-
-                
-
-
-
-            //}
-            //else
-            //{
-                
-            //    PanelStatus("Please Fill The Blank", Status.Red);
-            //}
-            //txtCount = 0;
-
-
-
-            //if (ValidationFlag)
-            //{
-            //    ValidationFlag = false;
-            //    if (!isFindCutomerFlag)
-            //    {
-            //        var result = HotelDatabase.Actor.InsertAll(txtCustFname.Text, txtCustLname.Text, dateCustBirth.Value.Date,
-            //      txtCustNationalCode.Text, cmbCustNational.SelectedItem.ToString(), txtCustEmail.Text, txtCustTel.Text,
-            //      txtCustMobile.Text, RadioButtonResult(rdbCustMale, rdbCustFemale), cmbCustState.SelectedItem.ToString(), txtCustCity.Text, txtCustAddress.Text);
-            //        if (result > 0)
-            //        {
-
-            //            var resultCustomer = HotelDatabase.Customer.Insert(result);
-            //            if (resultCustomer >0)
-            //            {
-            //                NewBook.currentCustomerID = resultCustomer;
-            //                PanelStatus("Action Completed Successfuly", Status.Green);
-            //                NewBook.statusFlag = 1;
-            //                btnCustSubmit.Enabled = false;
-            //                btnNext.Visible = true;
-
-            //                Customer customerInfo = new Customer(txtCustFname.Text, txtCustLname.Text, txtCustNationalCode.Text, txtCustMobile.Text ,  dateCustBirth.Value.Date,
-            //                     RadioButtonResult(rdbCustMale, rdbCustFemale) ,  cmbCustNational.SelectedItem.ToString(), txtCustEmail.Text, txtCustTel.Text
-            //                      , cmbCustState.SelectedItem.ToString(), txtCustCity.Text, txtCustAddress.Text);
-            //                NewBook.customerInfo = customerInfo;
-
-
-
-            //            }
-            //            else
-            //            {
-            //                PanelStatus("Unable to Complete Action - Customer Exist Already - Just Search Again", Status.Red);
-            //            }
-
-
-                        
-
-                        
-                        
-
-
-
-            //        }
-            //        else
-            //        {
-            //            PanelStatus("Unable to Complete Action - National Code Exist Already", Status.Red);
-            //        }
-
-
-
-            //    }
-            //    else if (isFindCutomerFlag)
-            //    {
-
-            //        var resultCustomer = HotelDatabase.Customer.Insert(HotelDatabase.Actor.ID);
-            //        if (resultCustomer > 0)
-            //        {
-            //            NewBook.currentCustomerID = resultCustomer;
-            //            PanelStatus("Action Completed Successfuly", Status.Green);
-            //            NewBook.statusFlag = 1;
-            //            btnCustSubmit.Enabled = false;
-            //            btnNext.Visible = true;
-            //            isFindCutomerFlag = false;
-            //        }
-            //        else
-            //        {
-            //            PanelStatus("Unable to Complete Action - Customer Exist Already - Just Search Again", Status.Red);
-            //        }
-
-
-
-
-
-            //    }
-            //    else
-            //    {
-
-            //    }
-                    
-              
-
-
-            //}
-
-
-      
-
-
-        }
-        private void btnCustSearch_Click(object sender, EventArgs e)
-        {
-
-            //txtCustNationalCode.Focus();
-            //panelCustStatusWaiting.Visible = true;
-
-
-            //TextBoxClearBorderColor();
-            ////TextBoxClearText();
-
-            //if (txtCustNationalCode.Text != "National Code" && txtCustNationalCode.Text != "")
-            //{
-            //    if (HotelDatabase.Actor.SearchActor(txtCustNationalCode.Text))
-            //    {
-
-                    
-                    
-
-            //        isFindCutomerFlag = true;
-
-                   
-            //        panelCustLeft.Enabled = false;
-            //        panelCustRight.Enabled = false;
-            //        btnCustSubmit.Enabled = false;
-            //        btnNext.Visible = true;
-            //        NewBook.statusFlag = 1;
-            //        //NewBook.currentCustomerID = HotelDatabase.Actor.ID;
-            //        PanelStatus("Customer Was successfully Found", Status.Green);
-
-
-            //        txtCustFname.Text = HotelDatabase.Actor.Firstname;
-            //        txtCustLname.Text = HotelDatabase.Actor.Lastname;
-            //        txtCustEmail.Text = HotelDatabase.Actor.Email;
-            //        txtCustMobile.Text = HotelDatabase.Actor.Mobile;
-            //        txtCustNationalCode.Text = HotelDatabase.Actor.NationalCode;
-            //        txtCustTel.Text = HotelDatabase.Actor.Tel;
-            //        txtCustCity.Text = HotelDatabase.Actor.City;
-            //        txtCustAddress.Text = HotelDatabase.Actor.Address;
-            //        dateCustBirth.Value = HotelDatabase.Actor.Birthday.Date; //Min Value As Null
-            //        cmbCustNational.SelectedItem = HotelDatabase.Actor.Nationality;
-            //        cmbCustState.SelectedItem = HotelDatabase.Actor.State;
-            //        if (HotelDatabase.Actor.Gender == "Male") rdbCustMale.Checked = true;
-            //        else rdbCustFemale.Checked = true;
-
-
-
-
-            //        int resultCustomer = HotelDatabase.Customer.Insert(HotelDatabase.Actor.ID);
-            //        if (resultCustomer > 0)
-            //        {
-            //            NewBook.currentCustomerID = resultCustomer;
-
-            //        }
-            //        else
-            //        {
-            //            NewBook.currentCustomerID = HotelDatabase.Customer.SearchCustomerID(HotelDatabase.Actor.ID);
-            //        }
-
-
-
-
-
-            //        Customer customerInfo = new Customer(txtCustFname.Text, txtCustLname.Text, txtCustNationalCode.Text, txtCustMobile.Text, dateCustBirth.Value.Date,
-            //                   RadioButtonResult(rdbCustMale, rdbCustFemale), cmbCustNational.SelectedItem.ToString(), txtCustEmail.Text, txtCustTel.Text
-            //                    , cmbCustState.SelectedItem.ToString(), txtCustCity.Text, txtCustAddress.Text);
-            //        NewBook.customerInfo = customerInfo;
-
-
-
-
-
-            //        // panelCustStatusWaiting.Visible = false;
-            //    }
-            //    else
-            //    {
-            //        PanelStatus("No Person found", Status.Red);
-            //        TextBoxClearText();
-            //        btnCustSubmit.Enabled = true;
-            //        panelCustLeft.Enabled = true;
-            //        panelCustRight.Enabled = true;
-            //        btnNext.Visible = false;
-            //        isFindCutomerFlag = false;
-            //    }
-            //}
-            //else
-            //{
-            //    PanelStatus("Enter National Code", Status.Red);
-            //    TextBoxColor(txtCustNationalCode, Status.Red);
-            //}
-
-            //// pgbCust.Visible = false;
-            ////lblCustWaiting.Visible = false;
-
-            //panelCustStatusWaiting.Visible = false;
-        }
 
         private void PanelStatus(Control Panel, string text, Status status)
         {

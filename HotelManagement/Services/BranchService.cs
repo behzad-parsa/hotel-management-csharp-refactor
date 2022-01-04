@@ -73,8 +73,5 @@ namespace HotelManagement.Services
             return Mapper.ConvertRowToObj<Branch>(dataTable.Rows[0]);
         }
 
-    
-
-
     }
 }

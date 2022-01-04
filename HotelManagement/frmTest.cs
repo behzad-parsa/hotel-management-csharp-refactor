@@ -50,11 +50,19 @@ namespace HotelManagement
             //    Lastname = "Sthe",
             //    ID = 3 
             //};
-            
+
             //CustomerService cs = new CustomerService();
             //Customer c = new Customer( 5 ,actor);
             //var res = cs.GetCustomer(21, null);
+            RoleService roleService = new RoleService();
             
+            roleService.InsertRole(new Role()
+            {
+                Title = "Digital Marketing"
+            });
+            var roles = roleService.GetAllRoles();
+            var role = roleService.GetRole(roleService.LastInsertedId);
+            var result = roleService.DeleteRole(roleService.LastInsertedId);
         }
         
     }

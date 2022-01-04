@@ -217,8 +217,7 @@ namespace HotelManagement
                 {
                     return false;
                 }
-            }    
-            
+            }          
             public static bool DeleteFacilType(int roomID)
             {
                 try
@@ -243,7 +242,6 @@ namespace HotelManagement
                     return false;
                 }
             }
-
             public static bool Delete(int id)
             {
                 try
@@ -262,7 +260,6 @@ namespace HotelManagement
                     return false;
                 }
             }
-
             public static Dictionary<int,string> GetRoomNumbers()
             {
                 try
@@ -337,7 +334,6 @@ namespace HotelManagement
                     return null;
                 }
             }
-
             public static Dictionary<int, string> GetFacilities()
             {
                 try
@@ -389,7 +385,6 @@ namespace HotelManagement
                     return false;
                 }
             }
-
             public static bool InsertRoomType(int roomID, int typeID)
             {
                 try
@@ -410,7 +405,6 @@ namespace HotelManagement
                 }
             }
         }
-
         public class User
         {
             public static int ID { get; set; }
@@ -761,7 +755,7 @@ namespace HotelManagement
 
         public class Role
         {
-            public static int ID { get; set; }
+            //public static int ID { get; set; }
             public static string Title {get; set; }
             private static SqlConnection con = new SqlConnection();
             private static SqlCommand cmd = new SqlCommand();
@@ -833,7 +827,6 @@ namespace HotelManagement
                     return -1;
                 }
             }
-
             public static string SearchRoleID(int id)
             {
                 try
@@ -863,7 +856,6 @@ namespace HotelManagement
                     return null;
                 }
             }
-
             public static Dictionary<int, string> GetAllRoles()
             {
                 try
