@@ -23,7 +23,7 @@ namespace HotelManagement.Services
 
                     if (property.Name == column.ColumnName)
                     {
-                        if ((object)dataRow[column.ColumnName] != (object)DBNull.Value)
+                        if (dataRow[column.ColumnName] != DBNull.Value)
                             property.SetValue(obj, dataRow[column.ColumnName], null);
                         else
                             property.SetValue(obj, null, null);

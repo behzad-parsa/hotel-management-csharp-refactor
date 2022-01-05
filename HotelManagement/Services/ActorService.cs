@@ -88,12 +88,17 @@ namespace HotelManagement.Services
         }
         public bool UpdateActor(Actor actor)
         {
+            if (actor.ID == 0)
+                return false;
+
             parameters = new Dictionary<string, object>();
             sqlQuery = "UPDATE \"Actor\" " +
-                "Set Firstname = @Firstname , Lastname = @Lastname  , Birthday=@Birthday ," +
-                "NationalCode = @NationalCode , Nationality = @Nationality , Email = @Email ," +
-                "Tel= @Tel , Mobile= @Mobile , Gender= @Gender , State = @State, City = @City ," +
-                "Address = @Address WHERE ID = @ID ";
+                "Set Firstname = @Firstname , Lastname = @Lastname  , Birthday=@Birthday , " +
+                "NationalCode = @NationalCode , Nationality = @Nationality , Email = @Email, " +
+                "Tel= @Tel, Mobile= @Mobile, Gender= @Gender, State = @State, City = @City, " +
+                "Address = @Address " +
+                "WHERE " +
+                "ID = @ID ";
 
             object tempObject;
             foreach (var property in typeof(Actor).GetProperties())

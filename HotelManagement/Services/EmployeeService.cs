@@ -77,6 +77,8 @@ namespace HotelManagement.Services
         }
         public bool UpdateEmployee(Employee employee)
         {
+            if (employee.ID == 0)
+                return false;
             parameters = new Dictionary<string,object>();
             sqlQuery = "Update \"Employee\"  " +
                 "SET " +

@@ -11,8 +11,7 @@ namespace HotelManagement
 
     namespace HotelDatabase
     {
-     
-        
+       
         public class Room
         {
             public static int ID { get; set; }
@@ -100,6 +99,7 @@ namespace HotelManagement
                     return -1;
                 }
             }
+           
             public static bool Update(int id , int branchID, int roomNumberID, bool isEmpty, int floor, int capacity, int price, string description)
             {
                 try
@@ -164,84 +164,6 @@ namespace HotelManagement
             //        //return null;
             //    }
             //}
-            public static bool SearchRoomWithID(int id)
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-                    DataTable facil = new DataTable();
-                    cmd.CommandText = "SELECT * FROM \"Room\" , RoomTypeRel Where ID = @ID AND ID = RoomID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    adp.SelectCommand = cmd;
-                    Connect();
-                    adp.Fill(dataTable);
-                    cmd.CommandText = "Select * From RoomFacilities Where RoomID =" + id;
-                    adp.SelectCommand = cmd;
-                    adp.Fill(facil);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-                        TypeID = Convert.ToInt32(dataTable.Rows[0]["RoomTypeID"]);
-                        RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
-                        BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
-                        IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
-                        Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
-                        Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
-                        Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
-                        Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-                        if (facil != null)
-                        {
-                            List<int> lstID = new List<int>();
-                            for (int i = 0; i < facil.Rows.Count; i++)
-                            {
-                                lstID.Add(Convert.ToInt32(facil.Rows[i]["FacilitiesID"]));
-                            }
-                            facility = lstID;
-                        }
-                        else
-                        {
-                            facility = null;
-                        }
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-            }          
-            public static bool DeleteFacilType(int roomID)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Delete From \"RoomFacilities\" Where RoomID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", roomID);
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    cmd.CommandText = "Delete From \"RoomTypeRel\" Where RoomID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", roomID);
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
             public static bool Delete(int id)
             {
                 try
@@ -260,6 +182,10 @@ namespace HotelManagement
                     return false;
                 }
             }
+
+
+
+
             public static Dictionary<int,string> GetRoomNumbers()
             {
                 try
@@ -366,7 +292,33 @@ namespace HotelManagement
                     return null;
                 }
             }
-            public static bool InsertFacilities(int roomID , int facilitiesID)
+
+
+            public static bool DeleteFacilType(int roomID)
+            {
+                try
+                {
+                    MakeConnection();
+                    cmd.CommandText = "Delete From \"RoomFacilities\" Where RoomID = @ID";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@ID", roomID);
+                    Connect();
+                    cmd.ExecuteNonQuery();
+                    Disconnect();
+                    cmd.CommandText = "Delete From \"RoomTypeRel\" Where RoomID = @ID";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@ID", roomID);
+                    Connect();
+                    cmd.ExecuteNonQuery();
+                    Disconnect();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            public static bool InsertFacilities(int roomID, int facilitiesID)
             {
                 try
                 {
@@ -404,6 +356,63 @@ namespace HotelManagement
                     return false;
                 }
             }
+
+
+            public static bool SearchRoomWithID(int id)
+            {
+                try
+                {
+                    MakeConnection();
+                    dataTable = new DataTable();
+                    DataTable facil = new DataTable();
+                    cmd.CommandText = "SELECT * FROM \"Room\" , RoomTypeRel Where ID = @ID AND ID = RoomID ";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    adp.SelectCommand = cmd;
+                    Connect();
+                    adp.Fill(dataTable);
+                    cmd.CommandText = "Select * From RoomFacilities Where RoomID =" + id;
+                    adp.SelectCommand = cmd;
+                    adp.Fill(facil);
+                    Disconnect();
+
+                    if (dataTable.Rows.Count != 0)
+                    {
+                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+                        TypeID = Convert.ToInt32(dataTable.Rows[0]["RoomTypeID"]);
+                        RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
+                        BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
+                        IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
+                        Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
+                        Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
+                        Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
+                        Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
+                        if (facil != null)
+                        {
+                            List<int> lstID = new List<int>();
+                            for (int i = 0; i < facil.Rows.Count; i++)
+                            {
+                                lstID.Add(Convert.ToInt32(facil.Rows[i]["FacilitiesID"]));
+                            }
+                            facility = lstID;
+                        }
+                        else
+                        {
+                            facility = null;
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
         }
         public class User
         {
@@ -752,8 +761,6 @@ namespace HotelManagement
                 }
             }
         }
-
-
         public class Reservation
         {
             public static int ID { get; set; }
@@ -1086,8 +1093,6 @@ namespace HotelManagement
             //    }
             //}
         }
-
-
         public class Bill
         {
             public static int ID { get; set; }
@@ -1360,7 +1365,6 @@ namespace HotelManagement
             //    }
             //}
         }
-
         public class Transact
         {
             public static int ID { get; set; }
@@ -1911,7 +1915,6 @@ namespace HotelManagement
                 }
             }
         }
-
         public class Food
         {
             public static int ID { get; set; }
@@ -2126,7 +2129,6 @@ namespace HotelManagement
 
             }
         }
-
         public class Service
         {
             public static int ID { get; set; }
@@ -2331,8 +2333,6 @@ namespace HotelManagement
                 }
             }
         }
-
-
         public class Database
         {
             //--Query To Get LastID After Insert

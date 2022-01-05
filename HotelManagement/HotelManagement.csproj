@@ -194,9 +194,13 @@
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Facility.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\RoomNumber.cs" />
+    <Compile Include="Models\RoomType.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="CustomeNumeric.cs">
       <SubType>UserControl</SubType>
@@ -387,6 +391,7 @@
     <Compile Include="Services\Mapper.cs" />
     <Compile Include="Services\ModuleService.cs" />
     <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\RoomService.cs" />
     <Compile Include="Setting.cs">
       <SubType>UserControl</SubType>
     </Compile>
