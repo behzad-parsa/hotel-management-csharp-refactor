@@ -17,6 +17,20 @@ namespace HotelManagement
         public frmTest()
         {
             InitializeComponent();
+            Food food = new Food()
+            {
+                Description = "It's healthy",
+                 Price = 200,
+                 Title = "Kabab"
+            };
+            FoodService foodService = new FoodService();
+            var result = foodService.InsertFood(food);
+
+            food.ID = foodService.LastInsertedId;
+            food.Price = 250;
+            var update = foodService.UpdateFood(food);
+            var get = foodService.GetFood(food.ID);
+            var delete = foodService.DeleteFood(food.ID);
 
 
         }
