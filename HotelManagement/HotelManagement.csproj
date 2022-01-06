@@ -122,6 +122,7 @@
       <DependentUpon>ActionSerivce.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AccessLevel.cs" />
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="BookList.cs">
       <SubType>UserControl</SubType>
@@ -387,6 +388,7 @@
     </Compile>
     <Compile Include="Report.cs" />
     <Compile Include="Services\AccessLevelService.cs" />
+    <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\ActorService.cs" />
     <Compile Include="Services\BranchService.cs" />
     <Compile Include="Services\CustomerService.cs" />
@@ -395,6 +397,8 @@
     <Compile Include="Services\GuestService.cs" />
     <Compile Include="Services\Mapper.cs" />
     <Compile Include="Services\ModuleService.cs" />
+    <Compile Include="Services\OrderFoodService.cs" />
+    <Compile Include="Services\OrderServiceService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\RoomService.cs" />
     <Compile Include="Services\ServiceService.cs" />

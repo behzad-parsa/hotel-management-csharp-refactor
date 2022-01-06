@@ -10,7 +10,7 @@ namespace HotelManagement.Services
 {
     public class EmployeeService
     {
-        public int LastInsertedId { get; set; }
+        public int LastInsertedId { get; private set; }
 
         private readonly DatabaseOperation _database;
         private string sqlQuery;

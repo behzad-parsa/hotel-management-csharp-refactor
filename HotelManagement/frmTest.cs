@@ -17,21 +17,25 @@ namespace HotelManagement
         public frmTest()
         {
             InitializeComponent();
-            Food food = new Food()
+            Account account = new Account()
             {
-                Description = "It's healthy",
-                 Price = 200,
-                 Title = "Kabab"
+                AccountName = "Maleki",
+                AccountNumber = "4444",
+                Bank="Sepah",
+                Description="Main Account",
+                Balance = 2000,
+                BranchID = 1
             };
-            FoodService foodService = new FoodService();
-            var result = foodService.InsertFood(food);
+            AccountService accountService = new AccountService();
+            accountService.InsertAccount(account);
 
-            food.ID = foodService.LastInsertedId;
-            food.Price = 250;
-            var update = foodService.UpdateFood(food);
-            var get = foodService.GetFood(food.ID);
-            var delete = foodService.DeleteFood(food.ID);
+            var getAccount = accountService.GetAccount(5);
+            getAccount.AccountName = "Behzad Parsa";
+            var res = accountService.UpdateAccount(getAccount);
+            account.ID = accountService.LastInsertedId;
+            var delete = accountService.DeleteAccount(account.ID);
 
+            var accounts = accountService.GetAllBranchAccounts(1);
 
         }
         

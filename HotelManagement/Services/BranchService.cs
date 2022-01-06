@@ -12,7 +12,7 @@ namespace HotelManagement.Services
 {
     public class BranchService
     {
-        public int LastInsertedId { get; set; }
+        public int LastInsertedId { get; private set; }
 
         private readonly DatabaseOperation _database;
         private string sqlQuery;

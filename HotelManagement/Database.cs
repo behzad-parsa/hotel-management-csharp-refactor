@@ -1282,12 +1282,7 @@ namespace HotelManagement
             public static double Balance { get; set; }
             public static string AccountName { get; set; }
             public static string AccountNumber{ get; set; }
-            //public static double Amount { get; set; }
-            //public static int FoodCharge { get; set; }
-            //public static int ServiceCharge { get; set; }
-            //public static int TotalCharge { get; set; }
-            //public static double Discount { get; set; }
-            //public static DateTime DateModified { get; set; }
+
             public static string Description { get; set; }
 
             private static SqlConnection con = new SqlConnection();
