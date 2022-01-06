@@ -8,20 +8,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class NewRoom : UserControl
     {
-        Dictionary<int, string> lstFacilities = new Dictionary<int, string>();
+        private readonly RoomService _roomService;
+
+        //Dictionary<int, string> lstFacilities = new Dictionary<int, string>();
         Dictionary<BunifuMetroTextbox, string> lstTxtBoxList = new Dictionary<BunifuMetroTextbox, string>();
-        List<CheckBox> lstCheckBox;
-        Dictionary<int , string> roomNumber;
-        Dictionary<int, string> roomType;
-        Dictionary<int, string> facility;
+        List<CheckBox> checkBoxesList;
+        //List<int> lstChoosedFacilitiesID = new List<int>();
+        List<Facility> checkedFacilitiesList;
+
+
+        //Dictionary<int , string> roomNumber;
+        //Dictionary<int, string> roomType;
+        //Dictionary<int, string> facility;
+
+        private List<Facility> facilitiesList;
+        private List<RoomNumber> roomNumbersList;
+        private List<RoomType> roomTypesList;
+
         public NewRoom()
         {
             InitializeComponent();
+
+            _roomService = new RoomService();
         }
 
         private void LoadData()
@@ -40,8 +55,6 @@ namespace HotelManagement
             int j_val;
             for (int i = 0, j = i + 1; i < t.Rows.Count; i++, j++)
             {
-
-
                 i_val = Convert.ToInt32(t.Rows[i]["id"]);
                 if (j < t.Rows.Count)
                 {
@@ -84,15 +97,12 @@ namespace HotelManagement
 
                     //}
                 }
-
                 //_id = Convert.ToInt32(t.Rows[i]["id"]);
 
                 //if (_id == Convert.ToInt32(t.Rows[i]["id"]))
                 //{
                 //    d += t.Rows[i]["Title"].ToString() + "\n";
                 //}
-
-
             }
 
             dgvRoom.DataSource = h;
@@ -100,42 +110,62 @@ namespace HotelManagement
             dgvRoom.Columns["Facil"].Width = 145;
         }
 
-        List<int> lstChoosedFacilitiesID = new List<int>();
+       
         private void NewRoom_Load(object sender, EventArgs e)
         {
+            //roomNumbersList = new List<RoomNumber>();
+            //facilitiesList = new List<Facility>();
+            //roomTypesList = new List<RoomType>();
 
             //----Room List ----
             LoadData();
-            roomNumber = HotelDatabase.Room.GetRoomNumbers();
-            roomType = HotelDatabase.Room.GetRoomTypes();
-            facility = HotelDatabase.Room.GetFacilities();
-            foreach (var item in roomNumber)
-            {
-                cmbRoomNumber.Items.Add(item.Value  );
-
-            }
-            foreach (var item in roomType)
-            {
-                cmbRoomType.Items.Add(item.Value);
-            }
-
-            lstFacilities = HotelDatabase.Room.GetFacilities();
-             lstCheckBox = new List<CheckBox>();
+            //roomNumber = HotelDatabase.Room.GetRoomNumbers();
+            //roomType = HotelDatabase.Room.GetRoomTypes();
+            //facility = HotelDatabase.Room.GetFacilities();
             
-            for (int i = 1; i < lstFacilities.Count + 1; i++)
+            roomNumbersList = _roomService.GetAllRoomNumbers();
+            roomTypesList = _roomService.GetAllRoomTypes();
+            facilitiesList = _roomService.GetAllFacilities();
+
+            checkedFacilitiesList = new List<Facility>();
+            //foreach (var item in roomNumber)
+            //{
+            //    cmbRoomNumber.Items.Add(item.Value );
+
+            //}
+            cmbRoomNumber.DataSource = roomNumbersList;
+            cmbRoomNumber.DisplayMember = "Title";
+
+
+            //foreach (var item in roomType)
+            //{
+            //    cmbRoomType.Items.Add(item.Value);
+            //}
+            cmbRoomType.DataSource = roomTypesList;
+            cmbRoomType.DisplayMember = "Title";
+
+            //lstFacilities = HotelDatabase.Room.GetFacilities();
+            checkBoxesList = new List<CheckBox>();
+            
+            for (int i = 1; i < facilitiesList.Count + 1; i++)
             {
                 CheckBox chbFacility = new CheckBox();
                 chbFacility.CheckedChanged += new EventHandler(CheckBoxSelected);
                 chbFacility.AutoSize = false;
                 chbFacility.Width = 268;
-                chbFacility.Text = lstFacilities[i];
-                if (i != 1) chbFacility.Location = new Point(chbFacility.Location.X, lstCheckBox[lstCheckBox.Count - 1].Location.Y + 40);
+                chbFacility.Text = facilitiesList[i].Title;
+                if (i != 1) 
+                    chbFacility.Location = new Point(chbFacility.Location.X, checkBoxesList[checkBoxesList.Count - 1].Location.Y + 40);
 
-                lstCheckBox.Add(chbFacility);
-                if (i < 12) panelLeftFacility.Controls.Add(chbFacility);
+                checkBoxesList.Add(chbFacility);
+
+                if (i < 12) 
+                    panelLeftFacility.Controls.Add(chbFacility);
                 else
                 {
-                    if (i == 12) chbFacility.Location = new Point(chbFacility.Location.X, lstCheckBox[0].Location.Y);
+                    if (i == 12) 
+                        chbFacility.Location = new Point(chbFacility.Location.X, checkBoxesList[0].Location.Y);
+                    
                     panelRightFacility.Controls.Add(chbFacility);
                 }
             }
@@ -145,14 +175,15 @@ namespace HotelManagement
         private void CheckBoxSelected(object sender , EventArgs e)
         {
             var checkBox = sender as CheckBox;
-            var id = lstFacilities.FirstOrDefault(x => x.Value == checkBox.Text).Key;
+            //var id = lstFacilities.FirstOrDefault(x => x.Value == checkBox.Text).Key;
+            var facility = facilitiesList.FirstOrDefault(x => x.Title == checkBox.Text);
             if (checkBox.Checked)
             {           
-                lstChoosedFacilitiesID.Add(id);
+                checkedFacilitiesList.Add(facility);
             }
             else
             {
-                lstChoosedFacilitiesID.Remove(id);
+                checkedFacilitiesList.Remove(facility);
             }
         }
 
@@ -210,23 +241,37 @@ namespace HotelManagement
                 if (ValidationFlag)
                 {
                     ValidationFlag = false;
-                    var roomNumberID = roomNumber.FirstOrDefault(x => x.Value == cmbRoomNumber.SelectedItem.ToString()).Key;
-                    string descriptionText;
-                    if (txtDescription.Text == "Description")
-                    {
-                        descriptionText = null;
-                    }
-                    else
-                    {
+                    //var roomNumberID = roomNumber.FirstOrDefault(x => x.Value == cmbRoomNumber.SelectedItem.ToString()).Key;
+                    var roomNumberID = roomNumbersList.FirstOrDefault(x => x == cmbRoomNumber.SelectedItem).ID;
+                    var roomTypeID = roomTypesList.FirstOrDefault(x => x == cmbRoomType.SelectedItem).ID;
+                    string descriptionText = null;
+
+                    if (txtDescription.Text != "Description")
                         descriptionText = txtDescription.Text;
-                    }
-                    var res = HotelDatabase.Room.Insert(Current.User.BranchID, roomNumberID, true, Convert.ToInt32(numericFloor.Value), Convert.ToInt32(numericCapacity.Value), Convert.ToInt32(txtPrice.Text), descriptionText);
-                    if (res > 0)
+
+                    
+                    //var res = HotelDatabase.Room.Insert(Current.User.BranchID, roomNumberID, true, Convert.ToInt32(numericFloor.Value), Convert.ToInt32(numericCapacity.Value), Convert.ToInt32(txtPrice.Text), descriptionText);
+
+                    Room room = new Room()
+                    {
+                        BranchID = Current.User.BranchID,
+                        RoomNumberID = roomNumberID , 
+                        IsEmpty = true ,
+                        Floor = Convert.ToInt32(numericFloor.Value),
+                        Capacity = Convert.ToInt32(numericCapacity.Value),
+                        Price = Convert.ToInt32(txtPrice.Text) , 
+                        Description = descriptionText,
+                        RoomTypeID = roomTypeID
+                        
+                    };
+                    var resultInsertRoom = _roomService.InsertRoom(room);
+                    if (resultInsertRoom)
                     {
                         //Insert Facilities
-                        for (int i = 0; i < lstChoosedFacilitiesID.Count; i++)
+                        for (int i = 0; i < checkedFacilitiesList.Count; i++)
                         {
-                            if (HotelDatabase.Room.InsertFacilities(res, lstChoosedFacilitiesID[i]))
+                            //if (HotelDatabase.Room.InsertFacilities(res, checkedFacilitiesList[i]))
+                            if (_roomService.InsertRoomFacility(_roomService.LastInsertedId, checkedFacilitiesList[i].ID))
                             {
                                 count++;
                             }
@@ -236,18 +281,23 @@ namespace HotelManagement
                             }
                         }
 
-                        var roomTypeID = roomType.FirstOrDefault(x => x.Value == cmbRoomType.SelectedItem.ToString()).Key;
+                        //var roomTypeID = roomType.FirstOrDefault(x => x.Value == cmbRoomType.SelectedItem.ToString()).Key;
+                        
+                        //var roomTypeID = roomTypesList.FirstOrDefault(x => x == cmbRoomType.SelectedItem);
+                        
                         //InsertType
-                        if (HotelDatabase.Room.InsertRoomType(res, roomTypeID))
-                        {
-                            count++;
-                        }
-                        else
-                        {
-                            PanelStatus(panelStatusCreate, "Unable To Complete Action -- Type", Status.Red);
-                        }
+                        //if (HotelDatabase.Room.InsertRoomType(res, roomTypeID))
+                        ////////if (_roomService.InsertRoo(res, roomTypeID))
+                        ////////{
+                        ////////    count++;
+                        ////////}
+                        ////////else
+                        ////////{
+                        ////////    PanelStatus(panelStatusCreate, "Unable To Complete Action -- Type", Status.Red);
+                        ////////}
 
-                        if (count == lstChoosedFacilitiesID.Count + 1)
+                        //if (count == checkedFacilitiesList.Count + 1)
+                        if (count == checkedFacilitiesList.Count)
                         {
                             PanelStatus(panelStatusCreate, "Action Completed Successfully", Status.Green);
                         }
@@ -278,25 +328,43 @@ namespace HotelManagement
                 {
                     ValidationFlag = false;
 
-                    var roomNumberID = roomNumber.FirstOrDefault(x => x.Value == cmbRoomNumber.SelectedItem.ToString()).Key;
-                    string descriptionText;
-                    if (txtDescription.Text == "Description")
-                    {
-                        descriptionText = null;
-                    }
-                    else
-                    {
+                    //var roomNumberID = roomNumber.FirstOrDefault(x => x.Value == cmbRoomNumber.SelectedItem.ToString()).Key;
+                    var roomNumberID = roomNumbersList.FirstOrDefault(x => x == cmbRoomNumber.SelectedItem).ID;
+                    var roomTypeID = roomNumbersList.FirstOrDefault(x => x == cmbRoomType.SelectedItem).ID;
+
+                    string descriptionText = null;
+
+                    if (txtDescription.Text != "Description")
                         descriptionText = txtDescription.Text;
-                    }
-                    var res = HotelDatabase.Room.Update(RoomID, Current.User.BranchID, roomNumberID, true, Convert.ToInt32(numericFloor.Value), Convert.ToInt32(numericCapacity.Value), Convert.ToInt32(txtPrice.Text), descriptionText);
-                    if (res)
+
+                    //var res = HotelDatabase.Room.Update(RoomID, Current.User.BranchID, roomNumberID, true, Convert.ToInt32(numericFloor.Value), Convert.ToInt32(numericCapacity.Value), Convert.ToInt32(txtPrice.Text), descriptionText);
+
+
+                    Room room = new Room()
                     {
-                        if (HotelDatabase.Room.DeleteFacilType(RoomID))
+                        ID = RoomID,
+                        BranchID = Current.User.BranchID,
+                        RoomNumberID = roomNumberID,
+                        IsEmpty = true,
+                        Floor = Convert.ToInt32(numericFloor.Value),
+                        Capacity = Convert.ToInt32(numericCapacity.Value),
+                        Price = Convert.ToInt32(txtPrice.Text),
+                        Description = descriptionText,
+                        RoomTypeID = roomTypeID
+
+                    };
+                    var resultUpdateRoom = _roomService.UpdateRoom(room);
+                    //if (res)
+                    if (resultUpdateRoom)
+                    {
+                        //if (HotelDatabase.Room.DeleteFacilType(RoomID))
+                        if (_roomService.DeleteRoomFacility(RoomID))
                         {
                             //Insert Facilities
-                            for (int i = 0; i < lstChoosedFacilitiesID.Count; i++)
+                            for (int i = 0; i < checkedFacilitiesList.Count; i++)
                             {
-                                if (HotelDatabase.Room.InsertFacilities(RoomID, lstChoosedFacilitiesID[i]))
+                                //if (HotelDatabase.Room.InsertFacilities(RoomID, checkedFacilitiesList[i].ID))
+                                if (_roomService.InsertRoomFacility(RoomID, checkedFacilitiesList[i].ID))
                                 {
                                     count++;
                                 }
@@ -306,37 +374,37 @@ namespace HotelManagement
                                 }
                             }
 
-                            var roomTypeID = roomType.FirstOrDefault(x => x.Value == cmbRoomType.SelectedItem.ToString()).Key;
+                            //var roomTypeID = roomType.FirstOrDefault(x => x.Value == cmbRoomType.SelectedItem.ToString()).Key;
                             //InsertType
-                            if (HotelDatabase.Room.InsertRoomType(RoomID, roomTypeID))
-                            {
-                                count++;
-                            }
-                            else
-                            {
-                                PanelStatus(panelStatusCreate, "Unable To Complete Action -- Type", Status.Red);
-                            }
+                            //if (HotelDatabase.Room.InsertRoomType(RoomID, roomTypeID))
+                            //{
+                            //    count++;
+                            //}
+                            //else
+                            //{
+                            //    PanelStatus(panelStatusCreate, "Unable To Complete Action -- Type", Status.Red);
+                            //}
 
-                            if (count == lstChoosedFacilitiesID.Count + 1)
+                            if (count == checkedFacilitiesList.Count)
                             {
                                 PanelStatus(panelStatusCreate, "Action Completed Successfully", Status.Green);
-                                Current.User.Activities.Add(new Activity("Create New Room", "New Room has been created by " + Current.User.Firstname + " " + Current.User.Lastname));
 
+                                Current.User.Activities.Add(
+                                    new Activity("Create New Room", "New Room has been created by " + 
+                                    Current.User.Firstname + " " + Current.User.Lastname)
+                                    );
                             }
                         }
                         else
                         {
                             PanelStatus(panelStatusCreate, "Unable To Complete Action -- Facilities", Status.Red);
-
                         }
                     }
                     else
                     {
                         PanelStatus(panelStatusCreate, "Unable To Complete Action", Status.Red);
                     }
-
                 }
-
                 btnSubmit.Text = "Submit";
                 insertFlag = true;
                 Reset();
@@ -446,41 +514,56 @@ namespace HotelManagement
         bool insertFlag;
         private void dgvRoom_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //----Setting-----
+            //------------ Setting ----------------------------------------------------
             Reset();
             btnSubmit.Text = "Save";
             updateFlag = true;
             insertFlag = false;
             //lstChoosedFacilitiesID.Clear();
 
-            //---Load Room Data--------------------------------------------------------
+            //------------ Load Room Data --------------------------------------------------------
             RoomID = Convert.ToInt32(dgvRoom["ID", dgvRoom.CurrentRow.Index].Value);
-            if (HotelDatabase.Room.SearchRoomWithID(RoomID))
+            var room = _roomService.GetRoom(RoomID);
+            //if (HotelDatabase.Room.SearchRoomWithID(RoomID))
+            if (room != null)
             {
-                txtPrice.Text = HotelDatabase.Room.Price.ToString();
-                txtDescription.Text = HotelDatabase.Room.Description;
-                numericFloor.Value = HotelDatabase.Room.Floor;
-                numericCapacity.Value = HotelDatabase.Room.Capacity;
-                var var = roomType.TryGetValue(HotelDatabase.Room.TypeID, out string type);
-                cmbRoomType.SelectedItem = type;
+                txtPrice.Text = room.Price.ToString();
+                txtDescription.Text = room.Description;
+                numericFloor.Value = room.Floor;
+                numericCapacity.Value = room.Capacity;
+                //var roomType = roomTypesList.TryGetValue(HotelDatabase.Room.TypeID, out string type);
+                //cmbRoomType.SelectedItem = type;
+                cmbRoomType.SelectedItem = roomTypesList.SingleOrDefault(x => x.ID == room.RoomTypeID);
 
-                roomNumber.TryGetValue(HotelDatabase.Room.RoomNumberID, out string number);
-                cmbRoomNumber.SelectedItem = number;
+                //roomNumber.TryGetValue(HotelDatabase.Room.RoomNumberID, out string number);
+                //cmbRoomNumber.SelectedItem = number;
+                cmbRoomNumber.SelectedItem = roomNumbersList.SingleOrDefault(x => x.ID == room.RoomNumberID);
+
                 //HotelDatabase.Room.RoomFacility(RoomID);
-                if (HotelDatabase.Room.facility != null)
+                
+                //if (HotelDatabase.Room.facility != null)
+                //{                   
+                //    foreach (var item in facility)
+                //    {
+                //        var data = HotelDatabase.Room.facility.Find(x => x == item.Key);
+                //        if (data > 0)
+                //        {
+                //            var chb = checkBoxesList.Find(x => x.Text == item.Value);
+                //            chb.Checked = true;
+                //        }
+
+                //        data = -1;
+                //    }
+                //}
+
+                var roomFacilities = _roomService.GetRoomFacilities(room.ID);
+                if (roomFacilities != null)
                 {                   
-                    foreach (var item in facility)
+                    foreach (var item in roomFacilities)
                     {
-                        var data = HotelDatabase.Room.facility.Find(x => x == item.Key);
-                        if (data > 0)
-                        {
-                            var chb = lstCheckBox.Find(x => x.Text == item.Value);
-                            chb.Checked = true;
-                        }
-
-                        data = -1;
+                        var chb = checkBoxesList.Find(x => x.Text == item.Title);
+                        chb.Checked = true;
                     }
-
                 }
             }
             else
@@ -497,7 +580,7 @@ namespace HotelManagement
             numericFloor.Value = 1;
             cmbRoomNumber.SelectedIndex = 0;
             cmbRoomType.SelectedIndex = 0;
-            lstCheckBox.ForEach(x => x.Checked = false);
+            checkBoxesList.ForEach(x => x.Checked = false);
         }
 
         int RoomID = -10;
@@ -518,10 +601,13 @@ namespace HotelManagement
             }
             else
             {
-                var res = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (res == DialogResult.Yes)
+                var dialogResult = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
                 {
-                    if (HotelDatabase.Room.Delete(RoomID))
+                    //if (HotelDatabase.Room.Delete(RoomID))
+                    if (_roomService.DeleteRoom(RoomID))
                     {
                         PanelStatus(panelStatusCreate ,"Action Completed Successfuly", Status.Green);
 

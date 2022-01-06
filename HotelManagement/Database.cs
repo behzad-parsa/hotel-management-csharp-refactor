@@ -11,409 +11,301 @@ namespace HotelManagement
 
     namespace HotelDatabase
     {
-       
-        public class Room
-        {
-            public static int ID { get; set; }
-            public static int BranchID { get; set; }
-            public static int RoomNumberID { get; set; }
-            public static int TypeID { get; set; }
-            public static bool IsEmpty { get; set; }
-            public static List<int> facility { get; set; }
-            public static int Floor { get; set; }
-            public static int Capacity { get; set; }
-            public static int Price { get; set; }
-            public static string Description { get; set; }
 
-            private static SqlConnection con = new SqlConnection();
-            private static SqlCommand cmd = new SqlCommand();
-            private static SqlDataAdapter adp = new SqlDataAdapter();
-            private static DataTable dataTable = new DataTable();
+        //public class Room
+        //{
+        //    public static int ID { get; set; }
+        //    public static int BranchID { get; set; }
+        //    public static int RoomNumberID { get; set; }
+        //    public static int TypeID { get; set; }
+        //    public static bool IsEmpty { get; set; }
+        //    public static List<int> facility { get; set; }
+        //    public static int Floor { get; set; }
+        //    public static int Capacity { get; set; }
+        //    public static int Price { get; set; }
+        //    public static string Description { get; set; }
 
-            private static void MakeConnection()
-            {
-                try
-                {
-                    con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
-                    cmd.Connection = con;
-                }
-                catch
-                {
-                    ;
-                }
-            }
-            private static void Connect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Closed)
-                    {
-                        con.Open();
-                    }
-                }
-                catch
-                {
-                    ;
-                }
-            }
-            private static void Disconnect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
-                    }
-                }
-                catch
-                {
-                    ;
-                }
-            }
+        //    private static SqlConnection con = new SqlConnection();
+        //    private static SqlCommand cmd = new SqlCommand();
+        //    private static SqlDataAdapter adp = new SqlDataAdapter();
+        //    private static DataTable dataTable = new DataTable();
 
-
-            public static int Insert(int branchID, int roomNumberID , bool isEmpty , int floor , int capacity , int price , string description)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Insert Into \"Room\" (BranchID , RoomNumberID , IsEmpty , Floor , Capacity , Price , Description) Values (@BranchID , @RoomNumberID , @IsEmpty , @Floor , @Capacity , @Price , @Description)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@BranchID", branchID);
-                    cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
-                    cmd.Parameters.AddWithValue("@IsEmpty", isEmpty);
-                    cmd.Parameters.AddWithValue("@Floor", Database.CheckNullInsert(floor));
-                    cmd.Parameters.AddWithValue("@Capacity", capacity);
-                    cmd.Parameters.AddWithValue("@Price", price);
-                    cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-     
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
-                    return insertedID;
-                }
-                catch
-                {
-                    return -1;
-                }
-            }
-           
-            public static bool Update(int id , int branchID, int roomNumberID, bool isEmpty, int floor, int capacity, int price, string description)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Update \"Room\" Set BranchID = @BranchID , RoomNumberID = @RoomNumberID , IsEmpty = @IsEmpty , Floor = @Floor  , Capacity = @Capacity , Price = @Price , Description = @Description Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    cmd.Parameters.AddWithValue("@BranchID", branchID);
-                    cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
-                    cmd.Parameters.AddWithValue("@IsEmpty", isEmpty);
-                    cmd.Parameters.AddWithValue("@Floor", Database.CheckNullInsert(floor));
-                    cmd.Parameters.AddWithValue("@Capacity", capacity);
-                    cmd.Parameters.AddWithValue("@Price", price);
-                    cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-                    Connect();
-                    cmd.ExecuteNonQuery();               
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            //public static bool SearchRoom(int branchID, int roomNumberID)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-            //        cmd.CommandText = "SELECT * FROM \"Room\" Where BranchID = @BranchID AND RoomNumberID = @RoomNumberID ";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@BranchID" , branchID);
-            //        cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
-            //        adp.SelectCommand = cmd;
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-            //            RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
-            //            BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
-            //            IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
-            //            Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
-            //            Price  = Convert.ToInt32(dataTable.Rows[0]["Price"]);
-            //            Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
-            //            Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-            //            //return dataTable;
-            //            return true;
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //            //return null; 
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return false;
-            //        //return null;
-            //    }
-            //}
-            public static bool Delete(int id)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Delete From \"Room\" Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
+        //    private static void MakeConnection()
+        //    {
+        //        try
+        //        {
+        //            con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
+        //            cmd.Connection = con;
+        //        }
+        //        catch
+        //        {
+        //            ;
+        //        }
+        //    }
+        //    private static void Connect()
+        //    {
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Closed)
+        //            {
+        //                con.Open();
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            ;
+        //        }
+        //    }
+        //    private static void Disconnect()
+        //    {
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Open)
+        //            {
+        //                con.Close();
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            ;
+        //        }
+        //    }
 
 
+        //    public static int Insert(int branchID, int roomNumberID, bool isEmpty, int floor, int capacity, int price, string description)
+        //    {
+        //        try
+        //        {
+        //            MakeConnection();
+        //            cmd.CommandText = "Insert Into \"Room\" (BranchID , RoomNumberID , IsEmpty , Floor , Capacity , Price , Description) Values (@BranchID , @RoomNumberID , @IsEmpty , @Floor , @Capacity , @Price , @Description)";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@BranchID", branchID);
+        //            cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
+        //            cmd.Parameters.AddWithValue("@IsEmpty", isEmpty);
+        //            cmd.Parameters.AddWithValue("@Floor", Database.CheckNullInsert(floor));
+        //            cmd.Parameters.AddWithValue("@Capacity", capacity);
+        //            cmd.Parameters.AddWithValue("@Price", price);
+        //            cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
+
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            cmd.CommandText = Database.QueryLastID;
+        //            int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
+        //            Disconnect();
+        //            return insertedID;
+        //        }
+        //        catch
+        //        {
+        //            return -1;
+        //        }
+        //    }
+
+        //    public static bool Update(int id, int branchID, int roomNumberID, bool isEmpty, int floor, int capacity, int price, string description)
+        //    {
+        //        try
+        //        {
+        //            MakeConnection();
+        //            cmd.CommandText = "Update \"Room\" Set BranchID = @BranchID , RoomNumberID = @RoomNumberID , IsEmpty = @IsEmpty , Floor = @Floor  , Capacity = @Capacity , Price = @Price , Description = @Description Where ID = @ID";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@ID", id);
+        //            cmd.Parameters.AddWithValue("@BranchID", branchID);
+        //            cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
+        //            cmd.Parameters.AddWithValue("@IsEmpty", isEmpty);
+        //            cmd.Parameters.AddWithValue("@Floor", Database.CheckNullInsert(floor));
+        //            cmd.Parameters.AddWithValue("@Capacity", capacity);
+        //            cmd.Parameters.AddWithValue("@Price", price);
+        //            cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            Disconnect();
+        //            return true;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    public static bool SearchRoom(int branchID, int roomNumberID)
+        //    {
+        //        try
+        //        {
+        //            MakeConnection();
+        //            dataTable = new DataTable();
+        //            cmd.CommandText = "SELECT * FROM \"Room\" Where BranchID = @BranchID AND RoomNumberID = @RoomNumberID ";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@BranchID", branchID);
+        //            cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
+        //            adp.SelectCommand = cmd;
+        //            Connect();
+        //            adp.Fill(dataTable);
+        //            Disconnect();
+        //            if (dataTable.Rows.Count != 0)
+        //            {
+        //                ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+        //                RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
+        //                BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
+        //                IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
+        //                Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
+        //                Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
+        //                Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
+        //                Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
+        //                //return dataTable;
+        //                return true;
+        //            }
+        //            else
+        //            {
+        //                return false;
+        //                //return null; 
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //            //return null;
+        //        }
+        //    }
+        //    public static bool Delete(int id)
+        //    {
+        //        try
+        //        {
+        //            MakeConnection();
+        //            cmd.CommandText = "Delete From \"Room\" Where ID = @ID";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@ID", id);
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            Disconnect();
+        //            return true;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
 
 
-            public static Dictionary<int,string> GetRoomNumbers()
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();                    
-                    cmd.CommandText = "SELECT * FROM \"RoomNumber\" ";
-                    cmd.Parameters.Clear();
-                    //cmd.Parameters.AddWithValue("@BranchID", branchID);
-                    //cmd.Parameters.AddWithValue("@RoomNumberID", roomNumberID);
-                    adp.SelectCommand = cmd;
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        Dictionary<int, string> list = new Dictionary<int, string>();
-                        for (int i = 0; i <  dataTable.Rows.Count ; i++)
-                        {
-                            list.Add(Convert.ToInt32(dataTable.Rows[i]["ID"]), dataTable.Rows[i]["Title"].ToString());
 
 
-                        }
-
-                        //return dataTable;
-                        return list;
-
-
-                    }
-                    else
-                    {
-                        return null;
-                        //return null; 
-                    }
-                }
-                catch
-                {
-                    return null ;
-                    //return null;
-                }
-            }
-            public static Dictionary<int, string> GetRoomTypes()
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-                    cmd.CommandText = "SELECT * FROM \"RoomType\" ";
-                    cmd.Parameters.Clear();
-                    adp.SelectCommand = cmd;
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        Dictionary<int, string> list = new Dictionary<int, string>();
-                        for (int i = 0; i < dataTable.Rows.Count; i++)
-                        {
-                            list.Add(Convert.ToInt32(dataTable.Rows[i]["ID"]), dataTable.Rows[i]["Title"].ToString());
-                        }
-                        return list;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            public static Dictionary<int, string> GetFacilities()
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-                    cmd.CommandText = "SELECT * FROM \"Facilities\" ";
-                    cmd.Parameters.Clear();
-                    adp.SelectCommand = cmd;
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        Dictionary<int, string> list = new Dictionary<int, string>();
-                        for (int i = 0; i < dataTable.Rows.Count; i++)
-                        {
-                            list.Add(Convert.ToInt32(dataTable.Rows[i]["ID"]), dataTable.Rows[i]["Title"].ToString());
-                        }
-                        return list;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
+        //    public static bool DeleteFacilType(int roomID)
+        //    {
+        //        try
+        //        {
+        //            MakeConnection();
+        //            cmd.CommandText = "Delete From \"RoomFacilities\" Where RoomID = @ID";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@ID", roomID);
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            Disconnect();
+        //            cmd.CommandText = "Delete From \"RoomTypeRel\" Where RoomID = @ID";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@ID", roomID);
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            Disconnect();
+        //            return true;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    public static bool InsertFacilities(int roomID, int facilitiesID)
+        //    {
+        //        try
+        //        {
+        //            MakeConnection();
+        //            cmd.CommandText = "Insert Into \"RoomFacilities\" (RoomID , FacilitiesID) Values (@RoomID , @FacilitiesID)";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@RoomID", roomID);
+        //            cmd.Parameters.AddWithValue("@FacilitiesID", facilitiesID);
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            Disconnect();
+        //            return true;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    public static bool InsertRoomType(int roomID, int typeID)
+        //    {
+        //        try
+        //        {
+        //            MakeConnection();
+        //            cmd.CommandText = "Insert Into \"RoomTypeRel\" (RoomID , RoomTypeID) Values (@RoomID , @RoomTypeID)";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@RoomID", roomID);
+        //            cmd.Parameters.AddWithValue("@RoomTypeID", typeID);
+        //            Connect();
+        //            cmd.ExecuteNonQuery();
+        //            Disconnect();
+        //            return true;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
 
 
-            public static bool DeleteFacilType(int roomID)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Delete From \"RoomFacilities\" Where RoomID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", roomID);
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    cmd.CommandText = "Delete From \"RoomTypeRel\" Where RoomID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", roomID);
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            public static bool InsertFacilities(int roomID, int facilitiesID)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Insert Into \"RoomFacilities\" (RoomID , FacilitiesID) Values (@RoomID , @FacilitiesID)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@RoomID", roomID);
-                    cmd.Parameters.AddWithValue("@FacilitiesID", facilitiesID);
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            public static bool InsertRoomType(int roomID, int typeID)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Insert Into \"RoomTypeRel\" (RoomID , RoomTypeID) Values (@RoomID , @RoomTypeID)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@RoomID", roomID);
-                    cmd.Parameters.AddWithValue("@RoomTypeID", typeID);
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
+        //    public static bool SearchRoomWithID(int id)
+        //    {
+        //        try
+        //        {
+        //            MakeConnection();
+        //            dataTable = new DataTable();
+        //            DataTable facil = new DataTable();
+        //            cmd.CommandText = "SELECT * FROM \"Room\" , RoomTypeRel Where ID = @ID AND ID = RoomID ";
+        //            cmd.Parameters.Clear();
+        //            cmd.Parameters.AddWithValue("@ID", id);
+        //            adp.SelectCommand = cmd;
+        //            Connect();
+        //            adp.Fill(dataTable);
+        //            cmd.CommandText = "Select * From RoomFacilities Where RoomID =" + id;
+        //            adp.SelectCommand = cmd;
+        //            adp.Fill(facil);
+        //            Disconnect();
 
+        //            if (dataTable.Rows.Count != 0)
+        //            {
+        //                ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
+        //                TypeID = Convert.ToInt32(dataTable.Rows[0]["RoomTypeID"]);
+        //                RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
+        //                BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
+        //                IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
+        //                Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
+        //                Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
+        //                Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
+        //                Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
+        //                if (facil != null)
+        //                {
+        //                    List<int> lstID = new List<int>();
+        //                    for (int i = 0; i < facil.Rows.Count; i++)
+        //                    {
+        //                        lstID.Add(Convert.ToInt32(facil.Rows[i]["FacilitiesID"]));
+        //                    }
+        //                    facility = lstID;
+        //                }
+        //                else
+        //                {
+        //                    facility = null;
+        //                }
+        //                return true;
+        //            }
+        //            else
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            public static bool SearchRoomWithID(int id)
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-                    DataTable facil = new DataTable();
-                    cmd.CommandText = "SELECT * FROM \"Room\" , RoomTypeRel Where ID = @ID AND ID = RoomID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    adp.SelectCommand = cmd;
-                    Connect();
-                    adp.Fill(dataTable);
-                    cmd.CommandText = "Select * From RoomFacilities Where RoomID =" + id;
-                    adp.SelectCommand = cmd;
-                    adp.Fill(facil);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-                        TypeID = Convert.ToInt32(dataTable.Rows[0]["RoomTypeID"]);
-                        RoomNumberID = Convert.ToInt32(dataTable.Rows[0]["RoomNumberID"]);
-                        BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
-                        IsEmpty = Convert.ToBoolean(dataTable.Rows[0]["IsEmpty"]);
-                        Floor = Convert.ToInt32(dataTable.Rows[0]["Floor"]);
-                        Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
-                        Capacity = Convert.ToInt32(dataTable.Rows[0]["Capacity"]);
-                        Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-                        if (facil != null)
-                        {
-                            List<int> lstID = new List<int>();
-                            for (int i = 0; i < facil.Rows.Count; i++)
-                            {
-                                lstID.Add(Convert.ToInt32(facil.Rows[i]["FacilitiesID"]));
-                            }
-                            facility = lstID;
-                        }
-                        else
-                        {
-                            facility = null;
-                        }
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-
-        }
+        //}
         public class User
         {
             public static int ID { get; set; }
