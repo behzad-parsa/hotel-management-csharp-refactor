@@ -971,10 +971,6 @@ namespace HotelManagement
             public static int TransactionTypeID { get; set; }
             public static string TransactionNumber { get; set; }
             public static double Amount { get; set; }
-            //public static int FoodCharge { get; set; }
-            //public static int ServiceCharge { get; set; }
-            //public static int TotalCharge { get; set; }
-            //public static double Discount { get; set; }
             public static DateTime DateModified { get; set; }
             public static string Description { get; set; }
 
@@ -1054,7 +1050,6 @@ namespace HotelManagement
                     return -1;
                 }
             }
-
             public static bool Update(int id , int accountID, int paymentMethodID, int transTypeID, string transNum, double amount, string description)
             {
                 try
@@ -1082,7 +1077,6 @@ namespace HotelManagement
                     return false ;
                 }
             }
-
             public static bool SearchTransact(int id)
             {
                 try
@@ -1244,270 +1238,8 @@ namespace HotelManagement
                 }
 
             }
-            //public static Dictionary<int , List<string>> A(int ID)
-            //public static int SearchBranchID(string code)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-            //        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@Code", code);
-            //        adp.SelectCommand = cmd;
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-            //            return ID;
-            //        }
-            //        else
-            //        {
-            //            return -1;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return -2;
-            //    }
-            //}
         }
-        public class Account
-        {
-            public static int ID { get; set; }
-            public static int BranchID { get; set; }
-            public static string Bank { get; set; }
-            public static double Balance { get; set; }
-            public static string AccountName { get; set; }
-            public static string AccountNumber{ get; set; }
 
-            public static string Description { get; set; }
-
-            private static SqlConnection con = new SqlConnection();
-            private static SqlCommand cmd = new SqlCommand();
-            private static SqlDataAdapter adp = new SqlDataAdapter();
-            private static DataTable dataTable = new DataTable();
-            private static void MakeConnection()
-            {
-                try
-                {
-                    con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
-                    cmd.Connection = con;
-                }
-                catch
-                {
-                    ;
-                }
-            }
-            private static void Connect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Closed)
-                    {
-                        con.Open();
-                    }
-                }
-                catch
-                {
-                   ;
-                }
-            }
-            private static void Disconnect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
-                    }
-                }
-                catch
-                {
-                    ;
-                }
-            }
-
-            public static int Insert(int branchID , string accountName , string accountNumber , string bank , double balance , string description )
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Insert Into \"Accounts\" (BranchID , AccountName , AccountNumber , Bank , Balance ,   Description) Values (@BranchID , @AccountName , @AccountNumber , @Bank , @Balance , @Description)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@BranchID", branchID);
-                    cmd.Parameters.AddWithValue("@AccountName", accountName);
-                    cmd.Parameters.AddWithValue("@Bank", bank);
-                    cmd.Parameters.AddWithValue("@Balance", balance);
-                    cmd.Parameters.AddWithValue("@AccountNumber", accountNumber);
-                    //cmd.Parameters.AddWithValue("@DateModified", serviceCharge);
-                    //cmd.Parameters.AddWithValue("@To", totalCharge);
-                    //cmd.Parameters.AddWithValue("@Discount", discount);
-                    //cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
-                    return insertedID;
-                }
-                catch
-                {
-                    return -1;
-                }
-            }
-            public static bool Update(int id , string accountName, string accountNumber, string bank, double balance, string description)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Update \"Accounts\" SET    AccountName = @AccountName , AccountNumber = @AccountNumber , Bank  = @Bank  , Balance = @Balance  ,   Description = @Description  Where ID=@ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("ID", id);
-                    //cmd.Parameters.AddWithValue("@BranchID", branchID);
-                    cmd.Parameters.AddWithValue("@AccountName", accountName);
-                    cmd.Parameters.AddWithValue("@Bank", bank);
-                    cmd.Parameters.AddWithValue("@Balance", balance);
-                    cmd.Parameters.AddWithValue("@AccountNumber", accountNumber);
-                    //cmd.Parameters.AddWithValue("@DateModified", serviceCharge);
-                    //cmd.Parameters.AddWithValue("@To", totalCharge);
-                    //cmd.Parameters.AddWithValue("@Discount", discount);
-                    //cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false ;
-                }
-            }
-            public static bool SearchAccount(int ID)
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-                    cmd.CommandText = "SELECT * FROM \"Accounts\" Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", ID);
-                    adp.SelectCommand = cmd;
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);        
-                        BranchID = Convert.ToInt32(dataTable.Rows[0]["BranchID"]);
-                        AccountName = dataTable.Rows[0]["AccountName"].ToString();
-                        AccountNumber = dataTable.Rows[0]["AccountNumber"].ToString();
-                        Bank = dataTable.Rows[0]["Bank"].ToString();                  
-                        Balance = Convert.ToDouble(dataTable.Rows[0]["Balance"]);
-                        Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            public static bool Delete (int id)
-            {
-                try
-                {       
-                    dataTable = new DataTable();
-                    cmd.CommandText = "Delete FROM \"Accounts\" Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    MakeConnection();
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            //public static int SearchBranchID(string code)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-            //        cmd.CommandText = "SELECT * FROM \"BranchInfo\" Where Code = @Code";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@Code", code)
-            //        adp.SelectCommand = cmd;
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-            //            return ID;
-            //        }
-            //        else
-            //        {
-            //            return -1;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return -2;
-            //    }
-            //}
-            public static Dictionary<int, string> GetAccountList(int branchID)
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-                    cmd.CommandText = "SELECT * FROM \"Accounts\" Where BranchID = @BranchID ";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@BranchID", branchID);
-                    adp.SelectCommand = cmd;
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        Dictionary<int, string> lstAccount = new Dictionary<int,string>();
-                        //List<string> lstSecond = new List<string>();
-                        for (int i = 0; i < dataTable.Rows.Count; i++)
-                        {
-                            ID = Convert.ToInt32(dataTable.Rows[i]["ID"]);
-                            AccountName = dataTable.Rows[i]["AccountName"].ToString();
-                            AccountNumber = dataTable.Rows[i]["AccountNumber"].ToString();
-                            Bank = dataTable.Rows[i]["Bank"].ToString();
-                            //Balance = Convert.ToDouble(dataTable.Rows[i]["Balance"])
-                            string str = Bank + " - " + AccountName + " - " + AccountNumber;
-                            lstAccount.Add(ID, str);
-                        }
-                        return lstAccount;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-        }
         public class Food
         {
             public static int ID { get; set; }

@@ -7,17 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class PayDialog : Form
     {
+        private readonly AccountService _accountService;
+        private List<Account> branchAccountsList;
+
         public static List<string> Information = new List<string>();
         public static int BillID;
         public bool completeAction = false;
         public PayDialog()
         {
             InitializeComponent();
+
+            _accountService = new AccountService();
+            
         }
 
         private void panel1_Click(object sender, EventArgs e)
@@ -25,7 +33,7 @@ namespace HotelManagement
             this.Close();
         }
 
-        Dictionary<int, string> lstAccount = new Dictionary<int, string>();
+        //Dictionary<int, string> lstAccount = new Dictionary<int, string>();
         Dictionary<int, string> lstPay = new Dictionary<int, string>();
         private void PayDialog_Load(object sender, EventArgs e)
         {
@@ -34,11 +42,14 @@ namespace HotelManagement
             lblCustomerName.Text = Information[1];
 
             //------ BranchID -------
-            lstAccount = HotelDatabase.Account.GetAccountList(1);
-            foreach (var item in lstAccount)
-            {
-                cmbAccount.Items.Add(item.Value);
-            }
+            //lstAccount = HotelDatabase.Account.GetAccountList(1);
+            branchAccountsList = _accountService.GetAllBranchAccounts(Current.User.BranchID);
+            //foreach (var item in lstAccount)
+            //{
+            //    cmbAccount.Items.Add(item.Value);
+            //}
+            cmbAccount.DataSource = branchAccountsList;
+            cmbAccount.DisplayMember = "AccountName";
 
             lstPay = HotelDatabase.Transact.GetPaymentMethod();
             int counter = 0;
@@ -76,7 +87,7 @@ namespace HotelManagement
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            var accountID = lstAccount.FirstOrDefault(x => x.Value == cmbAccount.SelectedItem.ToString()).Key;
+            var accountID = branchAccountsList.SingleOrDefault(x => x == cmbAccount.SelectedItem).ID;
             var paymentMethodID = lstPay.FirstOrDefault(x => x.Value == checkedValue).Key;
             var amount = Convert.ToDouble(Information[0]);      
             var res =  HotelDatabase.Transact.Insert(accountID, paymentMethodID, 1,txtTransNum.Text, amount, txtDescription.Text);

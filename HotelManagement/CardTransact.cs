@@ -46,8 +46,10 @@ namespace HotelManagement
             }
             else
             {
-                var res = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (res == DialogResult.Yes)
+                var dialogResult = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
                 {
                     if (HotelDatabase.Transact.Delete(transID))
                     {

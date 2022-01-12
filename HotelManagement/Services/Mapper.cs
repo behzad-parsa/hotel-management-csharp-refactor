@@ -18,9 +18,7 @@ namespace HotelManagement.Services
             foreach (DataColumn column in dataRow.Table.Columns)
             {
                 foreach (PropertyInfo property in typeof(T).GetProperties())
-                {
-                    
-
+                {                   
                     if (property.Name == column.ColumnName)
                     {
                         if (dataRow[column.ColumnName] != DBNull.Value)

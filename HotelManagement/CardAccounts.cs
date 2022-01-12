@@ -7,22 +7,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class CardAccounts : UserControl
     {
+        private readonly AccountService _accountService;
+
         public CardAccounts()
         {
             InitializeComponent();
+
+            _accountService = new AccountService();
         }
-        DataTable _data;
+
+        //DataTable _data;
         private void LoadData()
         {
-
+           
             string query = "Select * FRom Accounts";
             var data = HotelDatabase.Database.Query(query);
-            _data = data;
+            //_data = data;
             dgvAccount.DataSource = data;
             dgvAccount.Columns["BranchID"].Visible = false;
 
@@ -71,13 +78,13 @@ namespace HotelManagement
             else
             {
                 var bmp = Theme.DarkBack(this.ParentForm);
-                using (Panel p = new Panel())
+                using (Panel panel = new Panel())
                 {
-                    p.Location = new Point(0, 0);
-                    p.Size = this.ParentForm.ClientRectangle.Size;
-                    p.BackgroundImage = bmp;
-                    this.ParentForm.Controls.Add(p);
-                    p.BringToFront();
+                    panel.Location = new Point(0, 0);
+                    panel.Size = this.ParentForm.ClientRectangle.Size;
+                    panel.BackgroundImage = bmp;
+                    this.ParentForm.Controls.Add(panel);
+                    panel.BringToFront();
 
                     using (EditAccount editAccount = new EditAccount())
                     {
@@ -95,9 +102,6 @@ namespace HotelManagement
             }
         }
 
-        private void dgvAccount_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
      
         private void dgvAccount_SelectionChanged(object sender, EventArgs e)
         {
@@ -116,10 +120,15 @@ namespace HotelManagement
             }
             else
             {
-                var res = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (res == DialogResult.Yes)
+                var dialogResult = MessageBox.Show(
+                    "Are You Sure You Want To Delete This Record ?", "Delete", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
                 {
-                    if (HotelDatabase.Account.Delete(accountID))
+                    var resultDelete = _accountService.DeleteAccount(accountID); 
+                    //if (HotelDatabase.Account.Delete(accountID))
+                    if (resultDelete)
                     {
                         PanelStatus("Action Completed Successfuly", Status.Green);
                         LoadData();

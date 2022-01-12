@@ -8,30 +8,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class EditTransact : Form
     {
+        private readonly AccountService _accountService;
+
         public int transID;
         public bool completeFlag = false;
 
-        Dictionary<int, string> lstAccount = new Dictionary<int, string>();
+        //Dictionary<int, string> lstAccount = new Dictionary<int, string>();
+        private List<Account> branchAccountsList;
         Dictionary<int, string> lstPaymentType = new Dictionary<int, string>();
         Dictionary<int, string> lstTranactionType = new Dictionary<int, string>();
         public EditTransact()
         {
             InitializeComponent();
+
+            _accountService = new AccountService();
         }
 
         private void EditTransact_Load(object sender, EventArgs e)
         {
             //--------BranchID------------------------------------
-            lstAccount = HotelDatabase.Account.GetAccountList(1);
-            foreach (var item in lstAccount)
-            {
-                cmbAccount.Items.Add(item.Value);
-            }
+            //lstAccount = HotelDatabase.Account.GetAccountList(1);
+            branchAccountsList = _accountService.GetAllBranchAccounts(Current.User.BranchID);
+            //foreach (var item in lstAccount)
+            //{
+            //    cmbAccount.Items.Add(item.Value);
+            //}
+            cmbAccount.DataSource = branchAccountsList;
+            cmbAccount.DisplayMember = "AccountName";
 
             //-----PaymentMethod---------------------
             lstPaymentType = HotelDatabase.Transact.GetPaymentMethod();
@@ -47,7 +57,10 @@ namespace HotelManagement
                 txtAmount.Text = HotelDatabase.Transact.Amount.ToString();
                 txtTransNum.Text = HotelDatabase.Transact.TransactionNumber ?? "";
                 txtDescription.Text = HotelDatabase.Transact.Description ?? "";
-                lstAccount.TryGetValue( HotelDatabase.Transact.AccountID , out string account  );
+
+                //lstAccount.TryGetValue( HotelDatabase.Transact.AccountID , out string account  );
+                var account = branchAccountsList.SingleOrDefault(x => x.ID == HotelDatabase.Transact.AccountID);
+
                 cmbAccount.SelectedItem = account;
                 lstPaymentType.TryGetValue(HotelDatabase.Transact.PaymentMethodID, out string payMethodText);
                 var rdb = _lstRadioButton.Find(x => x.Text == payMethodText);
@@ -65,7 +78,6 @@ namespace HotelManagement
             List<RadioButton> lstRadioButton = new List<RadioButton>();
             foreach (var item in lst)
             {
-
                 RadioButton rdb = new RadioButton();
                 rdb.Text = item.Value;
                 if (isType)
@@ -199,7 +211,8 @@ namespace HotelManagement
             if (validationFlag)
             {
                 validationFlag = false;
-                var accountID = lstAccount.FirstOrDefault(x => x.Value == cmbAccount.SelectedItem.ToString()).Key;
+                //var accountID = lstAccount.FirstOrDefault(x => x.Value == cmbAccount.SelectedItem.ToString()).Key;
+                var accountID = branchAccountsList.SingleOrDefault(x => x == cmbAccount.SelectedItem).ID;
                 var paymentMethodID = lstPaymentType.FirstOrDefault(x => x.Value == checkedValuePaymentType).Key;
                 var transactionTypeID = lstTranactionType.FirstOrDefault(x => x.Value == checkValueTransType).Key;
                 var res = HotelDatabase.Transact.Update( transID , accountID, paymentMethodID, transactionTypeID, txtTransNum.Text, Convert.ToDouble(txtAmount.Text), txtDescription.Text);

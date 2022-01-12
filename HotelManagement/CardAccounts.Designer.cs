@@ -287,8 +287,7 @@
             this.dgvAccount.RowTemplate.Height = 50;
             this.dgvAccount.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAccount.Size = new System.Drawing.Size(1478, 614);
-            this.dgvAccount.TabIndex = 20;
-            this.dgvAccount.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAccount_CellContentClick);
+            this.dgvAccount.TabIndex = 20;            
             this.dgvAccount.SelectionChanged += new System.EventHandler(this.dgvAccount_SelectionChanged);
             // 
             // panel1

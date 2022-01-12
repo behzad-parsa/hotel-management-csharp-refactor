@@ -9,18 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
 using System.Threading;
-
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class NewAccount : Form
     {
+        private readonly AccountService _accountService;
+
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
         public bool completeFlag = false;
         
         public NewAccount()
         {
             InitializeComponent();
+            _accountService = new AccountService();
         }
 
         private void NewAccount_Load(object sender, EventArgs e)
@@ -168,8 +172,18 @@ namespace HotelManagement
             {
                 validFlag = false;
                 ////----------Change Bracnch ID LAter-------------------
-                var result = HotelDatabase.Account.Insert(1, txtAccountName.Text, txtAccountNumber.Text, txtBank.Text, Convert.ToDouble( txtBalance.Text ), txtDescription.Text);
-                if (result>0)
+                //var result = HotelDatabase.Account.Insert(1, txtAccountName.Text, txtAccountNumber.Text, txtBank.Text, Convert.ToDouble(txtBalance.Text), txtDescription.Text);
+                var account = new Account()
+                {
+                    BranchID = Current.User.BranchID,
+                    AccountName = txtAccountName.Text,
+                    AccountNumber = txtAccountNumber.Text,
+                    Bank = txtBank.Text,
+                    Balance = Convert.ToDouble(txtBalance.Text),
+                    Description = txtDescription.Text
+                };
+                var resultInsert = _accountService.InsertAccount(account);
+                if (resultInsert)
                 {
                     PanelStatus("Action Completed Successfuly", Status.Green);
                     completeFlag = true;

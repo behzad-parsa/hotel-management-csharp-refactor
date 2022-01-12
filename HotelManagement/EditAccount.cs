@@ -7,29 +7,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelManagement.Services;
+using HotelManagement.Models;
 
 namespace HotelManagement
 {
     public partial class EditAccount : Form
     {
+        private readonly AccountService _accountService;
         public bool completeFlag = false;
         public int accountID;
         public EditAccount()
         {
             InitializeComponent();
+
+            _accountService = new AccountService(); 
         }
         private void EditAccount_Load(object sender, EventArgs e)
         {
-            if (HotelDatabase.Account.SearchAccount(accountID))
+            var account = _accountService.GetAccount(accountID);
+            //if (HotelDatabase.Account.SearchAccount(accountID))
+            if (account != null)
             {
-                txtAccountName.Text = HotelDatabase.Account.AccountName;
-                txtBank.Text = HotelDatabase.Account.Bank;
-                txtBalance.Text = HotelDatabase.Account.Balance.ToString();
-                txtAccountNumber.Text = HotelDatabase.Account.AccountNumber;
-                if (HotelDatabase.Account.Description != null)
-                {
-                    txtDescription.Text = HotelDatabase.Account.Description;
-                }
+                txtAccountName.Text = account.AccountName;
+                txtBank.Text = account.Bank;
+                txtBalance.Text = account.Balance.ToString();
+                txtAccountNumber.Text = account.AccountNumber;
+                if (account.Description != null)
+                    txtDescription.Text = account.Description;
+                
             }
         }
 
@@ -45,14 +51,23 @@ namespace HotelManagement
                 txtDescription.Text = null;
             }
 
-            var result = HotelDatabase.Account.Update(accountID, txtAccountName.Text, txtAccountNumber.Text, txtBank.Text, Convert.ToDouble(txtBalance.Text), txtDescription.Text);
-            if (result )
+            //var result = HotelDatabase.Account.Update(accountID, txtAccountName.Text, txtAccountNumber.Text, txtBank.Text, Convert.ToDouble(txtBalance.Text), txtDescription.Text);
+            var account = new Account()
+            {
+                ID = accountID,
+                AccountName = txtAccountName.Text,
+                AccountNumber = txtAccountNumber.Text,
+                Bank = txtBank.Text,
+                Balance = Convert.ToDouble(txtBalance.Text),
+                Description = txtDescription.Text
+            };
+            var resultUpdate = _accountService.UpdateAccount(account);
+            if (resultUpdate)
             {
                 PanelStatus("Action Completed Successfuly", Status.Green);
                 this.Dispose();
                 completeFlag = true;
             }
-
             else
             {
                 PanelStatus("Unable to Complete Action", Status.Red);

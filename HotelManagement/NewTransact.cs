@@ -8,74 +8,50 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class NewTransact : Form
     {
+        private readonly AccountService _accountService;
         public bool completeFlag = false ;
-        Dictionary<int, string> lstAccount = new Dictionary<int, string>();
+        //Dictionary<int, string> lstAccount = new Dictionary<int, string>();
+        private List<Account> branchAccountsList;
         Dictionary<int, string> lstPaymentType = new Dictionary<int, string>();
         Dictionary<int, string> lstTranactionType = new Dictionary<int, string>();
 
         public NewTransact()
         {
             InitializeComponent();
+
+            _accountService = new AccountService();
+            
         }
 
         private void NewTransact_Load(object sender, EventArgs e)
         {
             //----cmb Account | Branch Later ------
 
-            lstAccount = HotelDatabase.Account.GetAccountList(1);
-            foreach (var item in lstAccount)
-            {
-                cmbAccount.Items.Add(item.Value);
-            }
+            //lstAccount = HotelDatabase.Account.GetAccountList(1);
+            branchAccountsList = _accountService.GetAllBranchAccounts(Current.User.BranchID);
+            //foreach (var item in lstAccount)
+            //{
+            //    cmbAccount.Items.Add(item.Value);
+            //}
+            cmbAccount.DataSource = branchAccountsList;
+            cmbAccount.DisplayMember = "AccountName";
+
             //----- PaymentMethod ---------------------
             
             lstPaymentType = HotelDatabase.Transact.GetPaymentMethod();
             FillPanel(panelPaymentMethod, lstPaymentType, false);
 
-            //int counter = 0;
-            //List<RadioButton> lstRadioButton = new List<RadioButton>();
-            //foreach (var item in lstPaymentType)
-            //{
-            //    RadioButton rdb = new RadioButton();
-            //    rdb.Text = item.Value;
-            //    rdb.CheckedChanged += new EventHandler(RadioButtonActivePay);
-            //    panelPaymentMethod.Controls.Add(rdb);
-            //    if (counter > 0)
-            //    {
-            //        rdb.Location = new Point(lstRadioButton[lstRadioButton.Count - 1].Location.X, lstRadioButton[lstRadioButton.Count - 1].Location.Y + 40);
-            //    }
-            //    lstRadioButton.Add(rdb);
-            //    counter++;
-            //}
-
-
             //TransactionType
             lstTranactionType = HotelDatabase.Transact.GetTransactionType();
             FillPanel(panelType, lstTranactionType, true);
-            //int counter2 = 0;
-            //List<RadioButton> lstRadioButton2 = new List<RadioButton>();
-            //foreach (var item in lstTranactionType)
-            //{
 
-            //    RadioButton rdb = new RadioButton();
-            //    rdb.Text = item.Value;
-            //    rdb.CheckedChanged += new EventHandler(RadioButtonActiveTrans);
-
-            //    panelType.Controls.Add(rdb);
-            //    if (counter2 > 0)
-            //    {
-            //        rdb.Location = new Point(lstRadioButton2[lstRadioButton2.Count - 1].Location.X, lstRadioButton2[lstRadioButton2.Count - 1].Location.Y + 40);
-
-
-            //    }
-            //    lstRadioButton2.Add(rdb);
-            //    counter2++;
-            //}
         }
 
         private void FillPanel(Panel panel , Dictionary<int ,string> lst , bool isType)

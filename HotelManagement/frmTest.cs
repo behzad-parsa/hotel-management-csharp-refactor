@@ -17,25 +17,7 @@ namespace HotelManagement
         public frmTest()
         {
             InitializeComponent();
-            Account account = new Account()
-            {
-                AccountName = "Maleki",
-                AccountNumber = "4444",
-                Bank="Sepah",
-                Description="Main Account",
-                Balance = 2000,
-                BranchID = 1
-            };
-            AccountService accountService = new AccountService();
-            accountService.InsertAccount(account);
 
-            var getAccount = accountService.GetAccount(5);
-            getAccount.AccountName = "Behzad Parsa";
-            var res = accountService.UpdateAccount(getAccount);
-            account.ID = accountService.LastInsertedId;
-            var delete = accountService.DeleteAccount(account.ID);
-
-            var accounts = accountService.GetAllBranchAccounts(1);
 
         }
         
