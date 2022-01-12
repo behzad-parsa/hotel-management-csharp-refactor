@@ -15,21 +15,21 @@ namespace HotelManagement
         public TabServices()
         {
             InitializeComponent();
-            AddControlsToPanel(new OrderFood());
+            AddControlsToPanel(new OrderFoodControl());
         }
 
         private void lblFood_Click(object sender, EventArgs e)
         {
             ActiveTab(lblFood, true);
             ActiveTab(lblService, false);
-            AddControlsToPanel(new OrderFood());
+            AddControlsToPanel(new OrderFoodControl());
         }
 
         private void lblService_Click(object sender, EventArgs e)
         {
             ActiveTab(lblFood, false);
             ActiveTab(lblService, true);
-            AddControlsToPanel(new OrderService());
+            AddControlsToPanel(new OrderServiceControl());
         }
         private void ActiveTab(Control lblTab)
         {

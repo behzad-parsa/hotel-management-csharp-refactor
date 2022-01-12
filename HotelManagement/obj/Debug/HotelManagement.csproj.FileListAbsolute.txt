@@ -3714,11 +3714,9 @@ E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refa
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.NewBranch.resources
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.NewEmployee.resources
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.NewRole.resources
-E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.OrderFood.resources
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.NewRoom.resources
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.NewTransact.resources
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.NewUser.resources
-E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.OrderService.resources
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.OnlineUserItem.resources
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.PVItem.resources
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.PayDialog.resources
@@ -3740,3 +3738,5 @@ E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refa
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.csproj.CopyComplete
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.exe
 E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.pdb
+E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.OrderFoodControl.resources
+E:\Programming\Projects\C#\MyProj\Final Proj Imp\Hotel\HotelManagement 86 - Refactor\HotelManagement\obj\Debug\HotelManagement.OrderServiceControl.resources

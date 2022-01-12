@@ -201,7 +201,7 @@ namespace HotelManagement
             if (validationFlag)
             {
                 validationFlag = false;
-                var accountID = lstAccount.FirstOrDefault(x => x.Value == cmbAccount.SelectedItem.ToString()).Key;
+                var accountID = branchAccountsList.SingleOrDefault(x => x == cmbAccount.SelectedItem).ID;
                 var paymentMethodID = lstPaymentType.FirstOrDefault(x => x.Value == checkedValuePaymentType).Key;
                 var transactionTypeID = lstTranactionType.FirstOrDefault(x => x.Value == checkValueTransType).Key;
                 var res = HotelDatabase.Transact.Insert(accountID, paymentMethodID, transactionTypeID, txtTransNum.Text, Convert.ToDouble(txtAmount.Text), txtDescription.Text);

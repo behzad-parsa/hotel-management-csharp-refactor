@@ -321,11 +321,11 @@
     <Compile Include="NewRole.Designer.cs">
       <DependentUpon>NewRole.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrderFood.cs">
+    <Compile Include="OrderFoodControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="OrderFood.Designer.cs">
-      <DependentUpon>OrderFood.cs</DependentUpon>
+    <Compile Include="OrderFoodControl.Designer.cs">
+      <DependentUpon>OrderFoodControl.cs</DependentUpon>
     </Compile>
     <Compile Include="NewRoom.cs">
       <SubType>UserControl</SubType>
@@ -345,11 +345,11 @@
     <Compile Include="NewUser.Designer.cs">
       <DependentUpon>NewUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrderService.cs">
+    <Compile Include="OrderServiceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="OrderService.Designer.cs">
-      <DependentUpon>OrderService.cs</DependentUpon>
+    <Compile Include="OrderServiceControl.Designer.cs">
+      <DependentUpon>OrderServiceControl.cs</DependentUpon>
     </Compile>
     <Compile Include="OvalPictureBox.cs">
       <SubType>Component</SubType>
@@ -555,8 +555,8 @@
     <EmbeddedResource Include="NewRole.resx">
       <DependentUpon>NewRole.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrderFood.resx">
-      <DependentUpon>OrderFood.cs</DependentUpon>
+    <EmbeddedResource Include="OrderFoodControl.resx">
+      <DependentUpon>OrderFoodControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewRoom.resx">
       <DependentUpon>NewRoom.cs</DependentUpon>
@@ -567,8 +567,8 @@
     <EmbeddedResource Include="NewUser.resx">
       <DependentUpon>NewUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrderService.resx">
-      <DependentUpon>OrderService.cs</DependentUpon>
+    <EmbeddedResource Include="OrderServiceControl.resx">
+      <DependentUpon>OrderServiceControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OnlineUserItem.resx">
       <DependentUpon>OnlineUserItem.cs</DependentUpon>

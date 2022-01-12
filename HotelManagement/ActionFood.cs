@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
-
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class ActionFood : Form
     {
+        private readonly FoodService _foodService;
+
         public int FoodID;
         public bool completeActionFlag = false;
         private bool addFlag;
@@ -56,11 +59,12 @@ namespace HotelManagement
             //-------------Load Edit ------------------
             if (!addFlag)
             {
-                if (HotelDatabase.Food.SearchFood(FoodID))
+                var food = _foodService.GetFood(FoodID);
+                if (food != null)
                 {
-                    txtTitle.Text = HotelDatabase.Food.Title;
-                    txtPrice.Text = HotelDatabase.Food.Price.ToString();
-                    txtDecription.Text = HotelDatabase.Food.Description;
+                    txtTitle.Text = food.Title;
+                    txtPrice.Text = food.Price.ToString();
+                    txtDecription.Text = food.Description;
                 }
                 else
                 {
@@ -172,15 +176,19 @@ namespace HotelManagement
                 //------- Add Part ------------
                 if (addFlag)
                 {
-                    var res = HotelDatabase.Food.Insert(txtTitle.Text, Convert.ToInt32(txtPrice.Text), txtDecription.Text);
-
-                    if (res>0)
+                    //var res = HotelDatabase.Food.Insert(txtTitle.Text, Convert.ToInt32(txtPrice.Text), txtDecription.Text);
+                    Food food = new Food()
                     {
-
+                        Title = txtTitle.Text,
+                        Price = Convert.ToInt32(txtPrice.Text),
+                        Description = txtDecription.Text
+                    };
+                    var resultInsert = _foodService.InsertFood(food);
+                    if (resultInsert)
+                    {
                         PanelStatus("Action Completed Successfully", Status.Green);
                         completeActionFlag = true;
                         this.Dispose();
-
                     }
                     else
                     {
@@ -191,7 +199,15 @@ namespace HotelManagement
                 //----------  Edit Part -----------
                 else
                 {
-                    if (HotelDatabase.Food.Update(FoodID , txtTitle.Text, Convert.ToInt32(txtPrice.Text), txtDecription.Text))
+                    var food = new Food()
+                    {
+                        ID = FoodID,
+                        Title = txtTitle.Text,
+                        Price = Convert.ToInt32(txtPrice.Text),
+                        Description = txtDecription.Text
+                    };
+                    var resultUpdate = _foodService.UpdateFood(food);
+                    if (resultUpdate)
                     {
                         PanelStatus("Action Completed Successfully", Status.Green);
                         completeActionFlag = true;

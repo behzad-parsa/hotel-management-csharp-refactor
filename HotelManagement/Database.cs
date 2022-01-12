@@ -105,7 +105,6 @@ namespace HotelManagement
                     return false;
                 }
             }
-
             public static bool SearchUser( int employeeID)
             {
                 try
@@ -142,35 +141,6 @@ namespace HotelManagement
                     return false;
                 }
             }
-            //public static int SearchUserID(string username)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-            //        cmd.CommandText = "SELECT * FROM \"User\" Where Username = @Username ";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@Username", username);
-            //        adp.SelectCommand = cmd;
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-            //            return ID;
-            //        }
-            //        else
-            //        {
-            //            return -1;
-            //        
-            //    }
-            //    catch
-            //    {
-            //        Disconnect();
-            //        return -2;
-            //    }
-            //}
             public static int Insert(int employeeID, int roleID, string username, string password, byte[] img, bool activate)
             {
                 try
@@ -281,26 +251,6 @@ namespace HotelManagement
                     return DateTime.MinValue;
                 }
             }
-            //public static bool InsertLoginHistory()
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        //dataTable = new DataTable();
-            //        cmd.CommandText = "Insert Into \"LoginHistory\" (UserID , DateTime) Values(@UserID , @DateTime)";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@UserID", ID);
-            //        cmd.Parameters.AddWithValue("@DateTime", DateTime.Now);
-            //        // DateTime.Now.ToString("h:mm:ss tt")
-            //        Connect();
-            //        cmd.ExecuteNonQuery();
-            //        Disconnect();
-            //        return true;
-            //    }
-            //    catch
-            //    {
-            //        return false;
-            //    }
             public static bool Delete(int id)
             {
                 try
@@ -446,49 +396,6 @@ namespace HotelManagement
                     return -1;
                 }
             }   
-            //public static bool SearchReserve(int customerID , DateTime sDate )
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-            //        cmd.CommandText = "SELECT * FROM \"Reserve\" Where CustomerID = @CustomerID AND StartDate >= @sDate  ";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@CustomerID", customerID);
-            //        cmd.Parameters.AddWithValue("@sDate", sDate);
-            //        adp.SelectCommand = cmd;
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-            //            //ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-            //            //CustomerID = Convert.ToInt32(dataTable.Rows[0]["CustomerID"]);
-            //            //UserID = Convert.ToInt32(dataTable.Rows[0]["UserID"]);
-            //            //RoomID = dataTable.Rows[0]["NationalCode"].ToString();
-            //            //Email = Database.CheckNullSelect(dataTable.Rows[0]["Email"]) as string;
-            //            //Tel = Database.CheckNullSelect(dataTable.Rows[0]["Tel"]) as string;
-            //            //State = Database.CheckNullSelect(dataTable.Rows[0]["State"]) as string;
-            //            //City = Database.CheckNullSelect(dataTable.Rows[0]["City"]) as string;
-            //            //Birthday = Database.CheckNullSelectDateTime(dataTable.Rows[0]["Birthday"]); //Min Value FOr Date Time Consider As Null
-            //            //Address = Database.CheckNullSelect(dataTable.Rows[0]["Address"]) as string;
-            //            //Gender = Database.CheckNullSelect(dataTable.Rows[0]["Gender"]) as string;
-            //            //Nationality = Database.CheckNullSelect(dataTable.Rows[0]["Nationality"]) as string;
-            //            //Mobile = Database.CheckNullSelect(dataTable.Rows[0]["Mobile"]) as string;
-            //            ////Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-            //            //Image = (byte[])dataTable.Rows[0]["Image"];
-            //            return true;
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return false;
-            //    }
-            //}
             public static bool SearchReserveWithID(int idd)
             {
                 try
@@ -629,67 +536,6 @@ namespace HotelManagement
                 }
 
             }
-            //public static bool Update(int id, DateTime CancelDate)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        cmd.CommandText = "Update \"Reservation\"  Set StartDate = @Checkin Where ID = @ID";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@ID", id);
-            //        cmd.Parameters.AddWithValue("@Checkin", Checkin);
-            //        //cmd.Parameters.AddWithValue("@RoomID", roomID);
-            //        //cmd.Parameters.AddWithValue("@StartDate", startDate);
-            //        //cmd.Parameters.AddWithValue("@EndDate", endDate);
-            //        //cmd.Parameters.AddWithValue("@TotalPayDueDate", totalPayDueDate);
-            //        //cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-            //        //cmd.Parameters.AddWithValue("@Mobile", Database.CheckNullInsert(mobile));
-            //        //cmd.Parameters.AddWithValue("@Gender", gender);
-            //        //cmd.Parameters.AddWithValue("@State", Database.CheckNullInsert(Gender));
-            //        //cmd.Parameters.AddWithValue("@City", Database.CheckNullInsert(city));
-            //        //cmd.Parameters.AddWithValue("@Address", Database.CheckNullInsert(address));
-            //        // DateTime.Now.ToString("h:mm:ss tt")
-            //        Connect();
-            //        cmd.ExecuteNonQuery();
-            //        Disconnect();
-            //        return true;
-            //    }
-            //    catch
-            //    {
-            //        return false;
-            //    }
-            //}
-
-            //public static int SearchActorID(string nationalCode)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        dataTable = new DataTable();
-            //        cmd.CommandText = "SELECT * FROM \"Actor\" Where NationalCode = @NationalCode ";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@NationalCode", nationalCode);
-            //        adp.SelectCommand = cmd;
-            //        Connect();
-            //        adp.Fill(dataTable);
-            //        Disconnect();
-            //        if (dataTable.Rows.Count != 0)
-            //        {
-            //            ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-            //            //Activate = Convert.ToBoolean(dataTable.Rows[0]["Activate"]);
-            //            //Image = (byte[])dataTable.Rows[0]["Image"];
-            //            return ID;
-            //        }
-            //        else
-            //        {
-            //            return -1;
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        return -2;
-            //    }
-            //}
         }
         public class Bill
         {
@@ -751,36 +597,6 @@ namespace HotelManagement
                     ;
                 }
             }
-
-            //public static int Insert(int resID , int transID , string billNo , int roomCharge , int foodCharge , int serviceCharge  , int totalCharge , double discount , string description)
-            //{
-            //    try
-            //    {
-            //        MakeConnection();
-            //        cmd.CommandText = "Insert Into \"Bill\" (ResID , TransactionID , BillNo , RoomCharge , FoodCharge , ServiceCharge  , TotalCharge , Discount , DateModified , Description) Values (@ResID , @TransactionID , @BillNo , @RoomCharge , @FoodCharge , @ServiceCharge , @TotalCharge , @Discount , @DateModified , @Description)";
-            //        cmd.Parameters.Clear();
-            //        cmd.Parameters.AddWithValue("@ResID", resID);
-            //        cmd.Parameters.AddWithValue("@TransactionID", transID);
-            //        cmd.Parameters.AddWithValue("@BillNo", billNo);
-            //        cmd.Parameters.AddWithValue("@RoomCharge", roomCharge);
-            //        cmd.Parameters.AddWithValue("@FoodCharge", foodCharge);
-            //        cmd.Parameters.AddWithValue("@ServiceCharge", serviceCharge);
-            //        cmd.Parameters.AddWithValue("@TotalCharge", totalCharge);
-            //        cmd.Parameters.AddWithValue("@Discount", discount);
-            //        cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-            //        cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));                
-            //        Connect();
-            //        cmd.ExecuteNonQuery();
-            //        cmd.CommandText = Database.QueryLastID;
-            //        int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-            //        Disconnect();
-            //        return insertedID;
-            //    }
-            //    catch
-            //    {
-            //        return -1;
-            //    }
-            //}
             public static int Insert(int resID)
             {
                 try
@@ -1231,214 +1047,6 @@ namespace HotelManagement
                     cmd.ExecuteNonQuery();
                     Disconnect();
                     return true;
-                }
-                catch
-                {
-                    return false;
-                }
-
-            }
-        }
-
-        public class Food
-        {
-            public static int ID { get; set; }
-            public static string Title { get; set; }
-            public static int Price { get; set; }
-            public static string Description { get; set; }
-
-            private static SqlConnection con = new SqlConnection();
-            private static SqlCommand cmd = new SqlCommand();
-            private static SqlDataAdapter adp = new SqlDataAdapter();
-            private static DataTable dataTable = new DataTable();
-            private static void MakeConnection()
-            {
-                try
-                {
-                    con.ConnectionString = "Data Source = (Local); Initial Catalog = Hotel; Integrated Security = True";
-                    cmd.Connection = con;
-                }
-                catch
-                {
-                    ;
-                }
-            }
-            private static void Connect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Closed)
-                    {
-                        con.Open();
-                    }
-                }
-                catch
-                {
-                    ;
-                }
-            }
-            private static void Disconnect()
-            {
-                try
-                {
-                    if (con.State == ConnectionState.Open)
-                    {
-                        con.Close();
-                    }
-                }
-                catch
-                {
-                    ;
-                }
-            }
-            public static int Insert(string title , int price , string description)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Insert Into \"Food\" (Title , Price , Description ) Values (@Title ,@Price , @Description)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@Title", title);
-                    cmd.Parameters.AddWithValue("@Price", price);                 
-                    cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
-                    return insertedID;
-                }
-                catch
-                {
-                    return -1;
-                }
-            }
-            public static bool Update(int id , string title, int price, string description)
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Update \"Food\" Set Title = @Title , Price = @Price , Description = @Description Where ID=@ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    cmd.Parameters.AddWithValue("@Title", title);
-                    cmd.Parameters.AddWithValue("@Price", price);
-                    cmd.Parameters.AddWithValue("@Description", Database.CheckNullInsert(description));
-
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }        
-            public static bool SearchFood(int id)
-            {
-                try
-                {
-                    MakeConnection();
-                    dataTable = new DataTable();
-                    cmd.CommandText = "SELECT * FROM \"Food\" Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    adp.SelectCommand = cmd;
-
-                    Connect();
-                    adp.Fill(dataTable);
-                    Disconnect();
-
-                    if (dataTable.Rows.Count != 0)
-                    {
-                        //ID = Convert.ToInt32(dataTable.Rows[0]["ID"]);
-                        //if (dataTable.Rows[0]["TransactionID"] != DBNull.Value)
-                        //{
-                        //    TransactionID = Convert.ToInt32(dataTable.Rows[0]["TransactionID"]);
-                        //}
-                        //else
-                        //{
-                        //    TransactionID = 0;
-                        //}
-                        Price = Convert.ToInt32(dataTable.Rows[0]["Price"]);
-                        //PaymentMethodID = Convert.ToInt32(dataTable.Rows[0]["PaymentMethodID"]);
-                        //TransactionTypeID = Convert.ToInt32(dataTable.Rows[0]["TransactionTypeID"]);
-                        Title = Database.CheckNullSelect(dataTable.Rows[0]["Title"]) as string;
-                        //Amount = Convert.ToDouble(dataTable.Rows[0]["Amount"]);
-                        ////Discount = Convert.ToDouble(dataTable.Rows[0][" Discount"]);
-                        //DateModified = Convert.ToDateTime(dataTable.Rows[0]["DateModified"]);
-                        Description = Database.CheckNullSelect(dataTable.Rows[0]["Description"]) as string;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            public static bool Delete(int id)
-            {
-                try
-                {
-                    dataTable = new DataTable();
-                    cmd.CommandText = "Delete FROM \"Food\" Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    MakeConnection();
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            public static int InsertOrderFood(int foodID , int resID , int count , int Total )
-            {
-                try
-                {
-                    MakeConnection();
-                    cmd.CommandText = "Insert Into \"OrderFood\" (FoodID , ResID , Count , Total , DateModified ) Values (@FoodID , @ResID , @Count , @Total , @DateModified )";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@FoodID", foodID);
-                    cmd.Parameters.AddWithValue("@ResID", resID);
-                    cmd.Parameters.AddWithValue("@Count", count);
-                    cmd.Parameters.AddWithValue("@Total", Total);
-                    cmd.Parameters.AddWithValue("@DateModified", DateTime.Now);
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
-                    return insertedID;
-                }
-                catch
-                {
-                    return -1;
-                }
-            }
-            public static bool DeleteOrderFood(int id)
-            {
-                try
-                {
-                    dataTable = new DataTable();
-                    cmd.CommandText = "Delete FROM \"OrderFood\" Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    MakeConnection();
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-
                 }
                 catch
                 {
