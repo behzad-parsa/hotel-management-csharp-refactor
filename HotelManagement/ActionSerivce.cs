@@ -8,13 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
 
     public partial class ActionSerivce : Form
     {
-
+        private readonly ServiceService _serviceService;
+        private readonly OrderServiceService _orderServiceService;
+        
         public int ServiceID;
         public bool completeActionFlag = false;
         private bool addFlag;
@@ -46,6 +50,9 @@ namespace HotelManagement
                 picIcon.Image = Properties.Resources._326602_32;
                 lblTitle.Text = "Edit";
             }
+
+            _orderServiceService = new OrderServiceService();
+            _serviceService = new ServiceService();
         }
 
         private void ActionSerivce_Load(object sender, EventArgs e)
@@ -53,12 +60,13 @@ namespace HotelManagement
             //-------------Load Edit ------------------
             if (!addFlag)
             {
-                if (HotelDatabase.Service.SearchService(ServiceID))
+                var service = _serviceService.GetService(ServiceID);
+                if (service != null)
                 {
 
-                    txtTitle.Text = HotelDatabase.Service.Title;
-                    txtPrice.Text = HotelDatabase.Service.Price.ToString();
-                    txtDecription.Text = HotelDatabase.Service.Description;
+                    txtTitle.Text = service.Title;
+                    txtPrice.Text = service.Price.ToString();
+                    txtDecription.Text = service.Description;
                 }
                 else
                 {
@@ -72,7 +80,7 @@ namespace HotelManagement
             this.Dispose();
         }
 
-        //SideWays Method ----------------------------
+        //------ SideWays Method ----------------------------
         private void TextBoxEnter(object sender, EventArgs e)
         {
             var txtBox = sender as BunifuMetroTextbox;
@@ -149,7 +157,7 @@ namespace HotelManagement
 
             if (txtCount == 2)
             {
-                bool isNumric = int.TryParse(txtPrice.Text, out int num);
+                bool isNumric = int.TryParse(txtPrice.Text, out int num);          
                 if (isNumric)
                 {
                     validationFlag = true;
@@ -169,12 +177,18 @@ namespace HotelManagement
             {
                 validationFlag = false;
 
-                //------- Add Part ------------
+                //-------- Add Part ------------
                 if (addFlag)
                 {
-                    var res = HotelDatabase.Service.Insert(txtTitle.Text, Convert.ToInt32(txtPrice.Text), txtDecription.Text);
-
-                    if (res > 0)
+                    //var res = HotelDatabase.Service.Insert(txtTitle.Text, Convert.ToInt32(txtPrice.Text), txtDecription.Text);
+                    var service = new Service()
+                    {
+                        Title = txtTitle.Text,
+                        Price = Convert.ToInt32(txtPrice.Text),
+                        Description = txtDecription.Text
+                    };
+                    var resultInsert = _serviceService.InsertService(service);
+                    if (resultInsert)
                     {
                         PanelStatus("Action Completed Successfully", Status.Green);
                         completeActionFlag = true;
@@ -189,7 +203,15 @@ namespace HotelManagement
                 //---------- This is Edit Part -----------
                 else
                 {
-                    if (HotelDatabase.Service.Update(ServiceID, txtTitle.Text, Convert.ToInt32(txtPrice.Text), txtDecription.Text))
+                    var service = new Service()
+                    {
+                        ID = ServiceID,
+                        Title = txtTitle.Text,
+                        Description = txtDecription.Text,
+                        Price = Convert.ToInt32(txtPrice.Text)
+                    };
+                    var resultUpdate = _serviceService.UpdateService(service);
+                    if (resultUpdate)
                     {
                         PanelStatus("Action Completed Successfully", Status.Green);
                         completeActionFlag = true;
