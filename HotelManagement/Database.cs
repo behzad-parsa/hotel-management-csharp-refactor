@@ -1026,7 +1026,7 @@ namespace HotelManagement
                 }
 
             }
-        }
+        } 
         public class Database
         {
             //--Query To Get LastID After Insert

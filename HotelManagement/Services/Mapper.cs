@@ -27,11 +27,8 @@ namespace HotelManagement.Services
                             property.SetValue(obj, null, null);
                         break;
                     }
-         
                 }
-
             }
-
             return obj;
         }
 
@@ -45,7 +42,6 @@ namespace HotelManagement.Services
                 objectList.Add(item);
             }
             return objectList;
-        }
-        
+        }    
     }
 }

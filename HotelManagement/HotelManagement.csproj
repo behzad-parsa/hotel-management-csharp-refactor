@@ -192,6 +192,7 @@
       <DependentUpon>frmTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Actor.cs" />
+    <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -201,11 +202,14 @@
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\OrderFood.cs" />
     <Compile Include="Models\OrderService.cs" />
+    <Compile Include="Models\PaymentMethod.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\RoomNumber.cs" />
     <Compile Include="Models\RoomType.cs" />
     <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\Transact.cs" />
+    <Compile Include="Models\TransactionType.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="CustomeNumeric.cs">
       <SubType>UserControl</SubType>
@@ -390,6 +394,7 @@
     <Compile Include="Services\AccessLevelService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\ActorService.cs" />
+    <Compile Include="Services\BillService.cs" />
     <Compile Include="Services\BranchService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
@@ -402,6 +407,7 @@
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\RoomService.cs" />
     <Compile Include="Services\ServiceService.cs" />
+    <Compile Include="Services\TransactService.cs" />
     <Compile Include="Setting.cs">
       <SubType>UserControl</SubType>
     </Compile>
