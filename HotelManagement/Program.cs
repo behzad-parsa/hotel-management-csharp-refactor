@@ -17,8 +17,11 @@ namespace HotelManagement
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new frmLogin());
-            Application.Run(new frmTest());
+            //Application.Run(new frmTest());
             //Application.Run(new frmMain());
+            EditTransact editTransact = new EditTransact();
+            editTransact.transID = 5;
+            Application.Run(editTransact);
         }
     }
 }

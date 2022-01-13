@@ -16,108 +16,94 @@ namespace HotelManagement
     public partial class EditTransact : Form
     {
         private readonly AccountService _accountService;
+        private readonly TransactService _transactService;
 
         public int transID;
         public bool completeFlag = false;
 
-        //Dictionary<int, string> lstAccount = new Dictionary<int, string>();
         private List<Account> branchAccountsList;
-        Dictionary<int, string> lstPaymentType = new Dictionary<int, string>();
-        Dictionary<int, string> lstTranactionType = new Dictionary<int, string>();
+        private List<PaymentMethod> paymentMethodsList;
+        private List<TransactionType> transactionTypesList;
+        
+        private readonly List<RadioButton> radioButtonsList;
         public EditTransact()
         {
             InitializeComponent();
 
             _accountService = new AccountService();
+            _transactService = new TransactService();
+
+            radioButtonsList = new List<RadioButton>();
         }
 
         private void EditTransact_Load(object sender, EventArgs e)
         {
-            //--------BranchID------------------------------------
-            //lstAccount = HotelDatabase.Account.GetAccountList(1);
+            //-------- Branch ----------------------------
             branchAccountsList = _accountService.GetAllBranchAccounts(Current.User.BranchID);
-            //foreach (var item in lstAccount)
-            //{
-            //    cmbAccount.Items.Add(item.Value);
-            //}
+
             cmbAccount.DataSource = branchAccountsList;
             cmbAccount.DisplayMember = "AccountName";
 
-            //-----PaymentMethod---------------------
-            lstPaymentType = HotelDatabase.Transact.GetPaymentMethod();
-            FillPanel(panelPaymentMethod, lstPaymentType, false);
+            // PaymentMethod ---------------------
+            paymentMethodsList = _transactService.GetAllPaymentMethods();
+            FillPanel(panelPaymentMethod , paymentMethodsList);
 
-            //TransactionType
-            lstTranactionType = HotelDatabase.Transact.GetTransactionType();
-            FillPanel(panelType, lstTranactionType, true);
+            //TransactionType ----------------------------
+            transactionTypesList = _transactService.GetAllTransactionTypes();
+            FillPanel(panelType , transactionTypesList);
 
-            var res = HotelDatabase.Transact.SearchTransact(transID);
-            if (res)
+            var transact = _transactService.GetTransact(transID);
+
+            if (transact != null)
             {
-                txtAmount.Text = HotelDatabase.Transact.Amount.ToString();
-                txtTransNum.Text = HotelDatabase.Transact.TransactionNumber ?? "";
-                txtDescription.Text = HotelDatabase.Transact.Description ?? "";
+                txtAmount.Text = transact.Amount.ToString();
+                txtTransNum.Text = transact.TransactionNumber ?? string.Empty;
+                txtDescription.Text = transact.Description ?? string.Empty;
 
-                //lstAccount.TryGetValue( HotelDatabase.Transact.AccountID , out string account  );
-                var account = branchAccountsList.SingleOrDefault(x => x.ID == HotelDatabase.Transact.AccountID);
-
+                var account = branchAccountsList.SingleOrDefault(x => x.ID == transact.AccountID);
                 cmbAccount.SelectedItem = account;
-                lstPaymentType.TryGetValue(HotelDatabase.Transact.PaymentMethodID, out string payMethodText);
-                var rdb = _lstRadioButton.Find(x => x.Text == payMethodText);
-                rdb.Checked = true;
-                lstTranactionType.TryGetValue(HotelDatabase.Transact.TransactionTypeID, out string transactionType);
-                var rdbType = _lstRadioButton.Find(x => x.Text == transactionType);
-                rdbType.Checked = true;              
+
+
+                var paymentMethod = paymentMethodsList.SingleOrDefault(x => x.ID == transact.PaymentMethodID);
+                var paymentRadioButton = radioButtonsList.Find(x => x.Text == paymentMethod.Title);
+                paymentRadioButton.Checked = true;
+
+
+                var transactionType = transactionTypesList.Find(x => x.ID == transact.TransactionTypeID);
+                var transactTypeRadioButton = radioButtonsList.Find(x => x.Text == transactionType.Title);
+                transactTypeRadioButton.Checked = true;              
             }            
         }
 
-        List<RadioButton> _lstRadioButton = new List<RadioButton>();
-        private void FillPanel(Panel panel, Dictionary<int, string> lst, bool isType)
+        private void FillPanel<T>(Panel panel, List<T> list)
         {
-            int counter = 0;
-            List<RadioButton> lstRadioButton = new List<RadioButton>();
-            foreach (var item in lst)
+            RadioButton previousRadioButton = null ;
+            foreach (var item in list)
             {
-                RadioButton rdb = new RadioButton();
-                rdb.Text = item.Value;
-                if (isType)
+                RadioButton radioButton = new RadioButton
                 {
-                    rdb.CheckedChanged += new EventHandler(RadioButtonActiveTrans);
-                }
-                else
-                {
-                    rdb.CheckedChanged += new EventHandler(RadioButtonActivePay);
-                }
+                    Text = item.GetType().GetProperty("Title").GetValue(item, null) as string,
+                    //Location = new Point()
+                };
+                
+                if(previousRadioButton != null)
+                    radioButton.Location = new Point(
+                            previousRadioButton.Location.X,
+                            previousRadioButton.Location.Y + 40);
 
-                panel.Controls.Add(rdb);
-                if (counter > 0)
-                {
-                    rdb.Location = new Point(lstRadioButton[lstRadioButton.Count - 1].Location.X, lstRadioButton[lstRadioButton.Count - 1].Location.Y + 40);
-                }
-                lstRadioButton.Add(rdb);
-                _lstRadioButton.Add(rdb);
-                counter++;
+                panel.Controls.Add(radioButton);
+
+                previousRadioButton = radioButton;
+
+                radioButton.CheckedChanged += new EventHandler(RadioButton_CheckedChange);
+                radioButtonsList.Add(radioButton);
             }
         }
-
-        private string checkedValuePaymentType;
-        private string checkValueTransType;
-        private void RadioButtonActivePay(object sender, EventArgs e)
+     
+        private void RadioButton_CheckedChange(object sender, EventArgs e)
         {
-            var rdb = sender as RadioButton;
-
-            if (rdb.Checked)
-            {
-                checkedValuePaymentType = rdb.Text;
-            }
-        }
-        private void RadioButtonActiveTrans(object sender, EventArgs e)
-        {
-            var rdb = sender as RadioButton;
-            if (rdb.Checked)
-            {
-                checkValueTransType = rdb.Text;
-            }
+            var radioButton = sender as RadioButton;
+            radioButtonsList.Find(x => x == radioButton).Checked = radioButton.Checked;
         }
 
         private enum Status
@@ -211,12 +197,27 @@ namespace HotelManagement
             if (validationFlag)
             {
                 validationFlag = false;
-                //var accountID = lstAccount.FirstOrDefault(x => x.Value == cmbAccount.SelectedItem.ToString()).Key;
+
                 var accountID = branchAccountsList.SingleOrDefault(x => x == cmbAccount.SelectedItem).ID;
-                var paymentMethodID = lstPaymentType.FirstOrDefault(x => x.Value == checkedValuePaymentType).Key;
-                var transactionTypeID = lstTranactionType.FirstOrDefault(x => x.Value == checkValueTransType).Key;
-                var res = HotelDatabase.Transact.Update( transID , accountID, paymentMethodID, transactionTypeID, txtTransNum.Text, Convert.ToDouble(txtAmount.Text), txtDescription.Text);
-                if (res )
+                //Technincally We have Two Active Radio Button : one in paymentMethods Another on TransactionsType
+                //First , paymentMethods Fill and the Second, transactionType fill the RadioButtonLists , So the order is fixed  
+                var checkedRadioButtons = radioButtonsList.FindAll(x => x.Checked); 
+                var paymentMethodID = paymentMethodsList.SingleOrDefault(x => x.Title == checkedRadioButtons[0].Text).ID; 
+                var transactionTypeID = transactionTypesList.SingleOrDefault(x => x.Title == checkedRadioButtons[1].Text).ID;
+
+                var transact = new Transact()
+                {
+                    ID = transID,
+                    AccountID = accountID,
+                    PaymentMethodID = paymentMethodID,
+                    TransactionTypeID = transactionTypeID,
+                    TransactionNumber = txtTransNum.Text,
+                    Amount = Convert.ToDouble(txtAmount.Text),
+                    Description = txtDescription.Text,
+                    DateModified = DateTime.Now
+                };
+                var resultUpdate = _transactService.UpdateTransact(transact);
+                if (resultUpdate)
                 {
                     PanelStatus("Action Completed Successfuly", Status.Green);
                     completeFlag = true;

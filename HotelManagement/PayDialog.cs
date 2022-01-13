@@ -15,7 +15,11 @@ namespace HotelManagement
     public partial class PayDialog : Form
     {
         private readonly AccountService _accountService;
+        private readonly TransactService _transactService;
+
         private List<Account> branchAccountsList;
+        private List<PaymentMethod> paymentMethodsList;
+        private readonly List<RadioButton> radioButtonsList;
 
         public static List<string> Information = new List<string>();
         public static int BillID;
@@ -25,78 +29,88 @@ namespace HotelManagement
             InitializeComponent();
 
             _accountService = new AccountService();
-            
+            _transactService = new TransactService();
+
+            radioButtonsList = new List<RadioButton>();
         }
 
         private void panel1_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        //Dictionary<int, string> lstAccount = new Dictionary<int, string>();
-        Dictionary<int, string> lstPay = new Dictionary<int, string>();
+       
         private void PayDialog_Load(object sender, EventArgs e)
         {
             btnPay.Enabled = true;
             lblAmountPay.Text = Information[0];
             lblCustomerName.Text = Information[1];
 
-            //------ BranchID -------
-            //lstAccount = HotelDatabase.Account.GetAccountList(1);
+            //------ Branch  -------
             branchAccountsList = _accountService.GetAllBranchAccounts(Current.User.BranchID);
-            //foreach (var item in lstAccount)
-            //{
-            //    cmbAccount.Items.Add(item.Value);
-            //}
+
             cmbAccount.DataSource = branchAccountsList;
             cmbAccount.DisplayMember = "AccountName";
 
-            lstPay = HotelDatabase.Transact.GetPaymentMethod();
-            int counter = 0;
-            List<RadioButton> lstRadioButton = new List<RadioButton>();
+            paymentMethodsList = _transactService.GetAllPaymentMethods();
+            FillPanel(panelPaymentMethod, paymentMethodsList);
 
-            foreach (var item in lstPay)
-            {            
-                RadioButton rdb = new RadioButton();
-                rdb.Text = item.Value;
-                rdb.CheckedChanged += new EventHandler(RadioButtonActive);
-
-                panelPaymentMethod.Controls.Add(rdb);
-                if (counter > 0)
-                {
-                    rdb.Location = new Point(
-                        lstRadioButton[lstRadioButton.Count - 1].Location.X , 
-                        lstRadioButton[lstRadioButton.Count - 1].Location.Y + 40
-                        );
-                }
-                lstRadioButton.Add(rdb);
-                counter++;
-            }
         }
 
-        private string checkedValue;
-        private void RadioButtonActive(object sender , EventArgs e)
+        private void FillPanel<T>(Panel panel, List<T> list)
         {
-            var rdb = sender as RadioButton;
-
-            if (rdb.Checked)
+            RadioButton previousRadioButton = null;
+            foreach (var item in list)
             {
-                checkedValue = rdb.Text;
+                RadioButton radioButton = new RadioButton
+                {
+                    Text = item.GetType().GetProperty("Title").GetValue(item, null) as string,
+
+                };
+
+                if (previousRadioButton != null)
+                    radioButton.Location = new Point(
+                            previousRadioButton.Location.X,
+                            previousRadioButton.Location.Y + 40);
+
+                panel.Controls.Add(radioButton);
+
+                previousRadioButton = radioButton;
+
+                radioButton.CheckedChanged += new EventHandler(RadioButton_CheckedChange);
+                radioButtonsList.Add(radioButton);
             }
+        }
+        private void RadioButton_CheckedChange(object sender, EventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+            radioButtonsList.Find(x => x == radioButton).Checked = radioButton.Checked;
         }
 
         private void btnPay_Click(object sender, EventArgs e)
         {
             var accountID = branchAccountsList.SingleOrDefault(x => x == cmbAccount.SelectedItem).ID;
-            var paymentMethodID = lstPay.FirstOrDefault(x => x.Value == checkedValue).Key;
-            var amount = Convert.ToDouble(Information[0]);      
-            var res =  HotelDatabase.Transact.Insert(accountID, paymentMethodID, 1,txtTransNum.Text, amount, txtDescription.Text);
-
-            if (res>0)
+            var checkedRadioButton = radioButtonsList.Find(x => x.Checked);
+            var paymentMethodID = paymentMethodsList.SingleOrDefault(x => x.Title == checkedRadioButton.Text).ID;
+            var amount = Convert.ToDouble(Information[0]);    
+           
+            //var res =  HotelDatabase.Transact.Insert(accountID, paymentMethodID, 1,txtTransNum.Text, amount, txtDescription.Text);
+            var transact = new Transact()
             {
-                if (HotelDatabase.Bill.Update(BillID, res))
+                AccountID = accountID,
+                PaymentMethodID = paymentMethodID,
+                TransactionTypeID = 1,
+                TransactionNumber = txtTransNum.Text,
+                Amount = amount,
+                Description = txtDescription.Text,
+                DateModified = DateTime.Now
+            };
+            var resultInsert = _transactService.InsertTransact(transact);
+            transact.ID = _transactService.LastInsertedId;
+            if (resultInsert)
+            {
+                if (HotelDatabase.Bill.Update(BillID, transact.ID ))
                 {
-                    InvoiceDetail.TranID = res;
+                    InvoiceDetail.TranID = transact.ID;
                     lblStatus.Visible = true;
                     lblStatus.Text = "Successful";
                     lblStatus.ForeColor = Color.SpringGreen;

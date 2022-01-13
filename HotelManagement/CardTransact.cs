@@ -7,14 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class CardTransact : UserControl
     {
+        private readonly TransactService _transactService;
         public CardTransact()
         {
             InitializeComponent();
+
+            _transactService = new TransactService();
         }
 
         private void LoadData()
@@ -51,11 +56,13 @@ namespace HotelManagement
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    if (HotelDatabase.Transact.Delete(transID))
+                    if (_transactService.DeleteTransact(transID))
                     {
                         PanelStatus("Action Completed Successfuly", Status.Green);
                         LoadData();
-                        Current.User.Activities.Add(new Activity("Delete Transaction", "A Transaction has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname));
+                        Current.User.Activities.Add(
+                            new Activity("Delete Transaction", " Transaction has been deleted by " + 
+                            Current.User.Firstname + " " + Current.User.Lastname));
                     }
                     else
                     {
