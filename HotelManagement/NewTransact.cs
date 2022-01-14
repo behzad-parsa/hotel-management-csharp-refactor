@@ -38,7 +38,7 @@ namespace HotelManagement
         private void NewTransact_Load(object sender, EventArgs e)
         {
             // Branch ------------
-            branchAccountsList = _accountService.GetAllBranchAccounts(Current.User.BranchID);
+            branchAccountsList = _accountService.GetAllBranchAccounts(Current.CurrentUser.BranchID);
 
             cmbAccount.DataSource = branchAccountsList;
             cmbAccount.DisplayMember = "AccountName";

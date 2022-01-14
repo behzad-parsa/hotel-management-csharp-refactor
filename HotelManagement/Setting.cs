@@ -37,7 +37,7 @@ namespace HotelManagement
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 var img = Image.FromFile(openFileDialog1.FileName);
-                if (Current.User.UpdateProfilePicture(ConvertPicToByte(img)))
+                if (Current.CurrentUser.UpdateProfilePicture(ConvertPicToByte(img)))
                 {
                     picPhoto.Image = img;
                 }               
@@ -47,26 +47,26 @@ namespace HotelManagement
         private void Setting_Load(object sender, EventArgs e)
         {
             //Loading User DAta
-            lblBirth.Text = Current.User.Birth.ToString("MM / dd / yyyy");
-            lblEducation.Text = Current.User.Education.ToString();
-            lblEmail.Text = Current.User.Email;
-            lblGender.Text = Current.User.Gender;
-            lblHire.Text = Current.User.HireDate.ToString("MM / dd / yyyy");
-            lblMobile.Text = Current.User.Mobile;
-            lblName.Text =  Current.User.Firstname +" " + Current.User.Lastname;
-            lblNC.Text = Current.User.NationalCode;
-            lblRole.Text = Current.User.RoleTitle;
-            lblSalary.Text = Current.User.Salary.ToString();
-            lblUsername.Text = Current.User.Username;
-            var lastSignin = HotelDatabase.User.GetLastSignin(Current.User.ID);
+            lblBirth.Text = Current.CurrentUser.Birth.ToString("MM / dd / yyyy");
+            lblEducation.Text = Current.CurrentUser.Education.ToString();
+            lblEmail.Text = Current.CurrentUser.Email;
+            lblGender.Text = Current.CurrentUser.Gender;
+            lblHire.Text = Current.CurrentUser.HireDate.ToString("MM / dd / yyyy");
+            lblMobile.Text = Current.CurrentUser.Mobile;
+            lblName.Text =  Current.CurrentUser.Firstname +" " + Current.CurrentUser.Lastname;
+            lblNC.Text = Current.CurrentUser.NationalCode;
+            lblRole.Text = Current.CurrentUser.RoleTitle;
+            lblSalary.Text = Current.CurrentUser.Salary.ToString();
+            lblUsername.Text = Current.CurrentUser.Username;
+            var lastSignin = HotelDatabase.User.GetLastSignin(Current.CurrentUser.ID);
             if (lastSignin != DateTime.MinValue) lblLastSignIn.Text = lastSignin.ToString();
 
-            MemoryStream ms = new MemoryStream(Current.User.Image); 
+            MemoryStream ms = new MemoryStream(Current.CurrentUser.Image); 
             picPhoto.Image = Image.FromStream(ms);
 
 
             //HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
-            var branch = _branchService.GetBranch(Current.User.BranchID);
+            var branch = _branchService.GetBranch(Current.CurrentUser.BranchID);
             lblBranch.Text = branch.BranchName;
 
             //Get Access To Parants (Theme Part)      
@@ -80,7 +80,7 @@ namespace HotelManagement
             panels.Add(panelMoveSide);
 
             //Loading Login History
-            var loginHistory = Current.User.GetLoginHistory();
+            var loginHistory = Current.CurrentUser.GetLoginHistory();
             if (loginHistory != null)
             {
                 lblEmpty.Visible = false;
@@ -153,8 +153,8 @@ namespace HotelManagement
                     if (editSetting.compeletFlag)
                     {
                         if(!string.IsNullOrEmpty(editSetting.username)) lblUsername.Text = editSetting.username;
-                        Current.User.SearchUser(editSetting.username);
-                        Current.User.Activities.Add(new Activity("Edit Profile Information", "information has been changed by " + Current.User.Firstname + " " + Current.User.Lastname));
+                        Current.CurrentUser.SearchUser(editSetting.username);
+                        Current.CurrentUser.Activities.Add(new Activity("Edit Profile Information", "information has been changed by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
 
                     }
                 }

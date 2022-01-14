@@ -23,7 +23,7 @@ namespace HotelManagement
 
         private void EditSetting_Load(object sender, EventArgs e)
         {
-            txtUsername.Text = Current.User.Username;
+            txtUsername.Text = Current.CurrentUser.Username;
             btnSave.Enabled = false;
         }
 
@@ -34,11 +34,11 @@ namespace HotelManagement
 
         private void brnSave_Click(object sender, EventArgs e)
         {
-            if(txtUsername.Text != "" && txtUsername.Text != null && txtUsername.Text != Current.User.Username)
+            if(txtUsername.Text != "" && txtUsername.Text != null && txtUsername.Text != Current.CurrentUser.Username)
             {
                 if (!HotelDatabase.User.SearchUser(txtUsername.Text))
                 {
-                    if (Current.User.UpdateUsername(txtUsername.Text))
+                    if (Current.CurrentUser.UpdateUsername(txtUsername.Text))
                     {
                         PanelStatus("Information Change Successfully", Status.Green);
                         username = txtUsername.Text;
@@ -67,7 +67,7 @@ namespace HotelManagement
                     if (txtConfirmPass.Text ==  txtPass.Text)
                     {
                         HashPassword hp = new HashPassword();
-                        if (Current.User.UpdatePassword(hp.ConvertPass(txtPass.Text)))
+                        if (Current.CurrentUser.UpdatePassword(hp.ConvertPass(txtPass.Text)))
                         {
                             PanelStatus("Information Change Successfully", Status.Green);
                             compeletFlag = true;

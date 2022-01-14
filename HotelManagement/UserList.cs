@@ -30,7 +30,7 @@ namespace HotelManagement
               "LEFT JOIN [User] u ON u.EmployeeID = e.ID " +
               "Inner Join Actor a On e.ActID = a.ID " +
               "left Join Role r on r.ID = u.RoleID " +
-              "Where e.BranchID = " + Current.User.BranchID;
+              "Where e.BranchID = " + Current.CurrentUser.BranchID;
 
             var data = _userData = HotelDatabase.Database.Query(query);
 
@@ -60,7 +60,7 @@ namespace HotelManagement
         private void LoadLoginHistory()
         {
             string query = " ; WITH Base AS( Select DISTINCT  log.id, Username, log.DateTime  From LoginHistory log, [User] u, Employee e, BranchInfo bi " +
-                "Where  log.UserID = u.ID And u.EmployeeId = e.id And e.BranchID = "+ Current.User.BranchID + ")" +
+                "Where  log.UserID = u.ID And u.EmployeeId = e.id And e.BranchID = "+ Current.CurrentUser.BranchID + ")" +
                 "SELECT Distinct ROW_NUMBER() OVER(ORDER BY id DESC) AS # , Username , DateTime FROM Base";
 
             var data = _historyData = HotelDatabase.Database.Query(query);
@@ -198,8 +198,8 @@ namespace HotelManagement
 
         private void btnReportFood_Click(object sender, EventArgs e)
         {
-            Current.User.Activities.Add(
-                new Activity("Create New Report", "the report from User/Employee list has been created by " + Current.User.Firstname + " " + Current.User.Lastname)
+            Current.CurrentUser.Activities.Add(
+                new Activity("Create New Report", "the report from User/Employee list has been created by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                 );
             Report.Load("Report/UserReport.mrt"  , "User" , _userData);
         }

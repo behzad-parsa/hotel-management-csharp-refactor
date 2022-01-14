@@ -148,9 +148,9 @@ namespace HotelManagement
                             {
                                 PanelStatus(panelStatusUser, "Action Completed Successfully ", Status.Green);
                                 panelInfo.Enabled = false;
-                                Current.User.Activities.Add(
+                                Current.CurrentUser.Activities.Add(
                                     new Activity("submit New User", 
-                                    "the User '"+ txtUsername.Text+"' has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
+                                    "the User '"+ txtUsername.Text+"' has been submited by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
                             }
                             else
                             {
@@ -230,7 +230,7 @@ namespace HotelManagement
                             PanelStatus(panelStatusUser, "Action Completed Successfully", Status.Green);                               
                             panelInfo.Enabled = false;                              
                             panelInfo.Enabled = false;                            
-                            Current.User.Activities.Add(new Activity("change user information", "the User '"+ txtUsername.Text+"'s information has been changed by " + Current.User.Firstname + " " + Current.User.Lastname));                         
+                            Current.CurrentUser.Activities.Add(new Activity("change user information", "the User '"+ txtUsername.Text+"'s information has been changed by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));                         
                         }                   
                         else                            
                         {                             
@@ -280,7 +280,7 @@ namespace HotelManagement
                 //FindEmployee(); //issue
                 var actor = _actorService.GetActor(txtNCSearch.Text);
                 //var actor = _actorService.GetActor(ActID);
-                var employee = _employeeService.GetEmployee(actor.ID, Current.User.BranchID);
+                var employee = _employeeService.GetEmployee(actor.ID, Current.CurrentUser.BranchID);
                 //if (isFindEmployee && actor != null && employee != null)
                 if (actor != null && employee != null)
                 {
@@ -293,7 +293,7 @@ namespace HotelManagement
                     lblSalary.Text = employee.Salary.ToString();
                     lblGender.Text = actor.Gender;
 
-                    var branch = _branchService.GetBranch(Current.User.BranchID);
+                    var branch = _branchService.GetBranch(Current.CurrentUser.BranchID);
                     if (branch != null) 
                     {
                         lblBranch.Text = branch.BranchName;

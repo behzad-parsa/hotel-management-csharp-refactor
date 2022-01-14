@@ -21,7 +21,7 @@ namespace HotelManagement
 
             StiText txtUser = new StiText();
             txtUser = report.GetComponentByName("txtUser") as StiText;
-            txtUser.Text = Current.User.Firstname + " " + Current.User.Lastname;
+            txtUser.Text = Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname;
 
             StiText txtDateTime = new StiText();
             txtDateTime = report.GetComponentByName("txtDateTime") as StiText;
@@ -64,7 +64,7 @@ namespace HotelManagement
         {
             StiReport report = new StiReport();
             report.Load(reportPath);
-            Report.SetHotelComponents(report, Current.User.Branch);          
+            Report.SetHotelComponents(report, Current.CurrentUser.Branch);          
             report.RegBusinessObject(businessObjName,businessObj);
             report.Compile();
             report.Show();

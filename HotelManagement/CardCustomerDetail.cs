@@ -460,7 +460,7 @@ namespace HotelManagement
                             customer.ID = _customerService.LastInsertedId;
 
                             PanelStatus(panelStatusCustomer , "Action Completed Successfuly", Status.Green);
-                            Current.User.Activities.Add(new Activity("Submit New Customer", txtFname.Text + " " + txtLname.Text + "'s information has been submited by " + Current.User.Firstname+" " +Current.User.Lastname));
+                            Current.CurrentUser.Activities.Add(new Activity("Submit New Customer", txtFname.Text + " " + txtLname.Text + "'s information has been submited by " + Current.CurrentUser.Firstname+" " +Current.CurrentUser.Lastname));
 
 
                             btnNext.Visible = true;
@@ -524,7 +524,7 @@ namespace HotelManagement
                     {
                         updateFlag = false;
                         PanelStatus(panelStatusCustomer, "Information Changed Successfuly", Status.Green);
-                        Current.User.Activities.Add(new Activity("Edit Customer Information", txtFname.Text + " " + txtLname.Text + "'s information has been changed by " + Current.User.Firstname + " " + Current.User.Lastname));
+                        Current.CurrentUser.Activities.Add(new Activity("Edit Customer Information", txtFname.Text + " " + txtLname.Text + "'s information has been changed by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
 
                         btnSubmit.Text = "Submit";
 

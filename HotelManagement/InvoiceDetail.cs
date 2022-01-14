@@ -124,7 +124,7 @@ namespace HotelManagement
             lblBottom.Text = lblHotelName.Text + " | " + lblHotelStateCity.Text + " | " + lblHotelTell.Text + " | " + data.Rows[0]["Baddress"].ToString();
 
             BillID = Convert.ToInt32(data.Rows[0]["Bid"]);
-            picLogo.Image = Image.FromStream(new MemoryStream(Current.User.Branch.Logo));
+            picLogo.Image = Image.FromStream(new MemoryStream(Current.CurrentUser.Branch.Logo));
             lblDiscount.Text = data.Rows[0]["Discount"].ToString();
             lblTotal.Text =  ConvertDiscount(lblDiscount.Text, lblSubtotal.Text).ToString();
             lblAmount.Text = lblTotal.Text;
@@ -179,9 +179,9 @@ namespace HotelManagement
                     edit.ShowDialog();
                     newDiscount = edit.discount;
                     newDescription = edit.description;
-                    Current.User.Activities.Add(
+                    Current.CurrentUser.Activities.Add(
                         new Activity("Modify Invoice",
-                        "invoice No." + lblBillNo.Text + "-" + lblCustName.Text + " has been modified by " + Current.User.Firstname + " " + Current.User.Lastname)
+                        "invoice No." + lblBillNo.Text + "-" + lblCustName.Text + " has been modified by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                         );
                 }
             } // pane
@@ -281,7 +281,7 @@ namespace HotelManagement
                         payFlag = true;
                         btnEdit.Enabled = false;
                         btnPay.Text = "Pay Info";
-                        Current.User.Activities.Add(new Activity("Pay Invoice", "Payment information of invoice No."+lblBillNo.Text+"-"+lblCustName.Text+" has been submited by " + Current.User.Firstname + " " + Current.User.Lastname));
+                        Current.CurrentUser.Activities.Add(new Activity("Pay Invoice", "Payment information of invoice No."+lblBillNo.Text+"-"+lblCustName.Text+" has been submited by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
 
                     }
                 }

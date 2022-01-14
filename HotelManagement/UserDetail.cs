@@ -41,9 +41,9 @@ namespace HotelManagement
             //var resAct = actor.SearchActorWithID(ActorID);
             var actor = _actorService.GetActor(ActorID);
             //var resEmployee = HotelDatabase.Employee.SearchEmployee(ActorID, Current.User.BranchID);
-            var employee = _employeeService.GetEmployee(ActorID, Current.User.BranchID);
+            var employee = _employeeService.GetEmployee(ActorID, Current.CurrentUser.BranchID);
             //var resBranch = HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID);
-            var branch = _branchService.GetBranch(Current.User.BranchID);
+            var branch = _branchService.GetBranch(Current.CurrentUser.BranchID);
             //if (resAct > 0 && resEmployee)
             if (actor != null && employee != null)
             {
@@ -196,9 +196,9 @@ namespace HotelManagement
                 var resultDeleteEmployee = _employeeService.DeleteEmployee(EmployeeID);
                 if (resultDeleteEmployee)
                 {
-                    Current.User.Activities.Add(
+                    Current.CurrentUser.Activities.Add(
                         new Activity("Delete a Employee", "the Employee '" + lblName.Text + "' has been deleted by " +
-                        Current.User.Firstname + " " + Current.User.Lastname)
+                        Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                         );
                     deleteEmployee = true;
                     this.Dispose();
@@ -218,9 +218,9 @@ namespace HotelManagement
                 if (HotelDatabase.User.Delete(UserID))
                 {
                     deleteEmployee = true;
-                    Current.User.Activities.Add(
+                    Current.CurrentUser.Activities.Add(
                             new Activity("Delete a User", "the User '" + lblName.Text + "-"+ 
-                            lblUsername.Text+"' has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname)
+                            lblUsername.Text+"' has been deleted by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                         );
                     this.Dispose();
                 }

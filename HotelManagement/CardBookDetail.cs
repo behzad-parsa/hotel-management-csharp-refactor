@@ -86,7 +86,7 @@ namespace HotelManagement
             string query = "Declare @checkin datetime = '" + checkin  +"' " +
                 "Declare @checkout datetime = '"+  checkout    +"' " +
                 "SELECT r.ID , rn.Title as No , Capacity As CPY , Floor , Price  , rt.Title as Type From Room as r , RoomNumber as rn , RoomTypeRel rtl, RoomType rt  " +
-                "Where  r.BranchID = "+Current.User.BranchID +" And  rn.id = r.RoomNumberID And r.Id = rtl.RoomID And rtl.RoomTypeID = rt.id " +
+                "Where  r.BranchID = "+Current.CurrentUser.BranchID +" And  rn.id = r.RoomNumberID And r.Id = rtl.RoomID And rtl.RoomTypeID = rt.id " +
             "AND r.ID NOT IN(  " +
 
             "Select Distinct res1.RoomID  From Room r, Reservation res1 Where  res1.CancelDate IS null ANd  r.id = res1.RoomID  " +
@@ -109,7 +109,7 @@ namespace HotelManagement
 
                 data.Columns.Add("Facilities");
 
-                var facilityData = HotelDatabase.Database.Query("Select DISTINCT r.id , f.Title From Room as r , facilities f , RoomFacilities rf Where r.BranchID = " + Current.User.BranchID + " And r.id = rf.RoomID ANd  f.id = rf.FacilitiesID ORder BY r.id ASC");
+                var facilityData = HotelDatabase.Database.Query("Select DISTINCT r.id , f.Title From Room as r , facilities f , RoomFacilities rf Where r.BranchID = " + Current.CurrentUser.BranchID + " And r.id = rf.RoomID ANd  f.id = rf.FacilitiesID ORder BY r.id ASC");
 
                 string d = null;
                 int i_val;
@@ -258,18 +258,18 @@ namespace HotelManagement
         {
             if (ID > 0)
             {
-                int result = HotelDatabase.Reservation.Insert(Current.User.ID, NewBook.customerInfo.ID, ID, dateStart.Value, dateEnd.Value, totalPrice);
+                int result = HotelDatabase.Reservation.Insert(Current.CurrentUser.ID, NewBook.customerInfo.ID, ID, dateStart.Value, dateEnd.Value, totalPrice);
                 if (result > 0)
                 {
                     LoadFreeRoom(dateStart.Value, dateEnd.Value);
                     dgvRoom.ClearSelection();
                     ID = -1;
                     PanelStatus(panelStatusBook , "Action Completed Successfuly", Status.Green);
-                    Current.User.Activities.Add(
+                    Current.CurrentUser.Activities.Add(
                         new Activity(
                             "Submit New Book", NewBook.customerInfo.Firstname+ " " + 
                             NewBook.customerInfo.Lastname + "'s booking has been submited by " + 
-                            Current.User.Firstname + " " + Current.User.Lastname)
+                            Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                         );
 
 
@@ -289,7 +289,7 @@ namespace HotelManagement
                     emailMsg += "\n Check-in/Out : " + dateStart.Value.ToString() + " - " + dateEnd.Value.ToString();
                     emailMsg += "\n Booking Date : " + DateTime.Now.ToString() +"\n\n";
 
-                    var branch = _branchService.GetBranch(Current.User.BranchID);
+                    var branch = _branchService.GetBranch(Current.CurrentUser.BranchID);
                     if (branch != null)//HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
                     {
                         emailMsg += branch.BranchName + " - " + branch.Tel + " - " + 

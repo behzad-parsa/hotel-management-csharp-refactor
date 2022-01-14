@@ -60,9 +60,9 @@ namespace HotelManagement
                     {
                         PanelStatus("Action Completed Successfuly", Status.Green);
                         LoadData();
-                        Current.User.Activities.Add(
+                        Current.CurrentUser.Activities.Add(
                             new Activity("Delete Transaction", " Transaction has been deleted by " + 
-                            Current.User.Firstname + " " + Current.User.Lastname));
+                            Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
                     }
                     else
                     {
@@ -121,8 +121,8 @@ namespace HotelManagement
                     {
                         LoadData();
                         dgvTransact.ClearSelection();
-                        Current.User.Activities.Add(
-                            new Activity("Create New Transaction", "New Transaction has been created by " + Current.User.Firstname + " " + Current.User.Lastname)
+                        Current.CurrentUser.Activities.Add(
+                            new Activity("Create New Transaction", "New Transaction has been created by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                             );
                     }
                 }
@@ -155,7 +155,7 @@ namespace HotelManagement
                         if (editTrans.completeFlag)
                         {
                             LoadData();
-                            Current.User.Activities.Add(new Activity("Edit Transaction", "Transaction information has been changed by " + Current.User.Firstname + " " + Current.User.Lastname));
+                            Current.CurrentUser.Activities.Add(new Activity("Edit Transaction", "Transaction information has been changed by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
                         }
                         int rowIndex = -1;
 

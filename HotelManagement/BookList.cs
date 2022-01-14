@@ -23,7 +23,7 @@ namespace HotelManagement
         {
             string query = "Select Distinct  res.id As ResID , u.Username as Employee , NationalCode , Firstname +' '+ Lastname  AS Name   , rn.Title As Room  , StartDate as CheckIn  , EndDate AS CheckOut , CancelDate , res.TotalPayDueDate as Pay ,res.DateModified  " +
                 "FRom Reservation res , [User] u , BranchInfo b , Employee e , Actor a , Room r , RoomNumber rn , Customer cus   " +
-                "Where res.UserID = u.ID ANd u.EmployeeID = e.ID AND e.BranchID = " + Current.User.BranchID +
+                "Where res.UserID = u.ID ANd u.EmployeeID = e.ID AND e.BranchID = " + Current.CurrentUser.BranchID +
                 " And res.RoomID = r.ID  And r.RoomNumberID = rn.ID ANd res.CustomerID = cus.ID And cus.ActID = a.ID";
 
             var data = HotelDatabase.Database.Query(query);
@@ -59,7 +59,7 @@ namespace HotelManagement
                         PanelStatus("Action Completed Successfuly", Status.Green);
 
                         LoadData();
-                        Current.User.Activities.Add(new Activity("Delete a Book", /*NewBook.customerInfo.Firstname + " " + NewBook.customerInfo.Lastname + "'s*/ "Booking record has been deleted by " + Current.User.Firstname + " " + Current.User.Lastname));
+                        Current.CurrentUser.Activities.Add(new Activity("Delete a Book", /*NewBook.customerInfo.Firstname + " " + NewBook.customerInfo.Lastname + "'s*/ "Booking record has been deleted by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
 
                         //int rowIndex = -1;
 

@@ -45,7 +45,7 @@ namespace HotelManagement
 
                     //Send Username To Server As Online User 
                     byte[] b = new byte[1024];
-                    b = Encoding.Unicode.GetBytes(Current.User.Username);
+                    b = Encoding.Unicode.GetBytes(Current.CurrentUser.Username);
                     socClient.Send(b);
                     //MessageBox.Show(socClient.RemoteEndPoint.ToString());
                     //--------------------------------------
@@ -108,7 +108,7 @@ namespace HotelManagement
                                 lstOnlineUser.Clear();
                                 for (int i = 0; i < onlineUser.Length; i++)
                                 {                                  
-                                    if (onlineUser[i] != Current.User.Username)
+                                    if (onlineUser[i] != Current.CurrentUser.Username)
                                     {
                                         var userInfo = HotelDatabase.User.SearchOnlineUser(onlineUser[i]);
                                         if(userInfo != null)
@@ -170,13 +170,13 @@ namespace HotelManagement
                 else
                 {
                     //Msg%sender%receiver%Text%Time
-                    msg = "Msg%" + Current.User.Username + "%" + receiver + "%" + date+"%"+ text;
+                    msg = "Msg%" + Current.CurrentUser.Username + "%" + receiver + "%" + date+"%"+ text;
                     var user = lstOnlineUser.Find(x => x.Username == receiver);
                     if (user != null)
                     {
                         //string[] msgSplitTime = _msg[3].Split(new char[] { '%' }, 2);
                         lstOnlineUser.Remove(user);
-                        user.Message.Add(new Message(Current.User.ID , text, date));
+                        user.Message.Add(new Message(Current.CurrentUser.ID , text, date));
                         lstOnlineUser.Add(user);
                     }
                 }

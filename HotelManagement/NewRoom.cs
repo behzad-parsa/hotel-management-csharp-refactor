@@ -43,7 +43,7 @@ namespace HotelManagement
         {
             //Bad Naming - Need Modify
             var h = HotelDatabase.Database.Query("Select Distinct r.id as ID, rn.Title as Number , Capacity , Floor , Price  , rt.Title as Type From Room as r , RoomNumber as rn , RoomTypeRel rtl , RoomType rt  " +
-            "Where r.isEmpty = 1 And rn.id = r.RoomNumberID And r.Id = rtl.RoomID And rtl.RoomTypeID = rt.id And r.BranchID = " + Current.User.BranchID + " ORder BY r.id ASC");
+            "Where r.isEmpty = 1 And rn.id = r.RoomNumberID And r.Id = rtl.RoomID And rtl.RoomTypeID = rt.id And r.BranchID = " + Current.CurrentUser.BranchID + " ORder BY r.id ASC");
 
             h.Columns.Add("Facil");
 
@@ -254,7 +254,7 @@ namespace HotelManagement
 
                     Room room = new Room()
                     {
-                        BranchID = Current.User.BranchID,
+                        BranchID = Current.CurrentUser.BranchID,
                         RoomNumberID = roomNumberID , 
                         IsEmpty = true ,
                         Floor = Convert.ToInt32(numericFloor.Value),
@@ -343,7 +343,7 @@ namespace HotelManagement
                     Room room = new Room()
                     {
                         ID = RoomID,
-                        BranchID = Current.User.BranchID,
+                        BranchID = Current.CurrentUser.BranchID,
                         RoomNumberID = roomNumberID,
                         IsEmpty = true,
                         Floor = Convert.ToInt32(numericFloor.Value),
@@ -389,9 +389,9 @@ namespace HotelManagement
                             {
                                 PanelStatus(panelStatusCreate, "Action Completed Successfully", Status.Green);
 
-                                Current.User.Activities.Add(
+                                Current.CurrentUser.Activities.Add(
                                     new Activity("Create New Room", "New Room has been created by " + 
-                                    Current.User.Firstname + " " + Current.User.Lastname)
+                                    Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                                     );
                             }
                         }

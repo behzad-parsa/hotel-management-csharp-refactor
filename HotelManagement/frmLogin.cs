@@ -268,20 +268,20 @@ namespace HotelManagement
                 {
                     this.Cursor = Cursors.WaitCursor;
                     //Check The Username
-                    if (Current.User.SearchUser(txtUsername.Text.ToLower().Trim()))
+                    if (Current.CurrentUser.SearchUser(txtUsername.Text.ToLower().Trim()))
                     {
                         HashPassword hashPass = new HashPassword();                      
                         //Check The Password
-                        if (hashPass.ComparePass(Current.User.Password, txtPassword.Text))
+                        if (hashPass.ComparePass(Current.CurrentUser.Password, txtPassword.Text))
                         {
 
                             //Check The Activate
-                            if (Current.User.Activate == true)
+                            if (Current.CurrentUser.Activate == true)
                             {
                                 //NextPage
                                 //countDownTime = 5;
                                // pictureLock.Image = Properties.Resources.unlock;
-                                Current.User.InsertLoginHistory();                          
+                                Current.CurrentUser.InsertLoginHistory();                          
                                 new frmMain().Show();
                                 this.Hide();
                             }
@@ -374,12 +374,12 @@ namespace HotelManagement
                 if (validationFlag)
                 {
                     validationFlag = false;
-                    if (Current.User.SearchUserEmail(txtForgotEmail.Text))
+                    if (Current.CurrentUser.SearchUserEmail(txtForgotEmail.Text))
                     {
                         rndStr = GenerateStrCode();
                         string body = "Your Confirmation Code is: \n " + rndStr;
 
-                        if (Communication.SendMail(txtForgotEmail.Text.Trim(), Current.User.Username, "Confirm Code", body))
+                        if (Communication.SendMail(txtForgotEmail.Text.Trim(), Current.CurrentUser.Username, "Confirm Code", body))
                         {
                             saveEmail = txtForgotEmail.Text.Trim();
                             labelHeader.Text = "Enter The Code :";
@@ -409,7 +409,7 @@ namespace HotelManagement
                 rndStr = GenerateStrCode();
                 string body = "Your Confirmation Code is: \n " + rndStr;
 
-                if (Communication.SendMail(saveEmail, Current.User.Username, "Confirm Code", body))
+                if (Communication.SendMail(saveEmail, Current.CurrentUser.Username, "Confirm Code", body))
                 {
     
                     txtForgotEmail.Text = null;
@@ -457,10 +457,10 @@ namespace HotelManagement
                 {
                     var pass = GeneratePassCode();
                     HashPassword hp = new HashPassword();
-                    if (Current.User.UpdatePassword(hp.ConvertPass(pass)))
+                    if (Current.CurrentUser.UpdatePassword(hp.ConvertPass(pass)))
                     {
-                        string body = "Dear , " + Current.User.Username + "\n\n" + "Your Password Has Been Changed :\t" + pass;
-                        Communication.SendMail(saveEmail, Current.User.Username, "New Password", body);
+                        string body = "Dear , " + Current.CurrentUser.Username + "\n\n" + "Your Password Has Been Changed :\t" + pass;
+                        Communication.SendMail(saveEmail, Current.CurrentUser.Username, "New Password", body);
 
                         LabelStatus(LblErrorFrogot, "Confirmed ,\n Check Your Mail To Get New Password", Status.Green);
                         timerReset.Stop();

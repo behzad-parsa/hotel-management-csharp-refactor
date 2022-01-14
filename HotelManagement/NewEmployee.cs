@@ -46,7 +46,7 @@ namespace HotelManagement
             cmbBranch.DataSource = branches;
             cmbBranch.DisplayMember = "BranchName";
             
-            var branch = branches.Find(x => x.ID == Current.User.BranchID);
+            var branch = branches.Find(x => x.ID == Current.CurrentUser.BranchID);
             cmbBranch.SelectedItem = branch.BranchName ;
         }
 
@@ -401,9 +401,9 @@ namespace HotelManagement
                             EmployeeID =_employeeService.LastInsertedId ;
                             searchFlag = false;
 
-                            Current.User.Activities.Add(
+                            Current.CurrentUser.Activities.Add(
                                 new Activity("submit New Employee", "the Employee '"+txtEmpFname.Text +" " +
-                                txtEmpLname.Text+"' has been submited by " + Current.User.Firstname + " " + Current.User.Lastname)
+                                txtEmpLname.Text+"' has been submited by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                                 );
                         }
                         else
@@ -451,11 +451,11 @@ namespace HotelManagement
                     if (employeeResult)
                     {                     
                         PanelStatus(panelStatusEmployee, "Action Completed Seccessfully", Status.Green);
-                        Current.User.Activities.Add(
+                        Current.CurrentUser.Activities.Add(
                             new Activity(
                                 "submit New Employee", "the Employee '" + txtEmpFname.Text + " " + 
                                 txtEmpLname.Text + "' has been submited by " + 
-                                Current.User.Firstname + " " + Current.User.Lastname)
+                                Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
                             );
                         panelEmployment.Enabled = false;
                         searchFlag = false;
@@ -543,9 +543,9 @@ namespace HotelManagement
                             panelContact.Enabled = false;
                             panelEmployment.Enabled = false;
 
-                            Current.User.Activities.Add(
+                            Current.CurrentUser.Activities.Add(
                                 new Activity("Edit Employee Information", 
-                                "the Employee '" + txtEmpFname.Text + " " + txtEmpLname.Text + "'s information has been changed by " + Current.User.Firstname + " " + Current.User.Lastname));
+                                "the Employee '" + txtEmpFname.Text + " " + txtEmpLname.Text + "'s information has been changed by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
                         }
                         else
                         {

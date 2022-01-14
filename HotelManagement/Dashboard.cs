@@ -36,11 +36,11 @@ namespace HotelManagement
 
             lstActivityItem = new List<ActivityItem>();
             int top = 0;
-            if (Current.User.Activities.Count != 0)
+            if (Current.CurrentUser.Activities.Count != 0)
             {
                 lblEmptyRecent.Visible = false;
 
-                foreach (var item in Current.User.Activities.OrderByDescending(x => x.Date))
+                foreach (var item in Current.CurrentUser.Activities.OrderByDescending(x => x.Date))
                 {
                     ActivityItem activityItem = new ActivityItem(item);
                     activityItem.Top = top;
@@ -187,7 +187,7 @@ namespace HotelManagement
                 else
                 {
                     string content;
-                    var branch = _branchService.GetBranch(Current.User.BranchID);
+                    var branch = _branchService.GetBranch(Current.CurrentUser.BranchID);
                     if (branch != null)//HotelDatabase.Branch.SearchBranchWithID(Current.User.BranchID))
                     {
                         var searchCity = OpenWeatherAPI.lstCity.Find(x => x.Name.ToLower() == branch.City.ToLower());
@@ -261,20 +261,20 @@ namespace HotelManagement
         private void AggregateQuery()
         {
             string query = "Select Count( Distinct  res.CustomerID ) From Customer c  , Reservation res , [User] u  , Employee e Where c.ID = res.CustomerID And GETDATE() Between res.StartDate And res.EndDate  "+
-                            "And res.UserID = u.ID And u.EmployeeID = e.ID And e.BranchID = " + Current.User.BranchID;
+                            "And res.UserID = u.ID And u.EmployeeID = e.ID And e.BranchID = " + Current.CurrentUser.BranchID;
 
             var customerCount = HotelDatabase.Database.Query(query);
             if (customerCount != null && customerCount.Rows[0][0] != DBNull.Value) lblCustomer.Text = customerCount.Rows[0][0].ToString();
 
             //DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             string date = DateTime.Now.Year.ToString()+"-"+DateTime.Now.Month.ToString()+"-"+DateTime.Now.Day.ToString();
-            query = "Select Sum(Amount) From Transact t , Accounts a Where t.AccountID = a.ID And a.BranchID = " + Current.User.BranchID + " And t.TransactionTypeID = 1   " +
+            query = "Select Sum(Amount) From Transact t , Accounts a Where t.AccountID = a.ID And a.BranchID = " + Current.CurrentUser.BranchID + " And t.TransactionTypeID = 1   " +
                      " And t.DateModified Between '" + date + " 00:00:00' And '" + date + " 23:59:59'  ";
             var revenue = HotelDatabase.Database.Query(query);
             if ( revenue!= null && revenue.Rows[0][0] != DBNull.Value) lblRevenue.Text = string.Format("{0:n0}", Convert.ToInt32(revenue.Rows[0][0]));
 
 
-            query = "select Count(r.ID) From Room r Where r.BranchID = " + Current.User.BranchID;
+            query = "select Count(r.ID) From Room r Where r.BranchID = " + Current.CurrentUser.BranchID;
             var room = HotelDatabase.Database.Query(query);
             if (room != null &&  room.Rows[0][0] != DBNull.Value) lblRooms.Text = room.Rows[0][0].ToString();
         }

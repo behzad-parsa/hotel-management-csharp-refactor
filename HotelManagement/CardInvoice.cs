@@ -136,7 +136,7 @@ namespace HotelManagement
                             panelContainer.Controls.Clear();
 
                             panelContainer.Controls.Add(new InvoiceDetail());
-                            Current.User.Activities.Add(new Activity("Create New Invoice", name+"'s Invoice has been created by " + Current.User.Firstname +" "+ Current.User.Lastname));
+                            Current.CurrentUser.Activities.Add(new Activity("Create New Invoice", name+"'s Invoice has been created by " + Current.CurrentUser.Firstname +" "+ Current.CurrentUser.Lastname));
                         }
                         else
                         {
@@ -172,7 +172,7 @@ namespace HotelManagement
                             panelContainer.Controls.Clear();
 
                             panelContainer.Controls.Add(new InvoiceDetail());
-                            Current.User.Activities.Add(new Activity("Create New Invoice", name + "'s Invoice has been created by " + Current.User.Firstname + " " + Current.User.Lastname));
+                            Current.CurrentUser.Activities.Add(new Activity("Create New Invoice", name + "'s Invoice has been created by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
 
 
                         }

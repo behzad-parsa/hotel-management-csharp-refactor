@@ -46,7 +46,7 @@ namespace HotelManagement
             lblCustomerName.Text = Information[1];
 
             //------ Branch  -------
-            branchAccountsList = _accountService.GetAllBranchAccounts(Current.User.BranchID);
+            branchAccountsList = _accountService.GetAllBranchAccounts(Current.CurrentUser.BranchID);
 
             cmbAccount.DataSource = branchAccountsList;
             cmbAccount.DisplayMember = "AccountName";

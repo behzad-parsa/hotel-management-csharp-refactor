@@ -175,7 +175,7 @@ namespace HotelManagement
                 //var result = HotelDatabase.Account.Insert(1, txtAccountName.Text, txtAccountNumber.Text, txtBank.Text, Convert.ToDouble(txtBalance.Text), txtDescription.Text);
                 var account = new Account()
                 {
-                    BranchID = Current.User.BranchID,
+                    BranchID = Current.CurrentUser.BranchID,
                     AccountName = txtAccountName.Text,
                     AccountNumber = txtAccountNumber.Text,
                     Bank = txtBank.Text,
