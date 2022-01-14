@@ -18,6 +18,7 @@ namespace HotelManagement
     public partial class Setting : UserControl
     {
         private readonly BranchService _branchService;
+        private readonly UserService _userService;
 
         GradientPanel panelLeft;
         GradientPanel panelTop;
@@ -28,6 +29,7 @@ namespace HotelManagement
             InitializeComponent();
 
             _branchService = new BranchService();
+            _userService = new UserService();
         }
 
         private void btnChange_Click(object sender, EventArgs e)
@@ -46,20 +48,23 @@ namespace HotelManagement
 
         private void Setting_Load(object sender, EventArgs e)
         {
-            //Loading User DAta
+            //Loading User Data
             lblBirth.Text = Current.CurrentUser.Birth.ToString("MM / dd / yyyy");
             lblEducation.Text = Current.CurrentUser.Education.ToString();
             lblEmail.Text = Current.CurrentUser.Email;
             lblGender.Text = Current.CurrentUser.Gender;
             lblHire.Text = Current.CurrentUser.HireDate.ToString("MM / dd / yyyy");
             lblMobile.Text = Current.CurrentUser.Mobile;
-            lblName.Text =  Current.CurrentUser.Firstname +" " + Current.CurrentUser.Lastname;
+            lblName.Text =  Current.CurrentUser.Firstname +" "+ Current.CurrentUser.Lastname;
             lblNC.Text = Current.CurrentUser.NationalCode;
             lblRole.Text = Current.CurrentUser.RoleTitle;
             lblSalary.Text = Current.CurrentUser.Salary.ToString();
             lblUsername.Text = Current.CurrentUser.Username;
-            var lastSignin = HotelDatabase.User.GetLastSignin(Current.CurrentUser.ID);
-            if (lastSignin != DateTime.MinValue) lblLastSignIn.Text = lastSignin.ToString();
+            
+            var lastSignin = _userService.GetLastSignIn(Current.CurrentUser.ID);
+            
+            if (lastSignin != DateTime.MinValue) 
+                lblLastSignIn.Text = lastSignin.ToString();
 
             MemoryStream ms = new MemoryStream(Current.CurrentUser.Image); 
             picPhoto.Image = Image.FromStream(ms);
@@ -74,7 +79,7 @@ namespace HotelManagement
             panelTop = (this.Parent.Parent as frmMain).Controls["panelTop"] as GradientPanel;
             //panelMoveSide = (this.Parent.Parent as frmMain).Controls["panelSide"] as GradientPanel;
             //var g = panelLeft.Controls.Find("panelSide", true);
-             panelMoveSide = panelLeft.Controls["panelSide"] as GradientPanel;
+            panelMoveSide = panelLeft.Controls["panelSide"] as GradientPanel;
             panels.Add(panelTop);
             panels.Add(panelLeft);     
             panels.Add(panelMoveSide);
@@ -128,14 +133,12 @@ namespace HotelManagement
             var rdb = sender as RadioButton;
             if (rdb.Checked)
             {
-                //Theme(rdb.Text, panels);
                 currentTheme = rdb.Text;
             }
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-
             var bmp = Theme.DarkBack(this.ParentForm);
 
             using (Panel p = new Panel())
@@ -154,21 +157,19 @@ namespace HotelManagement
                     {
                         if(!string.IsNullOrEmpty(editSetting.username)) lblUsername.Text = editSetting.username;
                         Current.CurrentUser.SearchUser(editSetting.username);
-                        Current.CurrentUser.Activities.Add(new Activity("Edit Profile Information", "information has been changed by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
-
+                        Current.CurrentUser.Activities.Add(
+                            new Activity("Edit Profile Information", "information has been changed by " + 
+                            Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
                     }
                 }
             }
         }
         private void btnSet_Click(object sender, EventArgs e)
         {
-            //Theme(currentTheme, panels);
             Theme.ChangeTheme(currentTheme, panels);
         }
 
-        private void panel13_Paint(object sender, PaintEventArgs e)
-        {
-        }
+
 
         public static bool updateWeatherFlag = false;
 

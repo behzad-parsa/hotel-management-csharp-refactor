@@ -906,7 +906,7 @@
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(523, 227);
             this.panel13.TabIndex = 0;
-            this.panel13.Paint += new System.Windows.Forms.PaintEventHandler(this.panel13_Paint);
+            
             // 
             // bunifuSeparator1
             // 

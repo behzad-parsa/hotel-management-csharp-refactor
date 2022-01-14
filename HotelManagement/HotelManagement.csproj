@@ -210,6 +210,7 @@
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Transact.cs" />
     <Compile Include="Models\TransactionType.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="CustomeNumeric.cs">
       <SubType>UserControl</SubType>
@@ -408,6 +409,7 @@
     <Compile Include="Services\RoomService.cs" />
     <Compile Include="Services\ServiceService.cs" />
     <Compile Include="Services\TransactService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Setting.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -445,7 +447,7 @@
       <DependentUpon>TabUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Theme.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="CurrentUser.cs" />
     <Compile Include="UserDetail.cs">
       <SubType>Form</SubType>
     </Compile>

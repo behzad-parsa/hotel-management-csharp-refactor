@@ -25,6 +25,7 @@ namespace HotelManagement
         private readonly RoleService _roleService;
         private readonly AccessLevelService _accessLevelService;
         private readonly ModuleService _moduleService;
+        private readonly UserService _userService;
         public UserDetail()
         {
             InitializeComponent();
@@ -34,6 +35,7 @@ namespace HotelManagement
             _roleService = new RoleService();
             _accessLevelService = new AccessLevelService();
             _moduleService = new ModuleService();
+            _userService = new UserService();
         }
 
         private void UserDetail_Load(object sender, EventArgs e)
@@ -92,17 +94,17 @@ namespace HotelManagement
                 if (UserID > 0 )
                 {
                     
-                    var resUser = HotelDatabase.User.SearchUser(EmployeeID);
-                    picPhoto.Image = Image.FromStream(new MemoryStream(HotelDatabase.User.Image));
-                    ActivatePic(HotelDatabase.User.Activate);
+                    var user = _userService.GetUser(EmployeeID);
+                    picPhoto.Image = Image.FromStream(new MemoryStream(user.Image));
+                    ActivatePic(user.Activate);
 
-                    var lastSignIn = HotelDatabase.User.GetLastSignin(UserID);
+                    var lastSignIn =_userService.GetLastSignIn(UserID);
                     if (lastSignIn!= DateTime.MinValue) 
                         lblLastSignIn.Text = lastSignIn.ToString();
                     else 
                         lblLastSignIn.Text = "Not Available";
 
-                    lblUsername.Text = HotelDatabase.User.Username;
+                    lblUsername.Text = user.Username;
 
                      if (RoleID > 0 )
                      {
@@ -212,10 +214,10 @@ namespace HotelManagement
 
         private void btnDeleteUser_Click(object sender, EventArgs e)
         {
-            var res = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res == DialogResult.Yes)
+            var dialogResult = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
             {
-                if (HotelDatabase.User.Delete(UserID))
+                if (_userService.DeleteUser(UserID))
                 {
                     deleteEmployee = true;
                     Current.CurrentUser.Activities.Add(

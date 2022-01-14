@@ -21,6 +21,7 @@ namespace HotelManagement
         private readonly BranchService _branchService;
         private readonly EmployeeService _employeeService;
         private readonly RoleService _roleService;
+        private readonly UserService _userService;
         public NewUser()
         {
             InitializeComponent();
@@ -29,6 +30,7 @@ namespace HotelManagement
             _branchService = new BranchService();
             _employeeService = new EmployeeService();
             _roleService = new RoleService();
+            _userService = new UserService();
         }
         private void LoadRoleData()
         {
@@ -139,18 +141,29 @@ namespace HotelManagement
                     if (ValidationFlag)
                     {
                         ValidationFlag = false;
-
-                        if (!HotelDatabase.User.SearchUser(txtUsername.Text.Trim().ToLower()))
+                        var searchedUser = _userService.GetUser(txtUsername.Text.Trim().ToLower());
+                        if (searchedUser is null)
                         {
                             HashPassword hashPassword = new HashPassword();
-                            var res = HotelDatabase.User.Insert(EmployeeID ,SelectedRoleID, txtUsername.Text.Trim().ToLower(), hashPassword.ConvertPass(txtPassword.Text), ConvertPicToByte(picUser.Image), chbActive.Checked);
-                            if (res > 0)
+                            //var res = HotelDatabase.User.Insert(EmployeeID, SelectedRoleID, txtUsername.Text.Trim().ToLower(), hashPassword.ConvertPass(txtPassword.Text), ConvertPicToByte(picUser.Image), chbActive.Checked);
+                            var user = new User()
+                            {
+                                EmployeeID = EmployeeID,
+                                RoleID = SelectedRoleID,
+                                Username = txtUsername.Text.Trim().ToLower(),
+                                Password = hashPassword.ConvertPass(txtPassword.Text),
+                                Image = ConvertPicToByte(picUser.Image),
+                                Activate = chbActive.Checked
+                            };
+                            var resultInsertUser = _userService.InsertUser(user);
+                            if (resultInsertUser)
                             {
                                 PanelStatus(panelStatusUser, "Action Completed Successfully ", Status.Green);
                                 panelInfo.Enabled = false;
                                 Current.CurrentUser.Activities.Add(
                                     new Activity("submit New User", 
-                                    "the User '"+ txtUsername.Text+"' has been submited by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
+                                    "the User '"+ txtUsername.Text+"' has been submited by " + 
+                                    Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
                             }
                             else
                             {
@@ -199,11 +212,12 @@ namespace HotelManagement
                     }
 
                     txtCount = 0;
-
+                    var searchedUser = _userService.GetUser(txtUsername.Text.Trim().ToLower());
                     //If Changed
                     if (!isSameflag)
                     {
-                        if (HotelDatabase.User.SearchUser(txtUsername.Text.Trim().ToLower()))
+   
+                        if (searchedUser != null)
                         {
                             PanelStatus(panelStatusUser, "Username Is Available", Status.Red);
                             ValidationFlag = false;
@@ -213,24 +227,39 @@ namespace HotelManagement
                     if (ValidationFlag)
                     {                        
                         ValidationFlag = false;
-                        HashPassword hp = new HashPassword();
-
+                        
                         if (SelectedRoleID < 0) 
-                            SelectedRoleID = HotelDatabase.User.RoleID;
-                            
-                        bool res;
-                           
-                        if (passFlag)  
-                            res = HotelDatabase.User.UpdateWithPass(UserID, EmployeeID, SelectedRoleID, txtUsername.Text.Trim().ToLower(), hp.ConvertPass(txtPassword.Text), ConvertPicToByte(picUser.Image), chbActive.Checked);                           
-                        else 
-                            res = HotelDatabase.User.Update(UserID, EmployeeID, SelectedRoleID, txtUsername.Text.Trim().ToLower(), ConvertPicToByte(picUser.Image), chbActive.Checked);
+                            SelectedRoleID = searchedUser.RoleID;
+                            //SelectedRoleID = HotelDatabase.User.RoleID;
+
+                        HashPassword hashPassword = new HashPassword();
+                        bool updateResult;
+                        var user = new User()
+                        {
+                            ID = UserID,
+                            EmployeeID = EmployeeID,
+                            RoleID = SelectedRoleID,
+                            Username = txtUsername.Text.Trim().ToLower(),
+                            Password = hashPassword.ConvertPass(txtPassword.Text),
+                            Image = ConvertPicToByte(picUser.Image),
+                            Activate = chbActive.Checked
+                        };
+                        if (passFlag)
+                            // res = HotelDatabase.User.UpdateWithPass(UserID, EmployeeID, SelectedRoleID, txtUsername.Text.Trim().ToLower(), hp.ConvertPass(txtPassword.Text), ConvertPicToByte(picUser.Image), chbActive.Checked);                           
+                            updateResult = _userService.UpdateUserWithPass(user);
+                        else
+                            //updateResult = HotelDatabase.User.Update(UserID, EmployeeID, SelectedRoleID, txtUsername.Text.Trim().ToLower(), ConvertPicToByte(picUser.Image), chbActive.Checked);
+                            updateResult = _userService.UpdateUser(user); 
                                                   
-                        if (res)                            
+                        if (updateResult)                            
                         {                               
                             PanelStatus(panelStatusUser, "Action Completed Successfully", Status.Green);                               
                             panelInfo.Enabled = false;                              
-                            panelInfo.Enabled = false;                            
-                            Current.CurrentUser.Activities.Add(new Activity("change user information", "the User '"+ txtUsername.Text+"'s information has been changed by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));                         
+                            //panelInfo.Enabled = false;
+                            
+                            Current.CurrentUser.Activities.Add(
+                                new Activity("change user information", "the User '"+ txtUsername.Text+"'s information has been changed by " + 
+                                Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));                         
                         }                   
                         else                            
                         {                             
@@ -251,25 +280,9 @@ namespace HotelManagement
         private int UserID;
         private bool isFindEmployee = false;
         //private bool isFindUser = false;
-        //private void FindEmployee()
-        //{
-        //    var result = HotelDatabase.Database.Query(
-        //        "Select DISTINCT a.id AS ActID , e.id AS EmployeeID  From  Actor a , Employee e  , BranchInfo b " +
-        //        "Where a.NationalCode = '" + txtNCSearch.Text + "' AND a.id = e.actid And e.BranchID = " + Current.User.BranchID);
-
-        //    if (result != null)
-        //    {
-        //        ActID = Convert.ToInt32(result.Rows[0]["ActID"]);
-        //        EmployeeID = Convert.ToInt32(result.Rows[0]["EmployeeID"]);
-        //        isFindEmployee = true;
-        //    }
-        //    else
-        //    {
-        //        isFindEmployee = false;
-        //    }
-        //}
 
 
+        private string usernameValueCheck;
         private void btnSearch_Click(object sender, EventArgs e)
         {
             panelStatusUser.Visible = false;
@@ -298,21 +311,20 @@ namespace HotelManagement
                     {
                         lblBranch.Text = branch.BranchName;
                     }
-
-
-
-                    if (HotelDatabase.User.SearchUser(EmployeeID))
+                    var user = _userService.GetUser(EmployeeID);
+                    if (user != null)
                     {
+                        usernameValueCheck = user.Username;
                         //isFindUser = true;
-                        txtUsername.Text = HotelDatabase.User.Username;
-                        chbActive.Checked = HotelDatabase.User.Activate;
-                        picUser.Image = Image.FromStream(new MemoryStream(HotelDatabase.User.Image));
+                        txtUsername.Text = user.Username;
+                        chbActive.Checked = user.Activate;
+                        picUser.Image = Image.FromStream(new MemoryStream(user.Image));
                         panelNeedUpdate.Visible = true;
 
-                        var role = _roleService.GetRole(HotelDatabase.User.RoleID);
+                        var role = _roleService.GetRole(user.RoleID);
                         lblRole.Text = role.Title;
 
-                        UserID = HotelDatabase.User.ID;
+                        UserID = user.ID;
                         PanelStatus(panelStatusUser, "User Was Successfully Found", Status.Green);
                         chbUpdate(true);
                     }
@@ -450,32 +462,6 @@ namespace HotelManagement
             }
         }
 
-        private string RadioButtonResult(RadioButton rdb1, RadioButton rdb2)
-        {
-            if (rdb1.Checked)
-            {
-                return rdb1.Text;
-            }
-            else
-            {
-                return rdb2.Text;
-            }
-        }
-
-        private void TextBoxClearTextUserInfo()
-        {
-            txtUsername.Text = "Username";
-            txtUsername.ForeColor = Color.Gray;
-
-            txtPassword.Text = "Password";
-            txtPassword.ForeColor = Color.Gray;
-
-            txtConPass.Text = "Confirm Password";
-            txtConPass.ForeColor = Color.Gray;
-
-            SetProfilePicture("Male", picUser);
-        }
- 
         private void TextBoxClearBorderColor()
         {
             TextBoxColor(txtUsername, Status.Green);
@@ -652,7 +638,8 @@ namespace HotelManagement
         {
             if (chbNeed.Checked)
             {
-                if (txtUsername.Text.Trim().ToLower() == HotelDatabase.User.Username)
+                //if (txtUsername.Text.Trim().ToLower() == HotelDatabase.User.Username)
+                if (txtUsername.Text.Trim().ToLower() == usernameValueCheck)
                 {
                     isSameflag = true;
                 }

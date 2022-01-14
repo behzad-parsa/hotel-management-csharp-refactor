@@ -8,17 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using HotelManagement.Services;
+using HotelManagement.Models;
 
 namespace HotelManagement
 {
     public partial class EditSetting : Form
     {
+        private readonly UserService _userService;
+
         public bool compeletFlag = false;
         public string username;
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
         public EditSetting()
         {
             InitializeComponent();
+
+            _userService = new UserService();
         }
 
         private void EditSetting_Load(object sender, EventArgs e)
@@ -36,7 +42,8 @@ namespace HotelManagement
         {
             if(txtUsername.Text != "" && txtUsername.Text != null && txtUsername.Text != Current.CurrentUser.Username)
             {
-                if (!HotelDatabase.User.SearchUser(txtUsername.Text))
+                var user = _userService.GetUser(txtUsername.Text);
+                if (user is null)
                 {
                     if (Current.CurrentUser.UpdateUsername(txtUsername.Text))
                     {

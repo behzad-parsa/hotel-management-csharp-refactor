@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Sockets;
 using User = HotelManagement.ChatInfo.User;
 using Message = HotelManagement.ChatInfo.Message;
+using HotelManagement.Services;
+
 
 namespace HotelManagement
 {
@@ -26,6 +28,7 @@ namespace HotelManagement
 
         public class Chat
         {
+            private readonly UserService _userService = new UserService();
             Socket socClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             static readonly object _lock = new object();
             public bool IsConnect { get; private set; }
@@ -39,24 +42,20 @@ namespace HotelManagement
                 IPEndPoint iep = new IPEndPoint(ip, 5050);
                 try
                 {
-
                     socClient.Connect(iep);
-
 
                     //Send Username To Server As Online User 
                     byte[] b = new byte[1024];
                     b = Encoding.Unicode.GetBytes(Current.CurrentUser.Username);
                     socClient.Send(b);
-                    //MessageBox.Show(socClient.RemoteEndPoint.ToString());
                     //--------------------------------------
                     //lstUser.Add(new User());
 
-                    Thread Tr = new Thread(new ThreadStart(rcvMsg)) { IsBackground = true };
+                    Thread Tr = new Thread(new ThreadStart(ReceiveMessage)) { IsBackground = true };
                     Tr.Start();
 
                     IsConnect = true;
                     return true;
-
                 }
                 catch (Exception e1)
                 {
@@ -84,7 +83,7 @@ namespace HotelManagement
                 }
             }
 
-            private void rcvMsg()
+            private void ReceiveMessage()
             {
                 try
                 {
@@ -110,7 +109,8 @@ namespace HotelManagement
                                 {                                  
                                     if (onlineUser[i] != Current.CurrentUser.Username)
                                     {
-                                        var userInfo = HotelDatabase.User.SearchOnlineUser(onlineUser[i]);
+                                        //var userInfo = HotelDatabase.User.SearchOnlineUser(onlineUser[i]);
+                                        var userInfo = _userService.GetOnlineUser(onlineUser[i]);
                                         if(userInfo != null)
                                         {
                                             lstOnlineUser.Add(userInfo);
