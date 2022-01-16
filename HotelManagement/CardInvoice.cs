@@ -93,22 +93,34 @@ namespace HotelManagement
             _data = data;
             dgvInvoice.Columns["ResID"].Visible = false;
         }
-        DataTable _data;
+        
         int ResID;
-
+        DataTable _data;
         private void dgvInvoice_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+           
             ResID = Convert.ToInt32(_data.Rows[e.RowIndex]["ResID"]);
             string name = _data.Rows[e.RowIndex]["Firstname"].ToString() + " " + _data.Rows[e.RowIndex]["Lastname"];
-            DataRow dr = _data.AsEnumerable()
+            DataRow dataRow = _data.AsEnumerable()
                .SingleOrDefault(r => r.Field<int>("ResID") == ResID);
-            if (dr["Status"].ToString() == "Check-in")
+
+            var reservation = _reservationService.GetReservation(ResID);
+            if (reservation == null)
+            {
+                MessageBox.Show("Problem");
+                return;
+            }
+            if (dataRow["Status"].ToString() == "Check-in")
             {
 
-                var result =MessageBox.Show("Are Sure? It Will BE Canceld And Factor Created"  ,"fd"  , MessageBoxButtons.YesNo , MessageBoxIcon.Information);
-                if (result == DialogResult.Yes)
+                var dialogResult = MessageBox.Show("Are Sure?\n It will bw Canceld And Bill Created","Warning",
+                    MessageBoxButtons.YesNo , MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    if (HotelDatabase.Reservation.Update(ResID, DateTime.Now.Date, false ))
+                    reservation.CancelDate = DateTime.Now.Date;
+                    reservation.TotalPayDueDate = Convert.ToInt32(reservation.TotalPayDueDate * 0.5 ); 
+                    //if (HotelDatabase.Reservation.Update(ResID, DateTime.Now.Date, false ))
+                    if (_reservationService.UpdateReservation(reservation))
                     {
                         var res = HotelDatabase.Bill.Insert(ResID);
                         if (res > 0)
@@ -128,12 +140,13 @@ namespace HotelManagement
                     }
                 }
             }
-            else if(dr["Status"].ToString() == "Finish" || dr["Status"].ToString() == "Canceled")
+            else if(dataRow["Status"].ToString() == "Finish" || dataRow["Status"].ToString() == "Canceled")
             {
-                if (dr["Bill"].ToString() =="No")
+                if (dataRow["Bill"].ToString() =="No")
                 {
-                    var result = MessageBox.Show("Create Invoice?", "fd", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if (result == DialogResult.Yes)
+                    var dialogResult = MessageBox.Show("Create Invoice?", "Noticed", 
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (dialogResult == DialogResult.Yes)
                     {                                                               
                         var res = HotelDatabase.Bill.Insert(ResID);
                         if (res>0)
@@ -142,7 +155,9 @@ namespace HotelManagement
                             panelContainer.Controls.Clear();
 
                             panelContainer.Controls.Add(new InvoiceDetail());
-                            Current.CurrentUser.Activities.Add(new Activity("Create New Invoice", name+"'s Invoice has been created by " + Current.CurrentUser.Firstname +" "+ Current.CurrentUser.Lastname));
+                            Current.CurrentUser.Activities.Add(
+                                new Activity("Create New Invoice", name+"'s Invoice has been created by " + 
+                                Current.CurrentUser.Firstname +" "+ Current.CurrentUser.Lastname));
                         }
                         else
                         {
@@ -152,7 +167,7 @@ namespace HotelManagement
                 }
                 else
                 {
-                    if (dr["Pay"].ToString()=="Yes")
+                    if (dataRow["Pay"].ToString()=="Yes")
                     {
                         InvoiceDetail.payFlag = true;
 
@@ -163,14 +178,20 @@ namespace HotelManagement
                     panelContainer.Controls.Add(new InvoiceDetail());
                 }   
             }
-            else if (dr["Status"].ToString() == "Booking")
+            else if (dataRow["Status"].ToString() == "Booking")
             {
-                var result = MessageBox.Show("Are Sure?\n It Will BE Canceld And Factor Created", "fd", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (result == DialogResult.Yes)
+                var dialogResult = MessageBox.Show("Are Sure?\n It Will BE Canceld And Bill Created", "Warning", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.Yes)
                 {
                     //var rs =  HotelDatabase.Reservation.SearchReserveWithID(ResID);
-                    var reservation = _reservationService.GetReservation(ResID);
-                    if (reservation != null && HotelDatabase.Reservation.Update(ResID,HotelDatabase.Reservation.TotalPayDueDate , DateTime.Now.Date))
+                    //var reservation = _reservationService.GetReservation(ResID);
+                    reservation.TotalPayDueDate = Convert.ToInt32(reservation.TotalPayDueDate * 0.5);
+                    reservation.CancelDate = DateTime.Now.Date;
+                    var reservationUpdateResult = _reservationService.UpdateReservation(reservation);
+                    //if (reservation != null && HotelDatabase.Reservation.Update(ResID,HotelDatabase.Reservation.TotalPayDueDate , DateTime.Now.Date))
+                    //if (reservation != null && reservationUpdateResult)
+                    if (reservationUpdateResult)
                     {
                         var res = HotelDatabase.Bill.Insert(ResID);
                         if (res > 0)
@@ -179,9 +200,10 @@ namespace HotelManagement
                             panelContainer.Controls.Clear();
 
                             panelContainer.Controls.Add(new InvoiceDetail());
-                            Current.CurrentUser.Activities.Add(new Activity("Create New Invoice", name + "'s Invoice has been created by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
-
-
+                            Current.CurrentUser.Activities.Add(
+                                new Activity("Create New Invoice", 
+                                name + "'s Invoice has been created by " + 
+                                Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
                         }
                         else
                         {
@@ -196,31 +218,18 @@ namespace HotelManagement
             }
         }
 
-        private void dgvInvoice_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
-
-        private void bunifuCustomLabel2_Click(object sender, EventArgs e)
-        {
-        }
-
         private void txtEmpNationalCode_OnValueChanged(object sender, EventArgs e)
         {
             if (txtEmpNationalCode.Text != null)
             {
                 _data.DefaultView.RowFilter = string.Format("NationalCode LIKE '{0}%'", txtEmpNationalCode.Text);
             }
-
         }
 
         private void txtEmpNationalCode_Enter(object sender, EventArgs e)
         {
             txtEmpNationalCode.ForeColor = Color.Black;
             txtEmpNationalCode.Text = "";
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
         }
     }
 }

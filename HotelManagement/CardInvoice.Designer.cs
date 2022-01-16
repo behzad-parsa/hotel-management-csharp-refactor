@@ -103,7 +103,7 @@
             this.bunifuCustomLabel2.TabIndex = 1;
             this.bunifuCustomLabel2.Text = "INVOICE LIST";
             this.bunifuCustomLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bunifuCustomLabel2.Click += new System.EventHandler(this.bunifuCustomLabel2_Click);
+
             // 
             // panelEmpLeft
             // 
@@ -125,7 +125,7 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+
             // 
             // dgvInvoice
             // 
@@ -182,7 +182,7 @@
             this.dgvInvoice.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvInvoice.Size = new System.Drawing.Size(1504, 557);
             this.dgvInvoice.TabIndex = 19;
-            this.dgvInvoice.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInvoice_CellClick);
+
             this.dgvInvoice.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInvoice_CellDoubleClick);
             // 
             // txtEmpNationalCode
