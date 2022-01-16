@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
+using HotelManagement.Services;
+using HotelManagement.Models;
 
 namespace HotelManagement
 { 
@@ -22,10 +24,14 @@ namespace HotelManagement
         private string newDescription;
         public static int TranID;
 
+        private readonly BillService _billService;
+
         ScreenCapture capScreen = new ScreenCapture();
         public InvoiceDetail()
         {
             InitializeComponent();
+
+            _billService = new BillService();
         }
         //private void cap()
         //{
@@ -144,7 +150,7 @@ namespace HotelManagement
         private double ConvertDiscount(string txtDis , string txtSubTotal)
         {
             double dis = Convert.ToDouble(txtDis);
-            dis = dis / 100;
+            dis /= 100;
             double subTotal = Convert.ToDouble(txtSubTotal);
             if (dis == 0)
             {
@@ -177,8 +183,8 @@ namespace HotelManagement
                 using (frmInvoiceEdit edit = new frmInvoiceEdit())
                 {
                     edit.ShowDialog();
-                    newDiscount = edit.discount;
-                    newDescription = edit.description;
+                    newDiscount = edit.Discount;
+                    newDescription = edit.Description;
                     Current.CurrentUser.Activities.Add(
                         new Activity("Modify Invoice",
                         "invoice No." + lblBillNo.Text + "-" + lblCustName.Text + " has been modified by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname)
@@ -186,7 +192,12 @@ namespace HotelManagement
                 }
             } // pane
 
-            if (HotelDatabase.Bill.Update(BillID , newDiscount , newDescription))
+            var bill = _billService.GetBill(BillID, null);
+            bill.Discount = newDiscount;
+            bill.Description = newDescription;
+
+            //if (HotelDatabase.Bill.Update(BillID , newDiscount , newDescription))
+            if (_billService.UpdateBill(bill))
             {
                 lblDiscount.Text = newDiscount.ToString();
                lblTotal.Text =  ConvertDiscount(lblDiscount.Text, lblSubtotal.Text).ToString();

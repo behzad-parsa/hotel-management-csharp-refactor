@@ -16,6 +16,7 @@ namespace HotelManagement
     {
         private readonly AccountService _accountService;
         private readonly TransactService _transactService;
+        private readonly BillService _billService;
 
         private List<Account> branchAccountsList;
         private List<PaymentMethod> paymentMethodsList;
@@ -30,6 +31,7 @@ namespace HotelManagement
 
             _accountService = new AccountService();
             _transactService = new TransactService();
+            _billService = new BillService();
 
             radioButtonsList = new List<RadioButton>();
         }
@@ -91,8 +93,11 @@ namespace HotelManagement
             var accountID = branchAccountsList.SingleOrDefault(x => x == cmbAccount.SelectedItem).ID;
             var checkedRadioButton = radioButtonsList.Find(x => x.Checked);
             var paymentMethodID = paymentMethodsList.SingleOrDefault(x => x.Title == checkedRadioButton.Text).ID;
-            var amount = Convert.ToDouble(Information[0]);    
-           
+            var amount = Convert.ToDouble(Information[0]);
+
+            //Getting Bill
+            var bill = _billService.GetBill(BillID, null);
+
             //var res =  HotelDatabase.Transact.Insert(accountID, paymentMethodID, 1,txtTransNum.Text, amount, txtDescription.Text);
             var transact = new Transact()
             {
@@ -108,7 +113,9 @@ namespace HotelManagement
             transact.ID = _transactService.LastInsertedId;
             if (resultInsert)
             {
-                if (HotelDatabase.Bill.Update(BillID, transact.ID ))
+                bill.TransactionID = transact.ID;
+                //if (HotelDatabase.Bill.Update(BillID, transact.ID ))
+                if (_billService.UpdateBill(bill))
                 {
                     InvoiceDetail.TranID = transact.ID;
                     lblStatus.Visible = true;

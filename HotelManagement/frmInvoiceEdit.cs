@@ -7,25 +7,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class frmInvoiceEdit : Form
     {
+        public double Discount { get; private set; }
+        public string Description { get; private set; }
+
+        private readonly BillService _billService;
+
         public frmInvoiceEdit()
         {
             InitializeComponent();
+
+            _billService = new BillService();
         }
-        public double discount { get; private set; }
-        public string description { get; private set; }
+
         private void frmInvoiceEdit_Load(object sender, EventArgs e)
         {
-            HotelDatabase.Bill.SearchBill(InvoiceDetail.ResID);
-            txtDis.Text = HotelDatabase.Bill.Discount.ToString();
+            // HotelDatabase.Bill.SearchBill(InvoiceDetail.ResID);
+            var bill = _billService.GetBill(null, InvoiceDetail.ResID);
+            txtDis.Text = bill.Discount.ToString();
 
-            if (HotelDatabase.Bill.Description != null)
+            if (bill.Description != null)
             {
-                txtDes.Text = HotelDatabase.Bill.Description.ToString();
+                txtDes.Text = bill.Description.ToString();
             }
         }
 
@@ -43,10 +52,10 @@ namespace HotelManagement
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            discount = Convert.ToDouble(txtDis.Text.Trim());
+            Discount = Convert.ToDouble(txtDis.Text.Trim());
             if (txtDes.Text != null)
             {
-                description = txtDes.Text;
+                Description = txtDes.Text;
             }
             this.Dispose(); 
         }

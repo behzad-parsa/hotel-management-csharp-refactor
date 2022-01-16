@@ -15,6 +15,7 @@ namespace HotelManagement
     public partial class CardInvoice : UserControl
     {
         private readonly ReservationService _reservationService;
+        private readonly BillService _billService;
 
         Panel panelContainer;
         public CardInvoice()
@@ -22,6 +23,7 @@ namespace HotelManagement
             InitializeComponent();
 
             _reservationService = new ReservationService();
+            _billService = new BillService();
         }
 
         private void CardInvoice_Load(object sender, EventArgs e)
@@ -107,7 +109,7 @@ namespace HotelManagement
             var reservation = _reservationService.GetReservation(ResID);
             if (reservation == null)
             {
-                MessageBox.Show("Problem");
+                MessageBox.Show("Problem - reservation Not Found");
                 return;
             }
             if (dataRow["Status"].ToString() == "Check-in")
@@ -122,8 +124,14 @@ namespace HotelManagement
                     //if (HotelDatabase.Reservation.Update(ResID, DateTime.Now.Date, false ))
                     if (_reservationService.UpdateReservation(reservation))
                     {
-                        var res = HotelDatabase.Bill.Insert(ResID);
-                        if (res > 0)
+                        //var res = HotelDatabase.Bill.Insert(ResID);
+                        var bill = new Bill()
+                        {
+                            ResID = ResID,
+                            DateModified = DateTime.Now.Date
+                        };
+                        var billInsertResult = _billService.InsertBill(bill);
+                        if (billInsertResult)
                         {
                             InvoiceDetail.ResID = ResID;
                             panelContainer.Controls.Clear();
@@ -147,9 +155,15 @@ namespace HotelManagement
                     var dialogResult = MessageBox.Show("Create Invoice?", "Noticed", 
                         MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if (dialogResult == DialogResult.Yes)
-                    {                                                               
-                        var res = HotelDatabase.Bill.Insert(ResID);
-                        if (res>0)
+                    {
+                        // var res = HotelDatabase.Bill.Insert(ResID);
+                        var bill = new Bill()
+                        {
+                            ResID = ResID,
+                            DateModified = DateTime.Now.Date
+                        };
+                        var billInsertResult = _billService.InsertBill(bill);
+                        if (billInsertResult)
                         {
                             InvoiceDetail.ResID = ResID;
                             panelContainer.Controls.Clear();
@@ -193,8 +207,14 @@ namespace HotelManagement
                     //if (reservation != null && reservationUpdateResult)
                     if (reservationUpdateResult)
                     {
-                        var res = HotelDatabase.Bill.Insert(ResID);
-                        if (res > 0)
+                        var bill = new Bill()
+                        {
+                            ResID = ResID,
+                            DateModified = DateTime.Now.Date
+                        };
+                        var billInsertResult = _billService.InsertBill(bill);
+                        //var res = HotelDatabase.Bill.Insert(ResID);
+                        if (billInsertResult)
                         {
                             InvoiceDetail.ResID = ResID;
                             panelContainer.Controls.Clear();
