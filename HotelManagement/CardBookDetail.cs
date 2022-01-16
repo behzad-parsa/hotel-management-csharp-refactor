@@ -17,6 +17,7 @@ namespace HotelManagement
     public partial class CardBookDetail : UserControl
     {
         private readonly BranchService _branchService;
+        private readonly ReservationService _reservationService;
 
         BunifuImageButton btnDone;
         BunifuImageButton btnNext;
@@ -35,6 +36,7 @@ namespace HotelManagement
             InitializeComponent();
 
             _branchService = new BranchService();
+            _reservationService = new ReservationService();
 
         }
 
@@ -258,8 +260,19 @@ namespace HotelManagement
         {
             if (ID > 0)
             {
-                int result = HotelDatabase.Reservation.Insert(Current.CurrentUser.ID, NewBook.customerInfo.ID, ID, dateStart.Value, dateEnd.Value, totalPrice);
-                if (result > 0)
+                var reservation = new Reservation()
+                {
+                    UserID = Current.CurrentUser.ID,
+                    CustomerID = NewBook.customerInfo.ID,
+                    RoomID = ID,
+                    StartDate = dateStart.Value,
+                    EndDate = dateEnd.Value,
+                    TotalPayDueDate = totalPrice,
+                    DateModified = DateTime.Now
+                };
+                //int result = HotelDatabase.Reservation.Insert(Current.CurrentUser.ID, NewBook.customerInfo.ID, ID, dateStart.Value, dateEnd.Value, totalPrice);
+                var insertResult = _reservationService.InsertReservation(reservation);
+                if (insertResult)
                 {
                     LoadFreeRoom(dateStart.Value, dateEnd.Value);
                     dgvRoom.ClearSelection();

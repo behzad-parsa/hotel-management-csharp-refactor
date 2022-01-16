@@ -74,7 +74,6 @@
             this.cardCustomerDetail.ShadowDepth = 20;
             this.cardCustomerDetail.Size = new System.Drawing.Size(1401, 919);
             this.cardCustomerDetail.TabIndex = 4;
-            this.cardCustomerDetail.Paint += new System.Windows.Forms.PaintEventHandler(this.cardCustomerDetail_Paint);
             // 
             // pictureBox2
             // 

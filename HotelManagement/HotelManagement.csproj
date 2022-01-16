@@ -203,6 +203,7 @@
     <Compile Include="Models\OrderFood.cs" />
     <Compile Include="Models\OrderService.cs" />
     <Compile Include="Models\PaymentMethod.cs" />
+    <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\RoomNumber.cs" />
@@ -405,6 +406,7 @@
     <Compile Include="Services\ModuleService.cs" />
     <Compile Include="Services\OrderFoodService.cs" />
     <Compile Include="Services\OrderServiceService.cs" />
+    <Compile Include="Services\ReservationService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\RoomService.cs" />
     <Compile Include="Services\ServiceService.cs" />

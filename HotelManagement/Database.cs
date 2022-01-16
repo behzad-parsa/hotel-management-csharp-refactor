@@ -69,35 +69,6 @@ namespace HotelManagement
                 }
             }
 
-            public static int Insert(int userID, int customerID, int roomID, DateTime startDate, DateTime endDate, int totalPayDueDate)
-            {
-                try
-                {
-                    MakeConnection();
-                   
-                    cmd.CommandText = "Insert Into \"Reservation\" (UserID , CustomerID , RoomID , StartDate , EndDate , TotalPayDueDate , DateModified) Values(@UserID , @CustomerID , @RoomID , @StartDate , @EndDate , @TotalPayDueDate , @DateModified)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@UserID", userID);
-                    cmd.Parameters.AddWithValue("@CustomerID", customerID);
-                    cmd.Parameters.AddWithValue("@RoomID", roomID);
-                    cmd.Parameters.AddWithValue("@StartDate", startDate);
-                    cmd.Parameters.AddWithValue("@EndDate", endDate);
-                    cmd.Parameters.AddWithValue("@TotalPayDueDate", totalPayDueDate);
-                    cmd.Parameters.AddWithValue("@DateModified",DateTime.Now);
-
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = Database.QueryLastID;
-                    int insertedID = Convert.ToInt32(cmd.ExecuteScalar());
-                    Disconnect();
-                    return insertedID;
-
-                }
-                catch
-                {
-                    return -1;
-                }
-            }   
             public static bool SearchReserveWithID(int idd)
             {
                 try
@@ -217,27 +188,7 @@ namespace HotelManagement
                     return false;
                 }
             }
-            public static bool Delete(int id)
-            {
-                try
-                {
-                    cmd.CommandText = "Delete FROM \"Reservation\" Where ID = @ID";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@ID", id);
 
-                    MakeConnection();
-                    Connect();
-                    cmd.ExecuteNonQuery();
-                    Disconnect();
-                    return true;
-
-                }
-                catch
-                {
-                    return false;
-                }
-
-            }
         }
         public class Bill
         {

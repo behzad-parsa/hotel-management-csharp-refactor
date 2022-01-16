@@ -7,15 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelManagement.Services;
+using HotelManagement.Models;
 
 namespace HotelManagement
 {
     public partial class CardInvoice : UserControl
     {
+        private readonly ReservationService _reservationService;
+
         Panel panelContainer;
         public CardInvoice()
         {
             InitializeComponent();
+
+            _reservationService = new ReservationService();
         }
 
         private void CardInvoice_Load(object sender, EventArgs e)
@@ -162,8 +168,9 @@ namespace HotelManagement
                 var result = MessageBox.Show("Are Sure?\n It Will BE Canceld And Factor Created", "fd", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.Yes)
                 {
-                    var rs =  HotelDatabase.Reservation.SearchReserveWithID(ResID);
-                    if (rs && HotelDatabase.Reservation.Update(ResID,HotelDatabase.Reservation.TotalPayDueDate , DateTime.Now.Date))
+                    //var rs =  HotelDatabase.Reservation.SearchReserveWithID(ResID);
+                    var reservation = _reservationService.GetReservation(ResID);
+                    if (reservation != null && HotelDatabase.Reservation.Update(ResID,HotelDatabase.Reservation.TotalPayDueDate , DateTime.Now.Date))
                     {
                         var res = HotelDatabase.Bill.Insert(ResID);
                         if (res > 0)

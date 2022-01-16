@@ -8,15 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.Framework.UI;
+using HotelManagement.Models;
+using HotelManagement.Services;
 
 namespace HotelManagement
 {
     public partial class BookList : UserControl
     {
         Dictionary<BunifuMetroTextbox, string> txtBoxList = new Dictionary<BunifuMetroTextbox, string>();
+        private readonly ReservationService _reservationService;
+
         public BookList()
         {
             InitializeComponent();
+
+            _reservationService = new ReservationService();
         }
 
         private void LoadData()
@@ -38,10 +44,6 @@ namespace HotelManagement
             LoadData();
         }
 
-        private void cardCustomerDetail_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
         int ResID = -10;
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -51,15 +53,19 @@ namespace HotelManagement
             }
             else
             {
-                var res = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (res == DialogResult.Yes)
+                var dialogResult = MessageBox.Show("Are You Sure You Want To Delete This Record ?", "Delete", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    if (HotelDatabase.Reservation.Delete(ResID))
+                    if (_reservationService.DeleteReservation(ResID))
                     {
                         PanelStatus("Action Completed Successfuly", Status.Green);
 
                         LoadData();
-                        Current.CurrentUser.Activities.Add(new Activity("Delete a Book", /*NewBook.customerInfo.Firstname + " " + NewBook.customerInfo.Lastname + "'s*/ "Booking record has been deleted by " + Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
+                        Current.CurrentUser.Activities.Add(
+                            new Activity("Delete a Book", 
+                            /*NewBook.customerInfo.Firstname + " " + NewBook.customerInfo.Lastname + "'s*/ "Booking record has been deleted by " + 
+                            Current.CurrentUser.Firstname + " " + Current.CurrentUser.Lastname));
 
                         //int rowIndex = -1;
 
