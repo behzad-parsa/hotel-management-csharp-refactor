@@ -137,7 +137,7 @@
             this.bunifuCustomLabel22.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel22.Location = new System.Drawing.Point(44, 184);
             this.bunifuCustomLabel22.Name = "bunifuCustomLabel22";
-            this.bunifuCustomLabel22.Size = new System.Drawing.Size(90, 32);
+            this.bunifuCustomLabel22.Size = new System.Drawing.Size(68, 25);
             this.bunifuCustomLabel22.TabIndex = 3;
             this.bunifuCustomLabel22.Text = "Access :";
             // 
@@ -172,7 +172,7 @@
             this.lblUsername.ForeColor = System.Drawing.Color.Black;
             this.lblUsername.Location = new System.Drawing.Point(164, 16);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(45, 23);
+            this.lblUsername.Size = new System.Drawing.Size(39, 20);
             this.lblUsername.TabIndex = 3;
             this.lblUsername.Text = "MSC";
             // 
@@ -184,7 +184,7 @@
             this.lblAccessRight.ForeColor = System.Drawing.Color.Black;
             this.lblAccessRight.Location = new System.Drawing.Point(58, 228);
             this.lblAccessRight.Name = "lblAccessRight";
-            this.lblAccessRight.Size = new System.Drawing.Size(0, 23);
+            this.lblAccessRight.Size = new System.Drawing.Size(0, 20);
             this.lblAccessRight.TabIndex = 3;
             // 
             // bunifuCustomLabel12
@@ -194,7 +194,7 @@
             this.bunifuCustomLabel12.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel12.Location = new System.Drawing.Point(18, 12);
             this.bunifuCustomLabel12.Name = "bunifuCustomLabel12";
-            this.bunifuCustomLabel12.Size = new System.Drawing.Size(118, 32);
+            this.bunifuCustomLabel12.Size = new System.Drawing.Size(92, 25);
             this.bunifuCustomLabel12.TabIndex = 3;
             this.bunifuCustomLabel12.Text = "Username :";
             // 
@@ -206,7 +206,7 @@
             this.lblAccessLeft.ForeColor = System.Drawing.Color.Black;
             this.lblAccessLeft.Location = new System.Drawing.Point(146, 189);
             this.lblAccessLeft.Name = "lblAccessLeft";
-            this.lblAccessLeft.Size = new System.Drawing.Size(0, 23);
+            this.lblAccessLeft.Size = new System.Drawing.Size(0, 20);
             this.lblAccessLeft.TabIndex = 3;
             // 
             // bunifuCustomLabel9
@@ -216,7 +216,7 @@
             this.bunifuCustomLabel9.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel9.Location = new System.Drawing.Point(7, 68);
             this.bunifuCustomLabel9.Name = "bunifuCustomLabel9";
-            this.bunifuCustomLabel9.Size = new System.Drawing.Size(129, 32);
+            this.bunifuCustomLabel9.Size = new System.Drawing.Size(97, 25);
             this.bunifuCustomLabel9.TabIndex = 3;
             this.bunifuCustomLabel9.Text = "Last-SignIn :";
             // 
@@ -227,7 +227,7 @@
             this.bunifuCustomLabel20.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel20.Location = new System.Drawing.Point(37, 124);
             this.bunifuCustomLabel20.Name = "bunifuCustomLabel20";
-            this.bunifuCustomLabel20.Size = new System.Drawing.Size(105, 32);
+            this.bunifuCustomLabel20.Size = new System.Drawing.Size(81, 25);
             this.bunifuCustomLabel20.TabIndex = 3;
             this.bunifuCustomLabel20.Text = "Activate : ";
             // 
@@ -238,7 +238,7 @@
             this.lblLastSignIn.ForeColor = System.Drawing.Color.Black;
             this.lblLastSignIn.Location = new System.Drawing.Point(164, 72);
             this.lblLastSignIn.Name = "lblLastSignIn";
-            this.lblLastSignIn.Size = new System.Drawing.Size(94, 23);
+            this.lblLastSignIn.Size = new System.Drawing.Size(82, 20);
             this.lblLastSignIn.TabIndex = 3;
             this.lblLastSignIn.Text = "1996/02/02";
             // 
@@ -350,7 +350,7 @@
             this.lblHire.ForeColor = System.Drawing.Color.Black;
             this.lblHire.Location = new System.Drawing.Point(222, 130);
             this.lblHire.Name = "lblHire";
-            this.lblHire.Size = new System.Drawing.Size(94, 23);
+            this.lblHire.Size = new System.Drawing.Size(82, 20);
             this.lblHire.TabIndex = 3;
             this.lblHire.Text = "1996/02/02";
             // 
@@ -361,7 +361,7 @@
             this.bunifuCustomLabel15.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel15.Location = new System.Drawing.Point(87, 127);
             this.bunifuCustomLabel15.Name = "bunifuCustomLabel15";
-            this.bunifuCustomLabel15.Size = new System.Drawing.Size(113, 32);
+            this.bunifuCustomLabel15.Size = new System.Drawing.Size(88, 25);
             this.bunifuCustomLabel15.TabIndex = 3;
             this.bunifuCustomLabel15.Text = "Hire Date : ";
             // 
@@ -372,7 +372,7 @@
             this.bunifuCustomLabel3.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel3.Location = new System.Drawing.Point(106, 17);
             this.bunifuCustomLabel3.Name = "bunifuCustomLabel3";
-            this.bunifuCustomLabel3.Size = new System.Drawing.Size(89, 32);
+            this.bunifuCustomLabel3.Size = new System.Drawing.Size(68, 25);
             this.bunifuCustomLabel3.TabIndex = 3;
             this.bunifuCustomLabel3.Text = "Branch :";
             // 
@@ -383,7 +383,7 @@
             this.bunifuCustomLabel18.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel18.Location = new System.Drawing.Point(81, 72);
             this.bunifuCustomLabel18.Name = "bunifuCustomLabel18";
-            this.bunifuCustomLabel18.Size = new System.Drawing.Size(115, 32);
+            this.bunifuCustomLabel18.Size = new System.Drawing.Size(88, 25);
             this.bunifuCustomLabel18.TabIndex = 3;
             this.bunifuCustomLabel18.Text = "Education :";
             // 
@@ -394,7 +394,7 @@
             this.bunifuCustomLabel19.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel19.Location = new System.Drawing.Point(112, 185);
             this.bunifuCustomLabel19.Name = "bunifuCustomLabel19";
-            this.bunifuCustomLabel19.Size = new System.Drawing.Size(81, 32);
+            this.bunifuCustomLabel19.Size = new System.Drawing.Size(62, 25);
             this.bunifuCustomLabel19.TabIndex = 3;
             this.bunifuCustomLabel19.Text = "Salary :";
             // 
@@ -405,7 +405,7 @@
             this.lblSalary.ForeColor = System.Drawing.Color.Black;
             this.lblSalary.Location = new System.Drawing.Point(222, 189);
             this.lblSalary.Name = "lblSalary";
-            this.lblSalary.Size = new System.Drawing.Size(45, 23);
+            this.lblSalary.Size = new System.Drawing.Size(39, 20);
             this.lblSalary.TabIndex = 3;
             this.lblSalary.Text = "MSC";
             // 
@@ -416,10 +416,9 @@
             this.lblBranch.ForeColor = System.Drawing.Color.Black;
             this.lblBranch.Location = new System.Drawing.Point(222, 21);
             this.lblBranch.Name = "lblBranch";
-            this.lblBranch.Size = new System.Drawing.Size(45, 23);
+            this.lblBranch.Size = new System.Drawing.Size(39, 20);
             this.lblBranch.TabIndex = 3;
             this.lblBranch.Text = "MSC";
-
             // 
             // lblEducation
             // 
@@ -428,7 +427,7 @@
             this.lblEducation.ForeColor = System.Drawing.Color.Black;
             this.lblEducation.Location = new System.Drawing.Point(222, 77);
             this.lblEducation.Name = "lblEducation";
-            this.lblEducation.Size = new System.Drawing.Size(45, 23);
+            this.lblEducation.Size = new System.Drawing.Size(39, 20);
             this.lblEducation.TabIndex = 3;
             this.lblEducation.Text = "MSC";
             // 
@@ -477,7 +476,7 @@
             this.lblNan.ForeColor = System.Drawing.Color.Black;
             this.lblNan.Location = new System.Drawing.Point(249, 186);
             this.lblNan.Name = "lblNan";
-            this.lblNan.Size = new System.Drawing.Size(39, 23);
+            this.lblNan.Size = new System.Drawing.Size(32, 20);
             this.lblNan.TabIndex = 3;
             this.lblNan.Text = "Iran";
             // 
@@ -488,7 +487,7 @@
             this.lblGender.ForeColor = System.Drawing.Color.Black;
             this.lblGender.Location = new System.Drawing.Point(249, 77);
             this.lblGender.Name = "lblGender";
-            this.lblGender.Size = new System.Drawing.Size(47, 23);
+            this.lblGender.Size = new System.Drawing.Size(40, 20);
             this.lblGender.TabIndex = 3;
             this.lblGender.Text = "Male";
             // 
@@ -499,7 +498,7 @@
             this.lblBirth.ForeColor = System.Drawing.Color.Black;
             this.lblBirth.Location = new System.Drawing.Point(249, 129);
             this.lblBirth.Name = "lblBirth";
-            this.lblBirth.Size = new System.Drawing.Size(94, 23);
+            this.lblBirth.Size = new System.Drawing.Size(82, 20);
             this.lblBirth.TabIndex = 3;
             this.lblBirth.Text = "1996/02/02";
             // 
@@ -510,7 +509,7 @@
             this.bunifuCustomLabel4.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel4.Location = new System.Drawing.Point(134, 185);
             this.bunifuCustomLabel4.Name = "bunifuCustomLabel4";
-            this.bunifuCustomLabel4.Size = new System.Drawing.Size(84, 32);
+            this.bunifuCustomLabel4.Size = new System.Drawing.Size(65, 25);
             this.bunifuCustomLabel4.TabIndex = 3;
             this.bunifuCustomLabel4.Text = "Nation :";
             // 
@@ -521,7 +520,7 @@
             this.bunifuCustomLabel2.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel2.Location = new System.Drawing.Point(127, 73);
             this.bunifuCustomLabel2.Name = "bunifuCustomLabel2";
-            this.bunifuCustomLabel2.Size = new System.Drawing.Size(91, 32);
+            this.bunifuCustomLabel2.Size = new System.Drawing.Size(71, 25);
             this.bunifuCustomLabel2.TabIndex = 3;
             this.bunifuCustomLabel2.Text = "Gender :";
             // 
@@ -532,7 +531,7 @@
             this.bunifuCustomLabel10.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel10.Location = new System.Drawing.Point(118, 129);
             this.bunifuCustomLabel10.Name = "bunifuCustomLabel10";
-            this.bunifuCustomLabel10.Size = new System.Drawing.Size(100, 32);
+            this.bunifuCustomLabel10.Size = new System.Drawing.Size(77, 25);
             this.bunifuCustomLabel10.TabIndex = 3;
             this.bunifuCustomLabel10.Text = "Birthday :";
             // 
@@ -543,7 +542,7 @@
             this.bunifuCustomLabel11.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel11.Location = new System.Drawing.Point(64, 17);
             this.bunifuCustomLabel11.Name = "bunifuCustomLabel11";
-            this.bunifuCustomLabel11.Size = new System.Drawing.Size(154, 32);
+            this.bunifuCustomLabel11.Size = new System.Drawing.Size(120, 25);
             this.bunifuCustomLabel11.TabIndex = 3;
             this.bunifuCustomLabel11.Text = "National Code :";
             // 
@@ -554,28 +553,28 @@
             this.lblNC.ForeColor = System.Drawing.Color.Black;
             this.lblNC.Location = new System.Drawing.Point(249, 22);
             this.lblNC.Name = "lblNC";
-            this.lblNC.Size = new System.Drawing.Size(102, 23);
+            this.lblNC.Size = new System.Drawing.Size(89, 20);
             this.lblNC.TabIndex = 3;
             this.lblNC.Text = "4880276472";
             // 
             // lblRole
             // 
             this.lblRole.AutoSize = true;
-            this.lblRole.Font = new System.Drawing.Font("Open Sans", 12F);
+            this.lblRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(191)))), ((int)(((byte)(240)))));
             this.lblRole.Location = new System.Drawing.Point(269, 133);
             this.lblRole.Name = "lblRole";
-            this.lblRole.Size = new System.Drawing.Size(73, 27);
+            this.lblRole.Size = new System.Drawing.Size(54, 20);
             this.lblRole.TabIndex = 8;
             this.lblRole.Text = "Admin";
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Font = new System.Drawing.Font("Penumbra Sans Std Light", 15F);
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.lblName.Location = new System.Drawing.Point(268, 86);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(253, 30);
+            this.lblName.Size = new System.Drawing.Size(182, 25);
             this.lblName.TabIndex = 9;
             this.lblName.Text = "Behzad Pesarakluo";
             // 
@@ -636,7 +635,7 @@
             this.lblStateCity.ForeColor = System.Drawing.Color.Black;
             this.lblStateCity.Location = new System.Drawing.Point(249, 192);
             this.lblStateCity.Name = "lblStateCity";
-            this.lblStateCity.Size = new System.Drawing.Size(130, 23);
+            this.lblStateCity.Size = new System.Drawing.Size(108, 20);
             this.lblStateCity.TabIndex = 3;
             this.lblStateCity.Text = "Tehran , Tehran";
             // 
@@ -647,7 +646,7 @@
             this.lblHome.ForeColor = System.Drawing.Color.Black;
             this.lblHome.Location = new System.Drawing.Point(249, 135);
             this.lblHome.Name = "lblHome";
-            this.lblHome.Size = new System.Drawing.Size(90, 23);
+            this.lblHome.Size = new System.Drawing.Size(78, 20);
             this.lblHome.TabIndex = 3;
             this.lblHome.Text = "021487532";
             // 
@@ -658,7 +657,7 @@
             this.lblMobile.ForeColor = System.Drawing.Color.Black;
             this.lblMobile.Location = new System.Drawing.Point(249, 77);
             this.lblMobile.Name = "lblMobile";
-            this.lblMobile.Size = new System.Drawing.Size(104, 23);
+            this.lblMobile.Size = new System.Drawing.Size(88, 20);
             this.lblMobile.TabIndex = 3;
             this.lblMobile.Text = "09111794629";
             // 
@@ -680,7 +679,7 @@
             this.bunifuCustomLabel16.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel16.Location = new System.Drawing.Point(119, 188);
             this.bunifuCustomLabel16.Name = "bunifuCustomLabel16";
-            this.bunifuCustomLabel16.Size = new System.Drawing.Size(99, 32);
+            this.bunifuCustomLabel16.Size = new System.Drawing.Size(75, 25);
             this.bunifuCustomLabel16.TabIndex = 3;
             this.bunifuCustomLabel16.Text = "Address :";
             // 
@@ -691,7 +690,7 @@
             this.bunifuCustomLabel7.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel7.Location = new System.Drawing.Point(140, 131);
             this.bunifuCustomLabel7.Name = "bunifuCustomLabel7";
-            this.bunifuCustomLabel7.Size = new System.Drawing.Size(78, 32);
+            this.bunifuCustomLabel7.Size = new System.Drawing.Size(62, 25);
             this.bunifuCustomLabel7.TabIndex = 3;
             this.bunifuCustomLabel7.Text = "Home :";
             // 
@@ -702,7 +701,7 @@
             this.bunifuCustomLabel13.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel13.Location = new System.Drawing.Point(134, 74);
             this.bunifuCustomLabel13.Name = "bunifuCustomLabel13";
-            this.bunifuCustomLabel13.Size = new System.Drawing.Size(84, 32);
+            this.bunifuCustomLabel13.Size = new System.Drawing.Size(66, 25);
             this.bunifuCustomLabel13.TabIndex = 3;
             this.bunifuCustomLabel13.Text = "Mobile :";
             // 
@@ -713,7 +712,7 @@
             this.bunifuCustomLabel14.ForeColor = System.Drawing.Color.Black;
             this.bunifuCustomLabel14.Location = new System.Drawing.Point(144, 17);
             this.bunifuCustomLabel14.Name = "bunifuCustomLabel14";
-            this.bunifuCustomLabel14.Size = new System.Drawing.Size(74, 32);
+            this.bunifuCustomLabel14.Size = new System.Drawing.Size(58, 25);
             this.bunifuCustomLabel14.TabIndex = 3;
             this.bunifuCustomLabel14.Text = "Email :";
             // 
@@ -742,7 +741,7 @@
             this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.bunifuSeparator1.LineThickness = 1;
             this.bunifuSeparator1.Location = new System.Drawing.Point(268, 119);
-            this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuSeparator1.Name = "bunifuSeparator1";
             this.bunifuSeparator1.Size = new System.Drawing.Size(644, 10);
             this.bunifuSeparator1.TabIndex = 14;
@@ -755,7 +754,7 @@
             this.lblNothing.Font = new System.Drawing.Font("Yu Gothic Light", 13F);
             this.lblNothing.Location = new System.Drawing.Point(534, 183);
             this.lblNothing.Name = "lblNothing";
-            this.lblNothing.Size = new System.Drawing.Size(136, 29);
+            this.lblNothing.Size = new System.Drawing.Size(110, 23);
             this.lblNothing.TabIndex = 16;
             this.lblNothing.Text = "Not Available";
             this.lblNothing.Visible = false;

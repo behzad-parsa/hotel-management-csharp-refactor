@@ -93,7 +93,6 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(1836, 70);
             this.panelTop.TabIndex = 5;
-   
             // 
             // bunifuSeparator1
             // 
@@ -116,7 +115,7 @@
             this.lblBranchName.ForeColor = System.Drawing.Color.White;
             this.lblBranchName.Location = new System.Drawing.Point(36, 26);
             this.lblBranchName.Name = "lblBranchName";
-            this.lblBranchName.Size = new System.Drawing.Size(142, 19);
+            this.lblBranchName.Size = new System.Drawing.Size(117, 16);
             this.lblBranchName.TabIndex = 12;
             this.lblBranchName.Text = "Branch  Name";
             // 
@@ -128,7 +127,7 @@
             this.lblTopName.ForeColor = System.Drawing.Color.White;
             this.lblTopName.Location = new System.Drawing.Point(1452, 23);
             this.lblTopName.Name = "lblTopName";
-            this.lblTopName.Size = new System.Drawing.Size(132, 23);
+            this.lblTopName.Size = new System.Drawing.Size(104, 18);
             this.lblTopName.TabIndex = 11;
             this.lblTopName.Text = "Hello , Behzad";
             // 
@@ -194,6 +193,7 @@
             this.panelLeftSlide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(70)))), ((int)(((byte)(89)))));
             this.panelLeftSlide.ColorLeft = System.Drawing.Color.Empty;
             this.panelLeftSlide.ColorRight = System.Drawing.Color.Empty;
+            this.panelLeftSlide.Controls.Add(this.btnDashboard);
             this.panelLeftSlide.Controls.Add(this.gradientPanel1);
             this.panelLeftSlide.Controls.Add(this.btnSetting);
             this.panelLeftSlide.Controls.Add(this.btnBranch);
@@ -203,7 +203,6 @@
             this.panelLeftSlide.Controls.Add(this.btnAccounting);
             this.panelLeftSlide.Controls.Add(this.btnRoom);
             this.panelLeftSlide.Controls.Add(this.btnBooking);
-            this.panelLeftSlide.Controls.Add(this.btnDashboard);
             this.panelLeftSlide.Controls.Add(this.panelSide);
             this.panelLeftSlide.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeftSlide.Location = new System.Drawing.Point(0, 0);
@@ -451,7 +450,7 @@
             this.btnAccounting.IconVisible = true;
             this.btnAccounting.IconZoom = 60D;
             this.btnAccounting.IsTab = true;
-            this.btnAccounting.Location = new System.Drawing.Point(7, 417);
+            this.btnAccounting.Location = new System.Drawing.Point(8, 417);
             this.btnAccounting.Margin = new System.Windows.Forms.Padding(6);
             this.btnAccounting.Name = "btnAccounting";
             this.btnAccounting.Normalcolor = System.Drawing.Color.Transparent;
@@ -565,7 +564,7 @@
             this.btnDashboard.IconVisible = true;
             this.btnDashboard.IconZoom = 60D;
             this.btnDashboard.IsTab = true;
-            this.btnDashboard.Location = new System.Drawing.Point(7, 177);
+            this.btnDashboard.Location = new System.Drawing.Point(8, 176);
             this.btnDashboard.Margin = new System.Windows.Forms.Padding(6);
             this.btnDashboard.Name = "btnDashboard";
             this.btnDashboard.Normalcolor = System.Drawing.Color.Transparent;
